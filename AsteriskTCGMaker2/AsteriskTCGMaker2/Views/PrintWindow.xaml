@@ -1,0 +1,56 @@
+﻿<Window x:Class="AsteriskTCGMaker2.Views.PrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AsteriskTCGMaker2.Views"
+        mc:Ignorable="d"  Background="Gray" ResizeMode="CanResize"
+        Title="印刷プレビュー" Height="970" Width="700">
+    <!--A4サイズの3倍-->
+    <Viewbox>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="891"/>
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+            <!--891 631-->
+            <Viewbox Grid.Row="0" Grid.Column="0">
+                <Grid Name="InputGrid" Height="892" Width=" 631" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <!--806 582-->
+                    <Image x:Name="OutsideFlame" Stretch="Uniform" Source="Resources/OutsideFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Grid Height="806" Width=" 582" ClipToBounds="False"  Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="card0"  Grid.Row="0" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card1"  Grid.Row="0" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card2"  Grid.Row="0" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card3"  Grid.Row="1" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card4"  Grid.Row="1" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card5"  Grid.Row="1" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card6"  Grid.Row="2" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card7"  Grid.Row="2" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card8"  Grid.Row="2" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+
+
+                    </Grid>
+                    <Image x:Name="PrintFlame" Stretch="Uniform" Source="Resources/PrintFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image x:Name="backPackage" Stretch="Uniform" Source="Resources/backPackage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                </Grid>
+            </Viewbox>
+            <CheckBox x:Name="downView" Content="低解像度" Grid.Column="0" HorizontalAlignment="Right" Margin="0,861,325,0" VerticalAlignment="Top" Width="76" />
+            <Button Content="裏面印刷" Grid.Column="0" HorizontalAlignment="Right" Margin="0,861,125,0"  VerticalAlignment="Top" Width="76" Click="Button_BackPrint"/>
+            <Button Content="印刷" Grid.Column="0" HorizontalAlignment="Right" Margin="0,861,25,0"  VerticalAlignment="Top" Width="76" Click="Button_Print"/>
+            <Button Content="PDF出力" Grid.Column="0" HorizontalAlignment="Right" Margin="0,861,225,0" VerticalAlignment="Top" Width="76" Click="Button_PDF"/>
+
+        </Grid>
+    </Viewbox>
+</Window>

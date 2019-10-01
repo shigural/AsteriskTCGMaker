@@ -1,0 +1,404 @@
+﻿<Window x:Class="AsteriskTCGMaker2.Views.MainView"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
+ Title="アスタリスクTCGメーカー2" ResizeMode="NoResize" Width="1024" Height="640"
+ Background="Gray" >
+
+    <!--各Styleの設定。できればjsonファイルから読み込む-->
+    <Window.Resources>
+        <Style x:Key="InfoTextBlockStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="InfoTextBoxStyle" TargetType="{x:Type TextBox}"  >
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="AcceptsReturn" Value="False"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+
+        </Style>
+
+        <Style x:Key="CardNameTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
+        </Style>
+
+        <Style x:Key="CardRubyTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
+        </Style>
+
+        <Style x:Name="CardEffectTextStyle"  x:Key="CardEffectTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontFamily" Value="HGS ゴシックM"/>
+        </Style>
+
+        <Style  x:Name="CardFlavorTextStyle" x:Key="CardFlavorTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontFamily" Value="HGS 明朝B"/>
+        </Style>
+
+        <Style x:Key="CardRaceTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontSize" Value="7"/>
+            <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
+        </Style>
+
+        <Style x:Key="CardMainManaTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontFamily" Value="Bahnschrift "/>
+        </Style>
+
+        <Style x:Key="CardSubManaTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Bahnschrift "/>
+        </Style>
+
+        <Style x:Key="CardPowerTextStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontFamily" Value="Bahnschrift "/>
+        </Style>
+
+        <Style x:Key="CardIllustrationtStyle" TargetType="{x:Type TextBlock}"  >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Padding" Value="0,0"/>
+            <Setter Property="FontSize" Value="4"/>
+            <Setter Property="FontFamily" Value="HGS 明朝E"/>
+        </Style>
+
+    </Window.Resources>
+
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="ファイル (_F)">
+                <MenuItem Header="開く(_O)" Command="{Binding OpenFileCommand}" b:CommonDialogBehavior.Callback="{Binding DialogCallback}" />
+            </MenuItem>
+            <MenuItem Header="編集 (_E)" />
+            <MenuItem Header="オプション (_O)" />
+            <MenuItem Header="ヘルプ (_H)" />
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem DockPanel.Dock="Right">
+                <TextBlock Text="ver2.23" />
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right" />
+            <TextBlock />
+        </StatusBar>
+
+        <Viewbox Stretch="Fill" Width="1018" Height="565">
+            <Grid Name="FullGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="303"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" Width="283" Height="419" >
+                    <Viewbox>
+                        <Grid Width="240" Height="334" >
+                            <Grid Name="OutputGrid" ClipToBounds="True">
+                                <Image  x:Name="CardImage" Stretch="Uniform" Source="Resources/InputSample.png" Panel.ZIndex="5" MaxWidth="262" MaxHeight="355"/>
+                                <Image  x:Name="CardFlame" Stretch="Fill" Source="Resources/CardFlame.png" Panel.ZIndex="10" />
+
+                                <Canvas Panel.ZIndex="100"  >
+                                    <Image  x:Name="CardSubImage"  Stretch="Uniform" Source="Resources/Sub_Black.png"  Width="115" Canvas.Left="12" Canvas.Bottom="250" Panel.ZIndex="0" />
+                                    <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="Resources/Main_Black.png" Width="292" Canvas.Left="-25" Canvas.Top="-20" Panel.ZIndex="5" />
+                                    <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="25" Canvas.Bottom="65" >
+                                        <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="190" Height="12" Opacity="0.5" />
+                                        <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="24" Panel.ZIndex="10" Width="190" Height="12"  Opacity="0.5" />
+                                        <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="190" Height="12"   Opacity="0.5"/>
+                                        <TextBlock x:Name="CardEffectText"  Style="{StaticResource CardEffectTextStyle}" Canvas.Left="2"  Canvas.Bottom="5"  Panel.ZIndex="105" 
+                                       Foreground="{Binding CardEffectColor}" />
+                                        <Image  x:Name="CardTextIcon"  Stretch="Fill" Source="Resources/break.png"  Width="12" Margin="1,1,1,1" Canvas.Left="5" Canvas.Bottom="0" Panel.ZIndex="120"/>
+                                    </Canvas>
+                                    <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-18"/>
+                                    <StackPanel Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="43" Height="18" Width="80">
+                                        <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage3"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage2"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage1"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Visible"/>
+                                    </StackPanel>
+                                    <StackPanel  Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="35" Canvas.Bottom="30" Height="18" Width="80">
+                                        <Image  x:Name="CardBreakImage9"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage8"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage7"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardBreakImage6"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
+                                    </StackPanel>
+
+                                    <StackPanel   Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="135" Height="120" Width="30">
+                                        <Image  x:Name="CardTypeImage1"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardTypeImage2"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardTypeImage3"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
+                                        <Image  x:Name="CardTypeImage4"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
+                                    </StackPanel>
+                                
+
+                                    <TextBlock x:Name="CardRubyText" Text="{Binding CardRubyText}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="100"
+                                       Canvas.Left="70" Canvas.Bottom="280"  FontSize="{Binding CardRubyFontSize}" Foreground="{Binding CardRubyColor}"/>
+                                    <TextBlock x:Name="CardNameText" Text="{Binding CardNameText}" Style="{StaticResource CardNameTextStyle}"  Panel.ZIndex="100"
+                                   Canvas.Left="70" Canvas.Bottom="270"  FontSize="{Binding CardNameFontSize}" Foreground="{Binding CardNameColor}"/>
+
+                                    <Grid  Canvas.Left="94" Canvas.Bottom="293" Panel.ZIndex="100"  Width="29">
+                                        <TextBlock x:Name="CardRace1Text" Text="{Binding CardRace1}" Style="{StaticResource CardRaceTextStyle}"  
+                                       HorizontalAlignment="Center" Foreground="{Binding CardNameColor}"/>
+                                    </Grid>
+                                    <Grid  Canvas.Left="133" Canvas.Bottom="293" Panel.ZIndex="100"  Width="29">
+                                        <TextBlock x:Name="CardRace2Text" Text="{Binding CardRace2}" Style="{StaticResource CardRaceTextStyle}"  Panel.ZIndex="100"
+                                        HorizontalAlignment="Center" Foreground="{Binding CardNameColor}"/>
+                                    </Grid>
+
+                                    <Grid Canvas.Left="20" Canvas.Bottom="271" Width="40" Height="30" Panel.ZIndex="200">
+                                        <TextBlock x:Name="CardMainManaText" Text="{Binding CardMainMana}" Style="{StaticResource CardMainManaTextStyle}"  Panel.ZIndex="100"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding CardManaColor}" FontWeight="Bold"/>
+                                    </Grid>
+                                    <Grid Canvas.Left="55" Canvas.Bottom="291" Width="30" Height="30" Panel.ZIndex="205">
+                                        <TextBlock x:Name="CardSubManaText" Text="{Binding CardSubMana}" Style="{StaticResource CardSubManaTextStyle}"  Panel.ZIndex="100"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding CardSubManaColor}" FontWeight="Bold"/>
+                                    </Grid>
+                                    <Grid Canvas.Left="112" Canvas.Bottom="27" Width="80" Height="30" Panel.ZIndex="205">
+                                        <TextBlock x:Name="CardPowerText" Text="{Binding CardPower}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
+                                    </Grid>
+                                    <TextBlock x:Name="CardIllustrationText" Text="{Binding CardIllustration}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
+                                       Canvas.Left="25" Canvas.Bottom="2" Foreground="White" FontSize="6"/>
+                                    <TextBlock x:Name="betaMessage" Text="このカードはβ版です。アンダーンでのみ使用できます。" Style="{StaticResource CardIllustrationtStyle}" 
+                                       Panel.ZIndex="100" Canvas.Left="95" Canvas.Bottom="2" Foreground="White" FontSize="6" Visibility="Hidden"/>
+
+                                </Canvas>
+                            </Grid>
+
+                        </Grid>
+                    </Viewbox>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
+                    <Grid Name="InputGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+
+                            <RowDefinition  />
+                            <RowDefinition />
+
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"  />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition  Width="250"/>
+                            <ColumnDefinition  Width="60" />
+                            <ColumnDefinition  Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <!--カード名-->
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="カードルビ"  Style="{StaticResource InfoTextBlockStyle}"  />
+                        <TextBox Name="CardRubyTextBox" Grid.Row="1" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
+                           Text="{Binding CardRubyText, UpdateSourceTrigger=PropertyChanged}"   />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="カード名" Style="{StaticResource InfoTextBlockStyle}"  />
+                        <TextBox Name="CardNameTextBox" Grid.Row="2" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
+                           Text="{Binding CardNameText, UpdateSourceTrigger=PropertyChanged}"   />
+
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="サイズ" Style="{StaticResource InfoTextBlockStyle}"  />
+                        <TextBox Name="CardRubyFontSizeBox" Grid.Row="1" Grid.Column="3" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardRubyFontSize, UpdateSourceTrigger=PropertyChanged}"    />
+                        <TextBox Name="CardNameFontSizeBox" Grid.Row="2" Grid.Column="3" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardNameFontSize, UpdateSourceTrigger=PropertyChanged}"    />
+
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="カラー" Style="{StaticResource InfoTextBlockStyle}"  />
+                        <TextBox Name="CardRubyColor" Grid.Row="1" Grid.Column="4" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardRubyColor, UpdateSourceTrigger=PropertyChanged}"    />
+                        <TextBox Name="CardNameColor" Grid.Row="2" Grid.Column="4" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardNameColor, UpdateSourceTrigger=PropertyChanged}"    />
+
+
+
+                        <!--効果-->
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="効果"
+                                   Style="{StaticResource InfoTextBlockStyle}"/>
+                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="CardEffectTextBox" Text="効果テキスト&#xa;---&#xa;フレーバーテキスト"
+                                 FontSize="8" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="70" TextChanged="EffectChanged" />
+
+                        <Grid  Grid.Row="3" Grid.Column="3" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBox Name="CardEffectFontSizeBox" Text="8" Grid.Row="0"
+                                 Style="{StaticResource InfoTextBoxStyle}" TextChanged="EffectChanged" VerticalAlignment="Center" />
+                            <TextBox Name="CardFlavorEffectFontSizeBox" Text="6" Grid.Row="1"
+                                 Style="{StaticResource InfoTextBoxStyle}" TextChanged="EffectChanged" VerticalAlignment="Center" />
+                        </Grid>
+
+                        <Grid  Grid.Row="3" Grid.Column="4" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBox Name="CardEffectColor" Grid.Row="0"  Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}"    />
+                    
+                            <StackPanel Margin="5"  Grid.Row="1" >
+                                <Slider x:Name="slider2" Value="12" Maximum="300" IsSnapToTickEnabled="True" ValueChanged="CardEffectHeight"/>
+                                <TextBlock Text="{Binding Value,StringFormat=size:{0}, ElementName=slider2}"  HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+
+
+
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="メイン/サブ/パワー" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <Grid Grid.Row="4" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding CardMainMana, UpdateSourceTrigger=PropertyChanged}"  />
+                            <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding CardSubMana, UpdateSourceTrigger=PropertyChanged}"  />
+                            <TextBox Grid.Row="0" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding CardPower, UpdateSourceTrigger=PropertyChanged}"  />
+                        </Grid>
+
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="種族" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <Grid Grid.Row="5" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding CardRace1, UpdateSourceTrigger=PropertyChanged}"  />
+                            <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding CardRace2, UpdateSourceTrigger=PropertyChanged}"  />
+                        </Grid>
+
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="Illustration" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <TextBox Name="CardIllustration" Grid.Row="6" Grid.Column="2"  Text="{Binding CardIllustration, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource InfoTextBoxStyle}"  VerticalAlignment="Center" />
+
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="メイン色" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <StackPanel Grid.Row="7" Grid.Column="2"  VerticalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton Content="黒" Grid.Column="0"  Checked="RadioButton_MainRate" IsChecked="True"/>
+                                <RadioButton Content="青" Grid.Column="1"  Checked="RadioButton_MainRate" />
+                                <RadioButton Content="緑" Grid.Column="2"  Checked="RadioButton_MainRate"/>
+                                <RadioButton Content="赤" Grid.Column="3"  Checked="RadioButton_MainRate"/>
+                                <RadioButton Content="白" Grid.Column="4"  Checked="RadioButton_MainRate"/>
+                                <RadioButton Content="黄" Grid.Column="5"  Checked="RadioButton_MainRate"/>
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="サブ色" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <StackPanel Grid.Row="8" Grid.Column="2" VerticalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton Content="黒" Grid.Column="0"  Checked="RadioButton_SubRate" />
+                                <RadioButton Content="青" Grid.Column="1"  Checked="RadioButton_SubRate" />
+                                <RadioButton Content="緑" Grid.Column="2"  Checked="RadioButton_SubRate"/>
+                                <RadioButton Content="赤" Grid.Column="3"  Checked="RadioButton_SubRate"/>
+                                <RadioButton Content="白" Grid.Column="4"  Checked="RadioButton_SubRate"/>
+                                <RadioButton Content="黄" Grid.Column="5"  Checked="RadioButton_SubRate"/>
+                                <RadioButton Content="無" Grid.Column="6"  Checked="RadioButton_SubRate" IsChecked="True"/>
+                            </Grid>
+                        </StackPanel>
+
+
+                        <TextBlock Grid.Row="9" Grid.Column="1" Text="タイプ" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                        <StackPanel Grid.Row="9" Grid.Column="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="burst" Content="burst" Grid.Row="0"  Grid.Column="0"  Checked="CheckBox_CardType" Unchecked="CheckBox_CardType"/>
+                                <CheckBox x:Name="reAction"  Content="re-action"  Grid.Row="0" Grid.Column="1"  Checked="CheckBox_CardType" Unchecked="CheckBox_CardType"/>
+                                <CheckBox x:Name="sealdtrigger"  Content="sealedtrigger"  Grid.Row="1" Grid.Column="0"  Checked="CheckBox_CardType" Unchecked="CheckBox_CardType"/>
+                                <CheckBox  x:Name="spellstep" Content="spellstep"  Grid.Row="1" Grid.Column="1"  Checked="CheckBox_CardType" Unchecked="CheckBox_CardType"/>
+
+                            </Grid>
+                        </StackPanel>
+
+
+
+
+                        <Button Name="ImageInsertButton" Grid.Row="7" Grid.Column="5" Content="グラフィック挿入"  Click="Button_Insert" />
+                        <Button Name="SaveButton" Grid.Row="8" Grid.Column="5" Content="カード出力" Click="Button_Output" />
+                        <Button Name="PrintButton" Grid.Row="9" Grid.Column="5" Content="印刷"  Click="Button_Print" />
+
+                        <StackPanel Grid.Row="5" Grid.Column="4" VerticalAlignment="Center">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton x:Name="suteraBox" Content="ステラ" Grid.Column="0"  Checked="RadioButton_CardKind" IsChecked="True"/>
+                                <RadioButton Content="スペル" Grid.Column="1"  Checked="RadioButton_CardKind" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Margin="5"  Grid.Row="4" Grid.Column="4">
+                            <Slider x:Name="slider" Value="1"  Maximum="9" IsSnapToTickEnabled="True" ValueChanged="BreakView"/>
+                            <TextBlock Text="{Binding Value,StringFormat=break:{0}, ElementName=slider}"  HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <CheckBox Name="BetaCheck" Grid.Row="6" Grid.Column="4" Content="β版" IsChecked="False" VerticalAlignment="center" HorizontalAlignment="Right" Checked="Check_beta" Unchecked="Check_beta"/>
+
+                        <TextBox Name="CardManaColor"  Grid.Column="3" Grid.Row="7"  Style="{StaticResource InfoTextBoxStyle}" Margin="0,0,0,0" Height="18" FontSize="10"
+                            Text="{Binding CardManaColor, UpdateSourceTrigger=PropertyChanged}"    />
+                        <TextBox Name="CardSubManaColor"  Grid.Column="3" Grid.Row="8"  Style="{StaticResource InfoTextBoxStyle}" Margin="0,0,0,0" Height="18" FontSize="10"
+                            Text="{Binding CardSubManaColor, UpdateSourceTrigger=PropertyChanged}"    />
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Viewbox>
+
+    </DockPanel>
+
+</Window>
