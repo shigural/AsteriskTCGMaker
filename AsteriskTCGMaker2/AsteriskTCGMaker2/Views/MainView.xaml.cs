@@ -175,16 +175,20 @@ namespace AsteriskTCGMaker2.Views
                     CardPowerText.Visibility = Visibility.Visible;
                     CardRace1Text.Visibility = Visibility.Visible;
                     CardRace2Text.Visibility = Visibility.Visible;
-                    Canvas.SetBottom(effectCanvas, 65);
+                    Canvas.SetBottom(effectCanvas, 55);
                     ViewNamePlate();
+                    CardBreakUp.Visibility = Visibility.Visible;
+                    CardBreakDown.Visibility = Visibility.Visible;
                     break;
                 case "スペル":
                     CardPowerImage.Visibility = Visibility.Hidden;
                     CardPowerText.Visibility = Visibility.Hidden;
                     CardRace1Text.Visibility = Visibility.Hidden;
                     CardRace2Text.Visibility = Visibility.Hidden;
-                    Canvas.SetBottom(effectCanvas, 30);
+                    Canvas.SetBottom(effectCanvas, 20);
                     ViewNamePlate();
+                    CardBreakUp.Visibility = Visibility.Hidden;
+                    CardBreakDown.Visibility = Visibility.Hidden;
                     break;
             }
 
@@ -279,193 +283,202 @@ namespace AsteriskTCGMaker2.Views
 
 
 
-        PresentationSource source = PresentationSource.FromVisual(this);
-        var bmp = new RenderTargetBitmap(
-            (int)(target.ActualWidth * n),
-            (int)(target.ActualHeight * n),
-            dpi * n * source.CompositionTarget.TransformToDevice.M11, dpi * n * source.CompositionTarget.TransformToDevice.M22, // DPI
-            PixelFormats.Pbgra32);
-        bmp.Render(target);
+            PresentationSource source = PresentationSource.FromVisual(this);
+            var bmp = new RenderTargetBitmap(
+                (int)(target.ActualWidth * n),
+                (int)(target.ActualHeight * n),
+                dpi * n * source.CompositionTarget.TransformToDevice.M11, dpi * n * source.CompositionTarget.TransformToDevice.M22, // DPI
+                PixelFormats.Pbgra32);
+            bmp.Render(target);
 
             // pngで保存
             var encoder = new PngBitmapEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(bmp));
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
             using (var fs = File.Open(path, FileMode.Create))
             {
                 encoder.Save(fs);
             }
-}
-
-private int CountChar(string s, char c)
-{
-    return s.Length - s.Replace(c.ToString(), "").Length;
-}
-
-private void EffectChanged(object sender, TextChangedEventArgs e)
-{
-    double fontSize = 0,fontFlavorSize=0;
-    if (CardEffectTextBox == null) return;
-    if (CardEffectFontSizeBox == null || CardFlavorEffectFontSizeBox == null || double.TryParse(CardEffectFontSizeBox.Text, out fontSize) != true|| double.TryParse(CardFlavorEffectFontSizeBox.Text, out fontFlavorSize) != true) return;
-
-    //テキストを取得する
-    var text = CardEffectTextBox.Text;
-
-
-    //取得したテキストから「---」の前後に切り分ける
-    var placeDelimiter = text.IndexOf("---");
-    var effectText = "";
-    var flavorText = "";
-    if (placeDelimiter >= 0)
-    {
-        effectText = text.Substring(0, text.IndexOf("---"));
-        flavorText = text.Substring(placeDelimiter + 3, text.Length - placeDelimiter - 3);
-    }
-    else
-    {
-        effectText = text;
-    }
-    //---の前を通常のフォント、---以降をフレーバーテキストフォントにする
-
-
-
-    var flavorRuns = new Run();
-    flavorRuns.Text = flavorText;
-    flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
-    flavorRuns.FontSize = fontFlavorSize;
-
-
-
-    var beforeTextSize = CardEffectText.ActualHeight;
-    //テキストを結合して描画する
-    CardEffectText.Inlines.Clear();
-
-    if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
-    {
-        CardTextIcon.Visibility = Visibility.Hidden;
-        if (effectText.IndexOf("@") == 0)
-        {//文頭がいきなりアイコンの場合だけ例外処理を行う。
-            effectText = effectText.Substring(1, effectText.Length - 1);
-            var atPlace = effectText.IndexOf("@");
-            var str = "";
-            str = effectText.Substring(0, atPlace);
-            effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
-            if (File.Exists(path + "Icon/" + str + ".png") == true)
-            {
-                CardTextIcon.Source = new BitmapImage(new Uri(path + "Icon/" + str + ".png", UriKind.Absolute));
-                Canvas.SetBottom(CardTextIcon, beforeTextSize - 6 - fontSize / 4);
-            }
-            CardTextIcon.Visibility = Visibility.Visible;
-
         }
-        var loopMode = 0;
-        while (effectText != "")
+
+        private int CountChar(string s, char c)
         {
+            return s.Length - s.Replace(c.ToString(), "").Length;
+        }
 
-            //@マークまで切り出す（存在しなければ最後まで）
-            var atPlace = effectText.IndexOf("@");
-            var str = "";
-            if (atPlace >= 0)
+        private void EffectChanged(object sender, TextChangedEventArgs e)
+        {
+            double fontSize = 0, fontFlavorSize = 0;
+            if (CardEffectTextBox == null) return;
+            if (CardEffectFontSizeBox == null || CardFlavorEffectFontSizeBox == null || double.TryParse(CardEffectFontSizeBox.Text, out fontSize) != true || double.TryParse(CardFlavorEffectFontSizeBox.Text, out fontFlavorSize) != true) return;
+
+            //テキストを取得する
+            var text = CardEffectTextBox.Text;
+
+
+            //取得したテキストから「---」の前後に切り分ける
+            var placeDelimiter = text.IndexOf("\r\n---\r\n");
+            var effectText = "";
+            var flavorText = "";
+            if (placeDelimiter >= 0)
             {
-                str = effectText.Substring(0, atPlace);
-                effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
+                effectText = text.Substring(0, text.IndexOf("\r\n---\r\n"));
+                flavorText = text.Substring(placeDelimiter + 7, text.Length - placeDelimiter - 7);
             }
             else
             {
-                str = effectText;
-                effectText = "";
+                effectText = text;
             }
-            if (loopMode == 0)
-            {//通常のテキストに関する処理
-             //Run情報を生成する
-                var effectRuns = new Run();
-                effectRuns.Text = str;
-                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-                if (fontSize >= 2) effectRuns.FontSize = fontSize;
-                CardEffectText.Inlines.Add(effectRuns);
-            }
-            else
-            {//アイコンに関する処理
+            //---の前を通常のフォント、---以降をフレーバーテキストフォントにする
 
-                if (File.Exists(path + "Icon/" + str + ".png") == true)
+
+
+
+            var flavorRuns = new Run();
+            flavorRuns.Text = flavorText;
+            flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
+            flavorRuns.FontSize = fontFlavorSize;
+
+
+
+            var beforeTextSize = CardEffectText.ActualHeight;
+            //テキストを結合して描画する
+            CardEffectText.Inlines.Clear();
+
+            if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
+            {
+                CardTextIcon.Visibility = Visibility.Hidden;
+                if (effectText.IndexOf("@") == 0)
+                {//文頭がいきなりアイコンの場合だけ例外処理を行う。
+                    effectText = effectText.Substring(1, effectText.Length - 1);
+                    var atPlace = effectText.IndexOf("@");
+                    var str = "";
+                    str = effectText.Substring(0, atPlace);
+                    effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
+                    if (File.Exists(path + "Icon/" + str + ".png") == true)
+                    {
+                        CardTextIcon.Source = new BitmapImage(new Uri(path + "Icon/" + str + ".png", UriKind.Absolute));
+                        Canvas.SetBottom(CardTextIcon, beforeTextSize - 6 - fontSize / 4);
+                    }
+                    CardTextIcon.Visibility = Visibility.Visible;
+
+                }
+                var loopMode = 0;
+                while (effectText != "")
                 {
-                    Image image = new Image();
-                    image.Width = fontSize;
-                    image.Height = fontSize;
-                    image.Stretch = Stretch.Uniform;
-                    image.Source = new BitmapImage(new Uri(path + "Icon/" + str + ".png", UriKind.Absolute));
-                    InlineUIContainer icon = new InlineUIContainer();
-                    icon.Child = image;
-                    CardEffectText.Inlines.Add(icon);
+
+                    //@マークまで切り出す（存在しなければ最後まで）
+                    var atPlace = effectText.IndexOf("@");
+                    var str = "";
+                    if (atPlace >= 0)
+                    {
+                        str = effectText.Substring(0, atPlace);
+                        effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
+                    }
+                    else
+                    {
+                        str = effectText;
+                        effectText = "";
+                    }
+                    if (loopMode == 0)
+                    {//通常のテキストに関する処理
+                     //Run情報を生成する
+                        var effectRuns = new Run();
+                        effectRuns.Text = str;
+                        effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                        if (fontSize >= 2) effectRuns.FontSize = fontSize;
+                        CardEffectText.Inlines.Add(effectRuns);
+                    }
+                    else
+                    {//アイコンに関する処理
+
+                        if (File.Exists(path + "Icon/" + str + ".png") == true)
+                        {
+                            Image image = new Image();
+                            image.Width = fontSize;
+                            image.Height = fontSize;
+                            image.Stretch = Stretch.Uniform;
+                            image.Source = new BitmapImage(new Uri(path + "Icon/" + str + ".png", UriKind.Absolute));
+                            InlineUIContainer icon = new InlineUIContainer();
+                            icon.Child = image;
+                            CardEffectText.Inlines.Add(icon);
+                        }
+
+                    }
+
+
+                    loopMode = (loopMode + 1) % 2;
+
                 }
 
             }
+            else
+            {//@が奇数個含まれる場合
+                var effectRuns = new Run();
+                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                if (fontSize >= 2) effectRuns.FontSize = fontSize;
 
+                flavorRuns.Text = effectText;
+                CardEffectText.Inlines.Add(effectRuns);
+            }
 
-            loopMode = (loopMode + 1) % 2;
+            var gapRuns = new Run();
+       
+            gapRuns.FontFamily = new FontFamily("HGS ゴシックM");
+            gapRuns.FontSize = 3;
+            gapRuns.Text = "\n    あ   \n";
+            gapRuns.Foreground = new SolidColorBrush(Colors.Transparent);
+            CardEffectText.Inlines.Add(gapRuns);
+            CardEffectText.Inlines.Add(flavorRuns);
 
         }
+        private delegate void Test();
 
-    }
-    else
-    {//@が奇数個含まれる場合
-        var effectRuns = new Run();
-        effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-        if (fontSize >= 2) effectRuns.FontSize = fontSize;
+        private void DoEvents()
+        {
 
-        flavorRuns.Text = effectText;
-        CardEffectText.Inlines.Add(effectRuns);
-    }
-    CardEffectText.Inlines.Add(flavorRuns);
-
-}
-private delegate void Test();
-
-private void DoEvents()
-{
-
-    DispatcherFrame frame = new DispatcherFrame();
-    var callback = new DispatcherOperationCallback(ExitFrames);
-    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, callback, frame);
-    Dispatcher.PushFrame(frame);
-}
+            DispatcherFrame frame = new DispatcherFrame();
+            var callback = new DispatcherOperationCallback(ExitFrames);
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, callback, frame);
+            Dispatcher.PushFrame(frame);
+        }
 
 
-private object ExitFrames(object obj)
-{
-    ((DispatcherFrame)obj).Continue = false;
-    return null;
-}
+        private object ExitFrames(object obj)
+        {
+            ((DispatcherFrame)obj).Continue = false;
+            return null;
+        }
 
-private void BreakView(object sender, RoutedPropertyChangedEventArgs<double> e)
-{
-    var breakNum = ((Slider)sender).Value;
-    var cardBreakList = new List<Image>();
-    cardBreakList.Add(CardBreakImage1);
-    cardBreakList.Add(CardBreakImage2);
-    cardBreakList.Add(CardBreakImage3);
-    cardBreakList.Add(CardBreakImage4);
-    cardBreakList.Add(CardBreakImage5);
-    cardBreakList.Add(CardBreakImage6);
-    cardBreakList.Add(CardBreakImage7);
-    cardBreakList.Add(CardBreakImage8);
-    cardBreakList.Add(CardBreakImage9);
+        private void BreakView(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var breakNum = ((Slider)sender).Value;
+            var cardBreakList = new List<Image>();
+            cardBreakList.Add(CardBreakImage1);
+            cardBreakList.Add(CardBreakImage2);
+            cardBreakList.Add(CardBreakImage3);
+            cardBreakList.Add(CardBreakImage4);
+            cardBreakList.Add(CardBreakImage5);
+            cardBreakList.Add(CardBreakImage6);
+            cardBreakList.Add(CardBreakImage7);
+            cardBreakList.Add(CardBreakImage8);
+            cardBreakList.Add(CardBreakImage9);
 
-    for (int i = 0; i < cardBreakList.Count; i++)
-    {
-        (cardBreakList[i]).Visibility = Visibility.Hidden;
-    }
+            for (int i = 0; i < cardBreakList.Count; i++)
+            {
+                (cardBreakList[i]).Visibility = Visibility.Hidden;
+            }
 
-    for (int i = 0; i < breakNum; i++)
-    {
-        (cardBreakList[i]).Visibility = Visibility.Visible;
-    }
-}
+            for (int i = 0; i < breakNum; i++)
+            {
+                (cardBreakList[i]).Visibility = Visibility.Visible;
+            }
+        }
 
-private void CardEffectHeight(object sender, RoutedPropertyChangedEventArgs<double> e)
-{
-    CardEffectImageCenter.Height = ((Slider)sender).Value;
-    Canvas.SetBottom(CardEffectImageUp, ((Slider)sender).Value + 12);
+        private void CardEffectHeight(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            CardEffectImageCenter.Height = ((Slider)sender).Value;
+            Canvas.SetBottom(CardEffectImageUp, ((Slider)sender).Value + 12);
 
-}
+        }
     }
 }

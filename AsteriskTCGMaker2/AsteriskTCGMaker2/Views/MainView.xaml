@@ -105,7 +105,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver2.23" />
+                <TextBlock Text="ver2.25" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -127,30 +127,30 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                                 <Canvas Panel.ZIndex="100"  >
                                     <Image  x:Name="CardSubImage"  Stretch="Uniform" Source="Resources/Sub_Black.png"  Width="115" Canvas.Left="12" Canvas.Bottom="250" Panel.ZIndex="0" />
                                     <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="Resources/Main_Black.png" Width="292" Canvas.Left="-25" Canvas.Top="-20" Panel.ZIndex="5" />
-                                    <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="25" Canvas.Bottom="65" >
-                                        <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="190" Height="12" Opacity="0.5" />
-                                        <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="24" Panel.ZIndex="10" Width="190" Height="12"  Opacity="0.5" />
-                                        <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="190" Height="12"   Opacity="0.5"/>
+                                    <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="55" >
+                                        <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
+                                        <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="24" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
+                                        <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="12"   Opacity="0.5" />
                                         <TextBlock x:Name="CardEffectText"  Style="{StaticResource CardEffectTextStyle}" Canvas.Left="2"  Canvas.Bottom="5"  Panel.ZIndex="105" 
                                        Foreground="{Binding CardEffectColor}" />
                                         <Image  x:Name="CardTextIcon"  Stretch="Fill" Source="Resources/break.png"  Width="12" Margin="1,1,1,1" Canvas.Left="5" Canvas.Bottom="0" Panel.ZIndex="120"/>
                                     </Canvas>
-                                    <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-18"/>
-                                    <StackPanel Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="43" Height="18" Width="80">
+                                    <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-28"/>
+                                    <StackPanel x:Name="CardBreakUp" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="33" Height="18" Width="80" Visibility="Visible">
                                         <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage3"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage2"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage1"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Visible"/>
                                     </StackPanel>
-                                    <StackPanel  Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="35" Canvas.Bottom="30" Height="18" Width="80">
+                                    <StackPanel  x:Name="CardBreakDown" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="35" Canvas.Bottom="20" Height="18" Width="80" Visibility="Visible">
                                         <Image  x:Name="CardBreakImage9"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage8"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage7"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardBreakImage6"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="Hidden"/>
                                     </StackPanel>
 
-                                    <StackPanel   Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="135" Height="120" Width="30">
+                                    <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="135" Height="120" Width="30">
                                         <Image  x:Name="CardTypeImage1"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardTypeImage2"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardTypeImage3"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
@@ -180,7 +180,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                                         <TextBlock x:Name="CardSubManaText" Text="{Binding CardSubMana}" Style="{StaticResource CardSubManaTextStyle}"  Panel.ZIndex="100"
                                         HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding CardSubManaColor}" FontWeight="Bold"/>
                                     </Grid>
-                                    <Grid Canvas.Left="112" Canvas.Bottom="27" Width="80" Height="30" Panel.ZIndex="205">
+                                    <Grid Canvas.Left="112" Canvas.Bottom="17" Width="80" Height="30" Panel.ZIndex="205">
                                         <TextBlock x:Name="CardPowerText" Text="{Binding CardPower}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
                                        HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
                                     </Grid>
@@ -247,7 +247,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                         <!--効果-->
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="効果"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
-                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="CardEffectTextBox" Text="効果テキスト&#xa;---&#xa;フレーバーテキスト"
+                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="CardEffectTextBox" Text="効果テキスト&#xD;&#xA;---&#xD;&#xA;フレーバーテキスト"
                                  FontSize="8" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="70" TextChanged="EffectChanged" />
 
                         <Grid  Grid.Row="3" Grid.Column="3" >
