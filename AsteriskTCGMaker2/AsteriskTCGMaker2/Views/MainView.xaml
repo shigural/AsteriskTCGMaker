@@ -105,7 +105,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver2.25" />
+                <TextBlock Text="ver2.26" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -121,7 +121,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                     <Viewbox>
                         <Grid Width="240" Height="334" >
                             <Grid Name="OutputGrid" ClipToBounds="True">
-                                <Image  x:Name="CardImage" Stretch="Uniform" Source="Resources/InputSample.png" Panel.ZIndex="5" MaxWidth="262" MaxHeight="355"/>
+                                <Image  x:Name="CardImage" Stretch="Uniform" Source="Resources/InputSample.png" Panel.ZIndex="5" MaxWidth="262" MaxHeight="355"  Margin="12px"/>
                                 <Image  x:Name="CardFlame" Stretch="Fill" Source="Resources/CardFlame.png" Panel.ZIndex="10" />
 
                                 <Canvas Panel.ZIndex="100"  >
@@ -131,7 +131,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                                         <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
                                         <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="24" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
                                         <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="12"   Opacity="0.5" />
-                                        <TextBlock x:Name="CardEffectText"  Style="{StaticResource CardEffectTextStyle}" Canvas.Left="2"  Canvas.Bottom="5"  Panel.ZIndex="105" 
+                                        <TextBlock x:Name="CardEffectText"  Style="{StaticResource CardEffectTextStyle}" Canvas.Left="2"  Canvas.Bottom="-8"  Panel.ZIndex="105" 
                                        Foreground="{Binding CardEffectColor}" />
                                         <Image  x:Name="CardTextIcon"  Stretch="Fill" Source="Resources/break.png"  Width="12" Margin="1,1,1,1" Canvas.Left="5" Canvas.Bottom="0" Panel.ZIndex="120"/>
                                     </Canvas>
@@ -247,7 +247,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                         <!--効果-->
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="効果"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
-                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="CardEffectTextBox" Text="効果テキスト&#xD;&#xA;---&#xD;&#xA;フレーバーテキスト"
+                        <TextBox Grid.Row="3" Grid.Column="2" x:Name="CardEffectTextBox" Text="効果テキスト&#xD;&#xA;---&#xD;&#xA;フレーバーテキスト&#xD;&#xA;"
                                  FontSize="8" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="70" TextChanged="EffectChanged" />
 
                         <Grid  Grid.Row="3" Grid.Column="3" >
