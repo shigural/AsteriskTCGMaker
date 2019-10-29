@@ -105,7 +105,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver2.27" />
+                <TextBlock Text="ver2.28" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />

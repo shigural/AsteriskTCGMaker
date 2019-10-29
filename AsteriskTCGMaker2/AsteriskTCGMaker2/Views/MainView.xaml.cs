@@ -347,7 +347,7 @@ namespace AsteriskTCGMaker2.Views
             if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
             {
                 CardTextIcon.Visibility = Visibility.Hidden;
-                if (effectText.IndexOf("@") == 0)
+                /*if (effectText.IndexOf("@") == 0)
                 {//文頭がいきなりアイコンの場合だけ例外処理を行う。
                     effectText = effectText.Substring(1, effectText.Length - 1);
                     var atPlace = effectText.IndexOf("@");
@@ -361,7 +361,7 @@ namespace AsteriskTCGMaker2.Views
                     }
                     CardTextIcon.Visibility = Visibility.Visible;
 
-                }
+                }*/
                 var loopMode = 0;
                 while (effectText != "")
                 {
