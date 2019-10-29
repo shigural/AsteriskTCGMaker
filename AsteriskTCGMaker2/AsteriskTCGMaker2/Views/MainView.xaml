@@ -105,7 +105,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver2.26" />
+                <TextBlock Text="ver2.27" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -119,9 +119,10 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" Width="283" Height="419" >
                     <Viewbox>
+                        <!--ここからマージンを引いたものがカードサイズ-->
                         <Grid Width="240" Height="334" >
                             <Grid Name="OutputGrid" ClipToBounds="True">
-                                <Image  x:Name="CardImage" Stretch="Uniform" Source="Resources/InputSample.png" Panel.ZIndex="5" MaxWidth="262" MaxHeight="355"  Margin="12px"/>
+                                <Image  x:Name="CardImage" Stretch="Fill" Source="Resources/InputSample.png" Panel.ZIndex="5" MaxWidth="262" MaxHeight="355"  Margin="12px"/>
                                 <Image  x:Name="CardFlame" Stretch="Fill" Source="Resources/CardFlame.png" Panel.ZIndex="10" />
 
                                 <Canvas Panel.ZIndex="100"  >
