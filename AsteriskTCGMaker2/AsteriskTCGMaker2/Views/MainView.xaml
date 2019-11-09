@@ -105,7 +105,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver2.28" />
+                <TextBlock Text="ver2.29" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -160,7 +160,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                                 
 
                                     <TextBlock x:Name="CardRubyText" Text="{Binding CardRubyText}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="100"
-                                       Canvas.Left="70" Canvas.Bottom="280"  FontSize="{Binding CardRubyFontSize}" Foreground="{Binding CardRubyColor}"/>
+                                       Canvas.Left="68" Canvas.Bottom="280"  FontSize="{Binding CardRubyFontSize}" Foreground="{Binding CardRubyColor}"/>
                                     <TextBlock x:Name="CardNameText" Text="{Binding CardNameText}" Style="{StaticResource CardNameTextStyle}"  Panel.ZIndex="100"
                                    Canvas.Left="70" Canvas.Bottom="270"  FontSize="{Binding CardNameFontSize}" Foreground="{Binding CardNameColor}"/>
 
