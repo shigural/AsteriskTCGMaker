@@ -157,7 +157,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                                         <Image  x:Name="CardTypeImage3"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
                                         <Image  x:Name="CardTypeImage4"  Stretch="Fill" Source="Resources/break.png"  Width="24" Margin="1,1,1,1" Visibility="Hidden"/>
                                     </StackPanel>
-                                
+
 
                                     <TextBlock x:Name="CardRubyText" Text="{Binding CardRubyText}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="100"
                                        Canvas.Left="68" Canvas.Bottom="280"  FontSize="{Binding CardRubyFontSize}" Foreground="{Binding CardRubyColor}"/>
@@ -200,18 +200,18 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
                     <Grid Name="InputGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="24*" />
 
-                            <RowDefinition  />
-                            <RowDefinition />
+                            <RowDefinition Height="45*"  />
+                            <RowDefinition Height="45" />
 
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="90*" />
+                            <RowDefinition Height="45*" />
+                            <RowDefinition Height="45*" />
+                            <RowDefinition Height="45*" />
+                            <RowDefinition Height="25*" />
+                            <RowDefinition Height="25*" />
+                            <RowDefinition Height="30*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"  />
@@ -269,7 +269,7 @@ xmlns:b="clr-namespace:AsteriskTCGMaker2.Views.Behaviors"
                             </Grid.RowDefinitions>
                             <TextBox Name="CardEffectColor" Grid.Row="0"  Style="{StaticResource InfoTextBoxStyle}"
                             Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}"    />
-                    
+
                             <StackPanel Margin="5"  Grid.Row="1" >
                                 <Slider x:Name="slider2" Value="12" Maximum="300" IsSnapToTickEnabled="True" ValueChanged="CardEffectHeight"/>
                                 <TextBlock Text="{Binding Value,StringFormat=size:{0}, ElementName=slider2}"  HorizontalAlignment="Center"/>

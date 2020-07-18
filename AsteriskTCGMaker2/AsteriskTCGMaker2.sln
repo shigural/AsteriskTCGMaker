@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteriskTCGMaker2", "AsteriskTCGMaker2\AsteriskTCGMaker2.csproj", "{23A37ED9-E45D-425A-89D7-1EAB743D4A29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteriskTCGMaker3", "AsteriskTCGMaker3\AsteriskTCGMaker3.csproj", "{8905EE28-2AE8-47DD-A9FE-A405183B5642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{23A37ED9-E45D-425A-89D7-1EAB743D4A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23A37ED9-E45D-425A-89D7-1EAB743D4A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23A37ED9-E45D-425A-89D7-1EAB743D4A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8905EE28-2AE8-47DD-A9FE-A405183B5642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8905EE28-2AE8-47DD-A9FE-A405183B5642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8905EE28-2AE8-47DD-A9FE-A405183B5642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8905EE28-2AE8-47DD-A9FE-A405183B5642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
