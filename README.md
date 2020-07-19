@@ -16,6 +16,8 @@
  - 各進行状況をステータスバーに通知する機能を実装
  - アプリが落ちる場合、主要なパターンでは落ちる代わりに問題を通知するように修正
  - UIを使いやすいように改良
+ - 英語表記をカタカナに修正
+ ![アスタリスクTCGメーカー3.00](https://raw.github.com/wiki/shigural/AsteriskTCGMaker2/images/3_00.png)
  
 ### 2019/8/31 ver2.29を公開
  - iLLustration・β版表記の位置を変更
@@ -26,11 +28,12 @@
  - スペルに置いてbreakアイコンがきえるように修正
  - ルビの位置を修正
  - 背景を出力しないように修正
- 
+ ![アスタリスクTCGメーカー2.29](https://raw.github.com/wiki/shigural/AsteriskTCGMaker2/images/2_29.png)
+
 ### 2019/8/25 ver2.20を公開
  - スペルにおいて画面レイアウトが変わるように修正
  - レイアウト修正
-
+ 
 ### 2019/8/24 ver2.10を公開
  - アイコンの位置を修正
  - 表記の種族を色に変更
@@ -53,5 +56,7 @@
  - タイプの設定機能を追加
  - β版かどうか選択できる機能を追加
  - テキストボックスのサイズが可変になるよう修正
+ ![アスタリスクTCGメーカー2.00](https://raw.github.com/wiki/shigural/AsteriskTCGMaker2/images/2_00.png)
 
 ### 2019/4/6以前 ver1.00を公開
+![アスタリスクTCGメーカー1.00](https://raw.github.com/wiki/shigural/AsteriskTCGMaker2/images/1_00.png)
