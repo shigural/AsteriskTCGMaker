@@ -24,6 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Documents;
 using System.Windows;
 using Microsoft.Win32;
+using System.Windows.Media.Effects;
 
 namespace AsteriskTCGMaker3.ViewModels
 {
@@ -150,6 +151,196 @@ namespace AsteriskTCGMaker3.ViewModels
         }
 
 
+        public string CardEffect
+        {
+            get
+            {
+                return SelectedCard.CardEffect;
+            }
+            set
+            {
+                SelectedCard.CardEffect = value;
+                OnPropertyChanged(nameof(EffectDocument));
+                OnPropertyChanged(nameof(CardEffect));
+            }
+
+        }
+
+        public string FlavorText
+        {
+            get
+            {
+                return SelectedCard.FlavorText;
+            }
+            set
+            {
+                SelectedCard.FlavorText = value;
+                OnPropertyChanged(nameof(EffectDocument));
+                OnPropertyChanged(nameof(FlavorText));
+            }
+
+        }
+
+
+        public double EffectFontSize
+        {
+            get
+            {
+                return SelectedCard.EffectFontSize;
+            }
+            set
+            {
+                SelectedCard.EffectFontSize = value;
+                OnPropertyChanged(nameof(EffectDocument));
+                OnPropertyChanged(nameof(EffectFontSize));
+            }
+
+        }
+
+
+        public double FlavorFontSize
+        {
+            get
+            {
+                return SelectedCard.FlavorFontSize;
+            }
+            set
+            {
+                SelectedCard.FlavorFontSize = value;
+                OnPropertyChanged(nameof(EffectDocument));
+                OnPropertyChanged(nameof(FlavorFontSize));
+            }
+
+        }
+
+        private int CountChar(string s, char c)
+        {
+            return s.Length - s.Replace(c.ToString(), "").Length;
+        }
+
+        public FlowDocument createText()
+        {
+
+            var effectText = SelectedCard.CardEffect;
+            var effectFontSize = SelectedCard.EffectFontSize;
+            var flavorText = SelectedCard.FlavorText;
+            var flavorFontSize = SelectedCard.FlavorFontSize;
+
+            var outputDocument = new FlowDocument();
+            var paragraph = new Paragraph();
+
+
+
+            var flavorRuns = new Run();
+            flavorRuns.Text = flavorText;
+            flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
+            flavorRuns.FontSize = flavorFontSize;
+
+            if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
+            {
+                var loopMode = 0;
+                while (effectText != "")
+                {
+
+                    //@マークまで切り出す（存在しなければ最後まで）
+                    var atPlace = effectText.IndexOf("@");
+                    var str = "";
+                    if (atPlace >= 0)
+                    {
+                        str = effectText.Substring(0, atPlace);
+                        effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
+                    }
+                    else
+                    {
+                        str = effectText;
+                        effectText = "";
+                    }
+                    if (loopMode == 0)
+                    {//通常のテキストに関する処理
+                     //Run情報を生成する
+                        var effectRuns = new Run();
+                        effectRuns.Text = str;
+                        effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                        effectRuns.FontSize = effectFontSize;
+                        paragraph.Inlines.Add(effectRuns);
+                    }
+                    else
+                    {//アイコンに関する処理
+
+                        if (File.Exists(Singleton.Instance.Path + "Icon/" + str + ".png") == true)
+                        {
+                            Image image = new Image();
+                            image.Width = effectFontSize;
+                            image.Height = effectFontSize;
+                            image.Stretch = Stretch.Uniform;
+                            image.Source = new BitmapImage(new Uri(Singleton.Instance.Path + "Icon/" + str + ".png", UriKind.Absolute));
+                            InlineUIContainer icon = new InlineUIContainer();
+                            icon.Child = image;
+                            paragraph.Inlines.Add(icon);
+                        }
+
+                    }
+
+
+                    loopMode = (loopMode + 1) % 2;
+
+                }
+
+            }
+            else
+            {//@が奇数個含まれる場合
+                var effectRuns = new Run();
+                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                effectRuns.FontSize = effectFontSize;
+
+                flavorRuns.Text = effectText;
+                paragraph.Inlines.Add(effectRuns);
+            }
+
+            var gapRuns = new Run();
+
+            gapRuns.FontFamily = new FontFamily("HGS ゴシックM");
+            gapRuns.FontSize = 3;
+            gapRuns.Text = "\n    あ   \n";
+            gapRuns.Foreground = new SolidColorBrush(Colors.Transparent);
+
+
+            //paragraph.Inlines.Add(effectRuns);
+            paragraph.Inlines.Add(gapRuns);
+            paragraph.Inlines.Add(flavorRuns);
+
+
+
+
+            outputDocument.Blocks.Add(paragraph);
+
+
+
+            return outputDocument;
+        }
+
+
+
+
+        FlowDocument _effectDocument = new FlowDocument();
+        public FlowDocument EffectDocument
+        {
+            get
+            {
+                _effectDocument = createText();
+                return _effectDocument;
+            }
+            set
+            {
+                _effectDocument = value;
+                OnPropertyChanged(nameof(EffectDocument));
+            }
+        }
+
+
+
+
+
         private ObservableCollection<CardData> _cardList = new ObservableCollection<CardData>();
         public ObservableCollection<CardData> CardList
         {
@@ -158,17 +349,17 @@ namespace AsteriskTCGMaker3.ViewModels
                 if (_cardList.Count == 0)
                 {
 
-                    /*  try
-                      {*/
-                    foreach (string fileName in Directory.GetFiles(Singleton.Instance.CardPath, "*.atcg"))
+                    try
                     {
-                        _cardList.Add(new CardData(fileName));
+                        foreach (string fileName in Directory.GetFiles(Singleton.Instance.CardPath, "*.atcg"))
+                        {
+                            _cardList.Add(new CardData(fileName));
+                        }
                     }
-                    /*  }
-                      catch (Exception e)
-                      {
-                          Console.WriteLine(e.ToString());
-                      }*/
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
 
 
                 }
@@ -187,6 +378,10 @@ namespace AsteriskTCGMaker3.ViewModels
             {
                 _selectedCard = value;
                 this.OnPropertyChanged(nameof(SelectedCard));
+                this.OnPropertyChanged(nameof(CardEffect));
+                this.OnPropertyChanged(nameof(FlavorText));
+                this.OnPropertyChanged(nameof(EffectFontSize));
+                this.OnPropertyChanged(nameof(FlavorFontSize));
             }
         }
 
@@ -204,11 +399,94 @@ namespace AsteriskTCGMaker3.ViewModels
             }
 
         }
+        private ViewModelCommand _savetCommand;
+        public ViewModelCommand SaveCommand
+        {
+            get
+            {
+                if (this._savetCommand == null)
+                {
+                    this._savetCommand = new ViewModelCommand(() =>
+                    {
+                        /*
+                      ,フォントサイズルビ,カード名,効果,フレーバーテキスト,テキストサイズ,β版か,バースト有無,リアクション有無,シールドトリガー有無,スペルステップ有無,
+                      ,色ルビ,カード名,効果,フレーバーテキスト,メイン色,サブ色,カードルビそのもの,Resource
+                         カード名
+                         [色][ステラ/スペル]《種族（ステラのみ）》
+                         〔黒:2　無:4〕（ただし無が0の場合〔黒:2〕）
+                         パワー:5500　BR:1（）ステラのみ/【永続スペル】（スペルのみ）
+
+                        効果
+
+                        フレーバーテキスト
+
+                        illustration:
+                         */
+
+                        var text = "";
+                        text += "," + SelectedCard.RubyFontSize.ToString();
+                        text += "," + SelectedCard.CardNameFontSize.ToString();
+                        text += "," + SelectedCard.EffectFontSize.ToString();
+                        text += "," + SelectedCard.FlavorFontSize.ToString();
+                        text += "," + SelectedCard.TextBoxSize.ToString();
+                        text += "," + SelectedCard.Beta.ToString();
+                        text += "," + SelectedCard.Burst.ToString();
+                        text += "," + SelectedCard.ReAction.ToString();
+                        text += "," + SelectedCard.SealedTrigger.ToString();
+                        text += "," + SelectedCard.SpellStep.ToString();
+                        text += "," + "\r\n";
+                        text += "," + SelectedCard.RubyColor.ToString();
+                        text += "," + SelectedCard.NameColor.ToString();
+                        text += "," + SelectedCard.EffectTextColor.ToString();
+                        text += "," + SelectedCard.FlavorTextColor.ToString();
+                        text += "," + SelectedCard.MainColorColor.ToString();
+                        text += "," + SelectedCard.SubColorColor.ToString();
+                        text += "," + SelectedCard.CardRuby.ToString();
+                        text += "," + SelectedCard.ImageSource.ToString();
+                        text += "," + "\r\n";
+                        text += SelectedCard.CardName.ToString();
+                        text += "\r\n";
+                        if (SelectedCard.SteraSpell == "ステラ")
+                        {
+                            text += "[" + SelectedCard.CostColor1.ToString() + "][ステラ]《" + SelectedCard.Kind1.ToString();
+                            if (SelectedCard.Kind2.ToString() == "") text += "》";
+                            else text += "/" + SelectedCard.Kind2.ToString() + "》";
+                        }
+                        else
+                        {
+                            text += "[" + SelectedCard.CostColor1.ToString() + "][スペル]";
+                        }
+                        text += "\r\n";
+                        text += "〔" + SelectedCard.CostColor1 + ":" + SelectedCard.CostMana1;
+                        if (SelectedCard.CostMana2 == "0") text += "〕\r\n";
+                        else text += "　" + SelectedCard.CostColor2 + ":" + SelectedCard.CostMana2 + "〕\r\n";
+                        if (SelectedCard.SteraSpell == "ステラ")
+                        {
+                            text += "パワー: " + SelectedCard.Power.ToString() + "　BR:" + SelectedCard.BR.ToString();
+                        }
+                        else
+                        {
+                            text += SelectedCard.SpellType;
+                        }
+
+                        text += "\r\n\r\n";
+                        text += SelectedCard.CardEffect.ToString() + "\r\n\r\n" + SelectedCard.FlavorText.ToString() + "\r\n\r\n" + SelectedCard.Illustration.ToString();
 
 
-       
+                        File.WriteAllText(Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg", text);
 
-      
+                    });
+                }
+                return this._savetCommand;
+
+            }
+
+        }
+
+
+
+
+
 
 
         private void GraphicInsert()
@@ -243,6 +521,8 @@ namespace AsteriskTCGMaker3.ViewModels
             return parameter;
         }
     }
+
+
 
 
     public class BoolVisibillityConverter : IValueConverter
@@ -448,119 +728,6 @@ namespace AsteriskTCGMaker3.ViewModels
     }
 
 
-    public class CardToEffectTextConverter : IMultiValueConverter
-    {
-        private int CountChar(string s, char c)
-        {
-            return s.Length - s.Replace(c.ToString(), "").Length;
-        }
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-
-            var effectText = values[0].ToString();
-            var effectFontSize = double.Parse(values[1].ToString());
-            var flavorText = values[2].ToString();
-            var flavorFontSize = double.Parse(values[3].ToString());
-
-            var outputDocument = new FlowDocument();
-            var paragraph = new Paragraph();
-
-
-
-            var flavorRuns = new Run();
-            flavorRuns.Text = flavorText;
-            flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
-            flavorRuns.FontSize = flavorFontSize;
-
-            if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
-            {
-                var loopMode = 0;
-                while (effectText != "")
-                {
-
-                    //@マークまで切り出す（存在しなければ最後まで）
-                    var atPlace = effectText.IndexOf("@");
-                    var str = "";
-                    if (atPlace >= 0)
-                    {
-                        str = effectText.Substring(0, atPlace);
-                        effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
-                    }
-                    else
-                    {
-                        str = effectText;
-                        effectText = "";
-                    }
-                    if (loopMode == 0)
-                    {//通常のテキストに関する処理
-                     //Run情報を生成する
-                        var effectRuns = new Run();
-                        effectRuns.Text = str;
-                        effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-                        effectRuns.FontSize = effectFontSize;
-                        paragraph.Inlines.Add(effectRuns);
-                    }
-                    else
-                    {//アイコンに関する処理
-
-                        if (File.Exists(Singleton.Instance.Path + "Icon/" + str + ".png") == true)
-                        {
-                            Image image = new Image();
-                            image.Width = effectFontSize;
-                            image.Height = effectFontSize;
-                            image.Stretch = Stretch.Uniform;
-                            image.Source = new BitmapImage(new Uri(Singleton.Instance.Path + "Icon/" + str + ".png", UriKind.Absolute));
-                            InlineUIContainer icon = new InlineUIContainer();
-                            icon.Child = image;
-                            paragraph.Inlines.Add(icon);
-                        }
-
-                    }
-
-
-                    loopMode = (loopMode + 1) % 2;
-
-                }
-
-            }
-            else
-            {//@が奇数個含まれる場合
-                var effectRuns = new Run();
-                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-                effectRuns.FontSize = effectFontSize;
-
-                flavorRuns.Text = effectText;
-                paragraph.Inlines.Add(effectRuns);
-            }
-
-            var gapRuns = new Run();
-
-            gapRuns.FontFamily = new FontFamily("HGS ゴシックM");
-            gapRuns.FontSize = 3;
-            gapRuns.Text = "\n    あ   \n";
-            gapRuns.Foreground = new SolidColorBrush(Colors.Transparent);
-
-
-            //paragraph.Inlines.Add(effectRuns);
-            paragraph.Inlines.Add(gapRuns);
-            paragraph.Inlines.Add(flavorRuns);
-
-
-
-
-            outputDocument.Blocks.Add(paragraph);
-
-
-
-            return outputDocument;
-        }
-
-        public object[] ConvertBack(object value, Type[] types, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-
-    }
     public class BindableRichTextBox : RichTextBox
     {
         #region 依存関係プロパティ
@@ -592,10 +759,9 @@ namespace AsteriskTCGMaker3.ViewModels
         //Wiki&内部データ
         public string CardName { get; set; }
         public string CardEffect { get; set; }
-        public string Color { get; set; }
         public string SteraSpell { get; set; }
         public string Kind1 { get; set; }
-        public string Kind2 { get; set; }
+        public string Kind2 { get; set; } = "";
         public string CostColor1 { get; set; }
         public string CostMana1 { get; set; }
         public string CostColor2 { get; set; }
@@ -607,22 +773,31 @@ namespace AsteriskTCGMaker3.ViewModels
         public string Illustration { get; set; }
 
         //内部データ
-        public string CardRuby { get; set; }
-        public Double EffectFontSize { get; set; } = 8;
-        public Double FlavorFontSize { get; set; } = 6;
+        public string CardRuby { get; set; } = "";
+        public double EffectFontSize { get; set; } = 8;
+        public double FlavorFontSize { get; set; } = 6;
         public bool Burst { get; set; }
         public bool ReAction { get; set; }
         public bool SealedTrigger { get; set; }
         public bool SpellStep { get; set; }
-        public Double TextBoxSize { get; set; } = 50;
+        public double TextBoxSize { get; set; } = 50;
         public bool Beta { get; set; } = false;
         public string ImageSource { get; set; }
+        public double RubyFontSize { get; set; } = 3;
+        public double CardNameFontSize { get; set; } = 10;
+
+        public string RubyColor { get; set; } = "white";
+        public string NameColor { get; set; } = "white";
+        public string EffectTextColor { get; set; } = "white";
+        public string FlavorTextColor { get; set; } = "white";
+        public string MainColorColor { get; set; } = "white";
+        public string SubColorColor { get; set; } = "white";
+
 
         public CardData()
         {
             CardName = "Name";
             CardEffect = "Effect";
-            Color = "赤";
             SteraSpell = "ステラ";
             Kind1 = "死神";
             Kind2 = "";
@@ -648,9 +823,16 @@ namespace AsteriskTCGMaker3.ViewModels
             }
         }
 
+        private string getNextElement(string Str)
+        {
+            return Str.Substring(1, Str.IndexOf(",", 1) - 1);
+        }
+
         private void WikiToData(string WikiData)
         {
             /*
+             ,フォントサイズルビ,カード名,効果,フレーバーテキスト,テキストサイズ,β版か,バースト有無,リアクション有無,シールドトリガー有無,スペルステップ有無,
+             ,色ルビ,カード名,効果,フレーバーテキスト,メイン色,サブ色,カードルビそのもの,リソース
              カード名
              [色][ステラ/スペル]《種類》
             〔色:コスト 色:コスト〕
@@ -660,6 +842,45 @@ namespace AsteriskTCGMaker3.ViewModels
             Illustration:イラスト
              */
 
+            RubyFontSize = double.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            CardNameFontSize = double.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            EffectFontSize = double.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            FlavorFontSize = double.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            TextBoxSize = double.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+
+            Beta = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            Burst = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            ReAction = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            SealedTrigger = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            SpellStep = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
+
+            RubyColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            NameColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            EffectTextColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            FlavorTextColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            MainColorColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            SubColorColor = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            CardRuby = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            ImageSource = getNextElement(WikiData);
+            WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
+
             //カード名
             CardName = WikiData.Substring(0, WikiData.IndexOf("\r\n"));
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
@@ -667,7 +888,7 @@ namespace AsteriskTCGMaker3.ViewModels
             //[色][ステラ/スペル]《種類》
             MatchCollection matches1 = Regex.Matches(WikiData, @"\[.*?\]");
             MatchCollection matches2 = Regex.Matches(WikiData, @"《.*?》");
-            Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
+            //Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
             SteraSpell = matches1[1].Value.Substring(1, matches1[1].Value.Length - 2);
             if (matches2.Count == 0) Kind1 = "";
             else Kind1 = matches2[0].Value.Substring(1, matches2[0].Value.Length - 2);
@@ -720,8 +941,10 @@ namespace AsteriskTCGMaker3.ViewModels
             }
 
             //イラスト
-            Illustration = WikiData.Substring(WikiData.IndexOf("Illustration:") + 13, WikiData.Length - (WikiData.LastIndexOf("Illustration:") + 13));
+            Illustration = WikiData.Substring(WikiData.IndexOf("Illustration:"), WikiData.Length - (WikiData.LastIndexOf("Illustration:")));
         }
 
     }
+
 }
+

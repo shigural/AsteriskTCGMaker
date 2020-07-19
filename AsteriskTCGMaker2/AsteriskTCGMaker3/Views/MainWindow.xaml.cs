@@ -96,7 +96,7 @@ namespace AsteriskTCGMaker3.Views
             Dispatcher.PushFrame(frame);
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void OutputButton_Click(object sender, RoutedEventArgs e)
         {
             this.StatusText.Text = "画像出力中....";
             doEvent();
@@ -130,5 +130,7 @@ namespace AsteriskTCGMaker3.Views
             }
             this.StatusText.Text = "";
         }
+
+
     }
 }

@@ -16,7 +16,6 @@
         <vm:BoolColorConverter x:Key="BoolColorConverter"/>
         <vm:ColorToColor1SourceConverter x:Key="ColorToColor1SourceConverter"/>
         <vm:ColorToColor2SourceConverter x:Key="ColorToColor2SourceConverter"/>
-        <vm:CardToEffectTextConverter x:Key="CardToEffectTextConverter"/>
         <vm:BoolVisibillityConverter x:Key="BoolVisibillityConverter"/>
         <vm:BoxSizeToBoxBottomConverter x:Key="BoxSizeToBoxBottomConverter"/>
         <vm:BRToVisibillityConverter x:Key="BRToVisibillityConverter"/>
@@ -184,16 +183,11 @@
                             <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
                             <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="{Binding SelectedCard.TextBoxSize, Converter={StaticResource BoxSizeToBoxBottomConverter}}" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
                             <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="{Binding SelectedCard.TextBoxSize}"   Opacity="0.5" />
-                            <vm:BindableRichTextBox Canvas.Left="2"  Canvas.Bottom="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
-                                                    Width="200" Foreground="{Binding CardEffectColor}" >
-                                <MultiBinding Converter="{StaticResource CardToEffectTextConverter}">
 
-                                    <Binding Path="SelectedCard.CardEffect" UpdateSourceTrigger="PropertyChanged" Mode="OneWay"/>
-                                    <Binding Path="SelectedCard.EffectFontSize" UpdateSourceTrigger="PropertyChanged" Mode="OneWay"/>
-                                    <Binding Path="SelectedCard.FlavorText"  UpdateSourceTrigger="PropertyChanged" Mode="OneWay"/>
-                                    <Binding Path="SelectedCard.FlavorFontSize" UpdateSourceTrigger="PropertyChanged" Mode="OneWay"/>
 
-                                </MultiBinding>
+
+                            <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="2"  Canvas.Bottom="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
+                                                    Width="200" Foreground="{Binding CardEffectColor}" Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
 
                             </vm:BindableRichTextBox>
 
@@ -328,29 +322,29 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" Text="カードルビ"  Style="{StaticResource InfoTextBlockStyle}"/>
                     <TextBox Name="CardRubyTextBox" Grid.Row="2" Grid.Column="1" Style="{StaticResource InfoTextBoxStyle}"
                            Text="{Binding SelectedCard.CardRuby, UpdateSourceTrigger=PropertyChanged}"   />
-                    <TextBlock Grid.Row="1" Grid.Column="2" Text="サイズ" Style="{StaticResource InfoTextBlockStyle}"  />
-                    <xctk:DoubleUpDown  Name="CardRubyFontSizeBox" FormatString="F2" Increment="0.1" Grid.Row="2" Grid.Column="2"  Text="{Binding CardRubyFontSize}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="カラー" Style="{StaticResource InfoTextBlockStyle}" Grid.ColumnSpan="2"  />
-                    <TextBox Name="CardRubyColor" Grid.Row="2" Grid.Column="3" Style="{StaticResource InfoTextBoxStyle}"
-                            Text="{Binding CardRubyColor, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"    />
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="サイズ" Style="{StaticResource InfoTextBlockStyle}"  />
+                    <xctk:DoubleUpDown  Name="CardRubyFontSizeBox" FormatString="F2" Increment="0.1" Grid.Row="2" Grid.Column="3"  Text="{Binding SelectedCard.RubyFontSize}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="カラー" Style="{StaticResource InfoTextBlockStyle}" Grid.ColumnSpan="2"  />
+                    <TextBox Name="CardRubyColor" Grid.Row="2" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardRubyColor, UpdateSourceTrigger=PropertyChanged}"   />
 
 
                     <!--カード名-->
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="カード名" Style="{StaticResource InfoTextBlockStyle}"  />
                     <TextBox Name="CardNameTextBox" Grid.Row="4" Grid.Column="1" Style="{StaticResource InfoTextBoxStyle}"
                            Text="{Binding SelectedCard.CardName, UpdateSourceTrigger=PropertyChanged}"   />
-                    <xctk:DoubleUpDown Name="CardNameFontSizeBox" FormatString="F2" Increment="0.1" Grid.Row="4" Grid.Column="2" Text="{Binding CardNameFontSize, UpdateSourceTrigger=PropertyChanged}"    />
-                    <TextBox Name="CardNameColor" Grid.Row="4" Grid.Column="3" Style="{StaticResource InfoTextBoxStyle}"
-                            Text="{Binding CardNameColor, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"    />
+                    <xctk:DoubleUpDown Name="CardNameFontSizeBox" FormatString="F2" Increment="0.1" Grid.Row="4" Grid.Column="3" Text="{Binding CardNameFontSize, UpdateSourceTrigger=PropertyChanged}"    />
+                    <TextBox Name="CardNameColor" Grid.Row="4" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding CardNameColor, UpdateSourceTrigger=PropertyChanged}"    />
 
                     <!--効果-->
                     <TextBlock Grid.Row="5" Grid.Column="1" Text="効果"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="CardEffectTextBox" Text="{Binding SelectedCard.CardEffect}"
+                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="CardEffectTextBox" Text="{Binding CardEffect, UpdateSourceTrigger=PropertyChanged}"
                                  FontSize="8" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="100" Margin="0,0,0,15" Grid.RowSpan="2"/>
-                    <xctk:DoubleUpDown Name="CardEffectFontSizeBox" FormatString="F2" Increment="0.1" Text="{Binding SelectedCard.EffectFontSize}" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Height="24" Margin="0,18" />
-                    <TextBox Name="CardEffectColor" Grid.Row="6" Grid.Column="3"  Style="{StaticResource InfoTextBoxStyle}"                                                      
-                            Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,18"    />
+                    <xctk:DoubleUpDown Name="CardEffectFontSizeBox" FormatString="F2" Increment="0.1" Text="{Binding EffectFontSize, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Height="24" Margin="0,18" />
+                    <TextBox Name="CardEffectColor" Grid.Row="6" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}"                                                      
+                            Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}"  Margin="0,18"    />
 
 
 
@@ -359,11 +353,11 @@
                     <!--フレーバーテキスト-->
                     <TextBlock Grid.Row="7" Grid.Column="1" Text="フレーバーテキスト"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
-                    <TextBox Grid.Row="7" Grid.Column="1" x:Name="CardFlavorTextBox" Text="{Binding SelectedCard.FlavorText}" Height="60" FontSize="8"
+                    <TextBox Grid.Row="7" Grid.Column="1" x:Name="CardFlavorTextBox" Text="{Binding FlavorText, UpdateSourceTrigger=PropertyChanged}" Height="60" FontSize="8"
                                 Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True"  Grid.RowSpan="3"/>
-                    <xctk:DoubleUpDown Name="CardFlavorEffectFontSizeBox"  FormatString="F2" Increment="0.1" Text="{Binding SelectedCard.FlavorFontSize}"  Grid.Row="8" Grid.Column="2"  VerticalAlignment="Center" />
-                    <TextBox Name="CardFalvorColor" Grid.Row="8" Grid.Column="3"  Style="{StaticResource InfoTextBoxStyle}"                                                      
-                            Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"    />
+                    <xctk:DoubleUpDown Name="CardFlavorEffectFontSizeBox"  FormatString="F2" Increment="0.1" Text="{Binding FlavorFontSize,UpdateSourceTrigger=PropertyChanged}"  Grid.Row="8" Grid.Column="3"  VerticalAlignment="Center" />
+                    <TextBox Name="CardFalvorColor" Grid.Row="8" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}"                                                      
+                            Text="{Binding CardEffectColor, UpdateSourceTrigger=PropertyChanged}"    />
 
 
 
@@ -466,9 +460,10 @@
 
                     <!--ボタン-->
                     <Button Name="ImageInsertButton" Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Content="グラフィック挿入" Command="{Binding GraphicInsertCommand}"  />
-                    <Button Name="SaveButton" Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Content="カード出力" Click="SaveButton_Click" />
-                    <Button Name="PrintButton" Grid.Row="21" Grid.Column="2" Grid.ColumnSpan="2" Content="印刷"  />
-
+                    <Button Name="Save" Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Content="保存"  Command="{Binding SaveCommand}" />
+                    <Button Name="SaveButton" Grid.Row="21" Grid.Column="2" Grid.ColumnSpan="2" Content="カード出力" Click="OutputButton_Click" />
+                    <Button Name="PrintButton" Grid.Row="22" Grid.Column="2" Grid.ColumnSpan="2" Content="印刷"  />
+                    <Button  Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="2" Content="クリップボードにコピー"  />
 
 
 
