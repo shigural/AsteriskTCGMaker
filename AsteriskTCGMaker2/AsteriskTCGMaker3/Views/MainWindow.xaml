@@ -151,7 +151,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.00β2" />
+                <TextBlock Text="ver3.00β3" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -174,7 +174,8 @@
                 </Grid.RowDefinitions>
                 <Viewbox Grid.Row="0" >
                     <Canvas Panel.ZIndex="100" Width="240"  Height="334" ClipToBounds="True" x:Name="OutPutCanvas">
-                        <Image  x:Name="CardImage" Source="{Binding SelectedCard.ImageSource}" Panel.ZIndex="-10" Width="240" Height="334" />
+                        <!--画像は本来の240×334から各方位5ピクセルだけ引いている-->
+                        <Image  x:Name="CardImage" Source="{Binding SelectedCard.ImageSource}" Panel.ZIndex="-10" Width="230" Height="324"   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Image  x:Name="CardFlame" Source="Resources/CardFlame.png" Panel.ZIndex="-5"  Width="240" Height="334" />
                         <Image  x:Name="CardSubImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor2, Converter={StaticResource ColorToColor2SourceConverter}}"  Width="115" Canvas.Left="12" Canvas.Bottom="250" Panel.ZIndex="0" />
                         <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Width="292" Canvas.Left="-25" Canvas.Top="-20" Panel.ZIndex="5" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>

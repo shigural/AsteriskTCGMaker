@@ -533,25 +533,25 @@ namespace AsteriskTCGMaker3.ViewModels
             var text = "";
             if (WithInf)
             {
-                text += "," + SelectedCard.RubyFontSize.ToString();
-                text += "," + SelectedCard.CardNameFontSize.ToString();
-                text += "," + SelectedCard.EffectFontSize.ToString();
-                text += "," + SelectedCard.FlavorFontSize.ToString();
-                text += "," + SelectedCard.TextBoxSize.ToString();
-                text += "," + SelectedCard.Beta.ToString();
-                text += "," + SelectedCard.Burst.ToString();
-                text += "," + SelectedCard.ReAction.ToString();
-                text += "," + SelectedCard.SealedTrigger.ToString();
-                text += "," + SelectedCard.SpellStep.ToString();
-                text += "," + "\r\n";
-                text += "," + SelectedCard.RubyColor.ToString();
-                text += "," + SelectedCard.NameColor.ToString();
-                text += "," + SelectedCard.EffectTextColor.ToString();
-                text += "," + SelectedCard.FlavorTextColor.ToString();
-                text += "," + SelectedCard.MainColorColor.ToString();
-                text += "," + SelectedCard.SubColorColor.ToString();
-                text += "," + SelectedCard.CardRuby.ToString();
-                text += "," + "\r\n";
+                text += ";" + SelectedCard.RubyFontSize.ToString();
+                text += ";" + SelectedCard.CardNameFontSize.ToString();
+                text += ";" + SelectedCard.EffectFontSize.ToString();
+                text += ";" + SelectedCard.FlavorFontSize.ToString();
+                text += ";" + SelectedCard.TextBoxSize.ToString();
+                text += ";" + SelectedCard.Beta.ToString();
+                text += ";" + SelectedCard.Burst.ToString();
+                text += ";" + SelectedCard.ReAction.ToString();
+                text += ";" + SelectedCard.SealedTrigger.ToString();
+                text += ";" + SelectedCard.SpellStep.ToString();
+                text += ";" + "\r\n";
+                text += ";" + SelectedCard.RubyColor.ToString();
+                text += ";" + SelectedCard.NameColor.ToString();
+                text += ";" + SelectedCard.EffectTextColor.ToString();
+                text += ";" + SelectedCard.FlavorTextColor.ToString();
+                text += ";" + SelectedCard.MainColorColor.ToString();
+                text += ";" + SelectedCard.SubColorColor.ToString();
+                text += ";" + SelectedCard.CardRuby.ToString();
+                text += ";" + "\r\n";
             }
 
 
@@ -659,20 +659,22 @@ namespace AsteriskTCGMaker3.ViewModels
                             outputName = outputName.Replace("：", "");
 
 
-                            var outputPath1 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png");
-                            var outputPath2 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\" + SelectedCard.CostColor1 + "\\(thumbnail)" + outputName + ".png");
+                            var outputPath1 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\big\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png");
+                            var outputPath2 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\small\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png");
                             var outputPath3 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\Output.png");
                             if (File.Exists(outputPath1)) System.IO.File.Delete(outputPath1);
+                            if (File.Exists(outputPath2)) System.IO.File.Delete(outputPath2);
 
-                            Directory.CreateDirectory(Singleton.Instance.Path + "Result\\" + SelectedCard.CostColor1);
+                            Directory.CreateDirectory(Singleton.Instance.Path + "Result\\big\\" + SelectedCard.CostColor1);
+                            Directory.CreateDirectory(Singleton.Instance.Path + "Result\\small\\" + SelectedCard.CostColor1);
                             SaveImage((FrameworkElement)elem, outputPath1, 10);
                             SaveImage((FrameworkElement)elem, outputPath2, 1);
                             SaveImage((FrameworkElement)elem, outputPath3, 10);
-                            StatusText = "出力完了（" + Singleton.Instance.Path + "Result\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png）";
+                            StatusText = "出力完了（" + outputPath1 + "）";
                         }
                         catch (Exception e)
                         {
-                            StatusText = "出力失敗（" + Singleton.Instance.Path + "Result\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png）";
+                            StatusText = "出力失敗";
                         }
                     });
                 }
@@ -768,10 +770,10 @@ namespace AsteriskTCGMaker3.ViewModels
                 SelectedCard.TextPaste(Clipboard.GetText());
                 StatusText = "クリップボードから貼り付けました";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 StatusText = "貼り付けに失敗しました";
-           
+
 
             }
             this.OnPropertyChanged(nameof(SelectedCard));
@@ -813,7 +815,7 @@ namespace AsteriskTCGMaker3.ViewModels
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if(!((bool)value))return Binding.DoNothing;
+            if (!((bool)value)) return Binding.DoNothing;
             else return parameter;
         }
     }
@@ -1193,7 +1195,7 @@ namespace AsteriskTCGMaker3.ViewModels
 
         private string getNextElement(string Str)
         {
-            return Str.Substring(1, Str.IndexOf(",", 1) - 1);
+            return Str.Substring(1, Str.IndexOf(";", 1) - 1);
         }
 
         private void WikiToData(string WikiData)
@@ -1211,39 +1213,39 @@ namespace AsteriskTCGMaker3.ViewModels
              */
 
             RubyFontSize = double.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             CardNameFontSize = double.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             EffectFontSize = double.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             FlavorFontSize = double.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             TextBoxSize = double.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
 
             Beta = bool.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             Burst = bool.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             ReAction = bool.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             SealedTrigger = bool.Parse(getNextElement(WikiData));
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             SpellStep = bool.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
             RubyColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             NameColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             EffectTextColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             FlavorTextColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             MainColorColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             SubColorColor = getNextElement(WikiData);
-            WikiData = WikiData.Substring(WikiData.IndexOf(",", 1), WikiData.Length - (WikiData.IndexOf(",", 1)));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             CardRuby = getNextElement(WikiData);
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
