@@ -8,13 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="LivetCask" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="ReachFramework" />
+    <Reference Include="System.Printing" />
     <Reference Include="Xceed.Wpf.Toolkit">
       <HintPath>..\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\PrintWindow.xaml.cs">
+      <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\PrintWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

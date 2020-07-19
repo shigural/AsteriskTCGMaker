@@ -98,10 +98,7 @@ namespace AsteriskTCGMaker3.Views
 
         private void OutputButton_Click(object sender, RoutedEventArgs e)
         {
-            this.StatusText.Text = "画像出力中....";
             doEvent();
-
-
 
             var inputPath = Singleton.Instance.Path + "Result/Input.png";
             var outputName = this.CardNameTextBox.Text;
@@ -128,7 +125,6 @@ namespace AsteriskTCGMaker3.Views
                 MessageBox.Show("ファイル保存に失敗しました。\n他のアプリケーションで画像ファイルを開いていないか確認してください。", "画像出力エラー", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-            this.StatusText.Text = "";
         }
 
 
