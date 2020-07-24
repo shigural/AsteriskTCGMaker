@@ -312,8 +312,8 @@ namespace AsteriskTCGMaker3.ViewModels
                 _cardList = new ObservableCollection<CardData>(
                 _cardList.OrderBy(elm => elm.CostColor1)
                 .ThenByDescending(elm => elm.SteraSpell)
-                .ThenBy(elm => elm.CostMana1 + elm.CostMana2)
-                .ThenBy(elm => elm.Power));
+                .ThenByDescending(elm => elm.CostMana1 + elm.CostMana2)
+                .ThenByDescending(elm => elm.Power));
             }
             catch (Exception e)
             {
