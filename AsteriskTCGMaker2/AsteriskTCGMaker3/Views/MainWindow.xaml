@@ -151,7 +151,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.00β4" />
+                <TextBlock Text="ver3.00β5" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -211,11 +211,12 @@
                         </StackPanel>
 
 
-                        <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="135" Height="120" Width="30">
+                        <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="111" Height="144" Width="30">
                             <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage3" Stretch="Fill" Source="Resources/sealedtrigger.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SealedTrigger, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/keep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
                         </StackPanel>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="100"
@@ -299,7 +300,7 @@
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="80"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
@@ -314,7 +315,7 @@
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -455,6 +456,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -464,6 +466,7 @@
                             <CheckBox x:Name="reAction"  Content="リアクション"  Grid.Row="0" Grid.Column="1" IsChecked="{Binding  SelectedCard.ReAction}"/>
                             <CheckBox x:Name="sealdtrigger"  Content="ダメージトリガー"  Grid.Row="1" Grid.Column="0"  IsChecked="{Binding  SelectedCard.SealedTrigger}"/>
                             <CheckBox  x:Name="spellstep" Content="スペルステップ"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding  SelectedCard.SpellStep}"/>
+                            <CheckBox  x:Name="keepspell" Content="永続スペル"  Grid.Row="2" Grid.Column="0" IsChecked="{Binding  SelectedCard.KeepSpell}"/>
                         </Grid>
 
                     </StackPanel>

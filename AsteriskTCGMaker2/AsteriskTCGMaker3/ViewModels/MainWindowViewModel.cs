@@ -404,7 +404,7 @@ namespace AsteriskTCGMaker3.ViewModels
                     {
                         _cardList.Add(new CardData(fileName));
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
 
                     }
@@ -584,6 +584,7 @@ namespace AsteriskTCGMaker3.ViewModels
             var text = "";
             if (WithInf)
             {
+                text += ";" + SelectedCard.Version.ToString();
                 text += ";" + SelectedCard.RubyFontSize.ToString();
                 text += ";" + SelectedCard.CardNameFontSize.ToString();
                 text += ";" + SelectedCard.EffectFontSize.ToString();
@@ -594,6 +595,7 @@ namespace AsteriskTCGMaker3.ViewModels
                 text += ";" + SelectedCard.ReAction.ToString();
                 text += ";" + SelectedCard.SealedTrigger.ToString();
                 text += ";" + SelectedCard.SpellStep.ToString();
+                text += ";" + SelectedCard.KeepSpell.ToString();
                 text += ";" + "\r\n";
                 text += ";" + SelectedCard.RubyColor.ToString();
                 text += ";" + SelectedCard.NameColor.ToString();
@@ -1121,6 +1123,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public string Illustration { get; set; }
 
         //内部データ
+        public int Version { get; set; } = 3004;
         public string CardRuby { get; set; } = "";
         public double EffectFontSize { get; set; } = 8;
         public double FlavorFontSize { get; set; } = 6;
@@ -1128,6 +1131,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public bool ReAction { get; set; }
         public bool SealedTrigger { get; set; }
         public bool SpellStep { get; set; }
+        public bool KeepSpell { get; set; }
         public double TextBoxSize { get; set; } = 50;
         public bool Beta { get; set; } = false;
         public string ImageSource { get; set; }
@@ -1262,6 +1266,8 @@ namespace AsteriskTCGMaker3.ViewModels
             Illustration:イラスト
              */
 
+            Version = int.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             RubyFontSize = double.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             CardNameFontSize = double.Parse(getNextElement(WikiData));
@@ -1282,6 +1288,8 @@ namespace AsteriskTCGMaker3.ViewModels
             SealedTrigger = bool.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             SpellStep = bool.Parse(getNextElement(WikiData));
+            WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+            KeepSpell = bool.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
             RubyColor = getNextElement(WikiData);

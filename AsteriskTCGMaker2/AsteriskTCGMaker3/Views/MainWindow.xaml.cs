@@ -50,6 +50,7 @@ namespace AsteriskTCGMaker3.Views
             CardTypeImage2.Source = new BitmapImage(new Uri(path + "Resources/re-action.png", UriKind.Absolute));
             CardTypeImage3.Source = new BitmapImage(new Uri(path + "Resources/sealedtrigger.png", UriKind.Absolute));
             CardTypeImage4.Source = new BitmapImage(new Uri(path + "Resources/spellstep.png", UriKind.Absolute));
+            CardTypeImage5.Source = new BitmapImage(new Uri(path + "Resources/keep.png", UriKind.Absolute));
         }
 
         //指定要素を画像として保存する
