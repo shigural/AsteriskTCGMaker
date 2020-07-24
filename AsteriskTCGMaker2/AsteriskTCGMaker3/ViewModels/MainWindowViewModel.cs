@@ -873,6 +873,22 @@ namespace AsteriskTCGMaker3.ViewModels
     }
 
 
+    /// <summary>
+    /// 種族がからの場合はハイフンにするコンバーター
+    /// </summary>
+    public class KindConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value.ToString() == "") return "-";
+            return value.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
 
 
     public class BoolVisibillityConverter : IValueConverter
@@ -1135,7 +1151,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public double TextBoxSize { get; set; } = 50;
         public bool Beta { get; set; } = false;
         public string ImageSource { get; set; }
-        public double RubyFontSize { get; set; } = 3;
+        public double RubyFontSize { get; set; } = 4;
         public double CardNameFontSize { get; set; } = 10;
 
         public string RubyColor { get; set; } = "white";
