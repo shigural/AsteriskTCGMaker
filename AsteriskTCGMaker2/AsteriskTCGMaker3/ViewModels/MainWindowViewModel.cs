@@ -56,16 +56,6 @@ namespace AsteriskTCGMaker3.ViewModels
 
         public string CreateDeleateCardName { get; set; } = "CardName";
 
-        private double _cardNameFontSize = 10;
-        public double CardNameFontSize
-        {
-            get { return this._cardNameFontSize; }
-            set
-            {
-                if (value >= 100) return; this._cardNameFontSize = value;
-                OnPropertyChanged(nameof(CardNameFontSize));
-            }
-        }
         private string _statusText = "";
         public string StatusText
         {
@@ -79,96 +69,6 @@ namespace AsteriskTCGMaker3.ViewModels
                 OnPropertyChanged(nameof(StatusText));
             }
         }
-
-        private byte _cardRubyFontSize = 4;
-        public byte CardRubyFontSize
-        {
-            get { return this._cardRubyFontSize; }
-            set
-            {
-                if (value >= 100) return; this._cardRubyFontSize = value;
-                OnPropertyChanged(nameof(CardRubyFontSize));
-            }
-        }
-
-        private double _cardEffectFontSize = 8;
-        public double CardEffectFontSize
-        {
-            get { return this._cardEffectFontSize; }
-            set
-            {
-                if (value >= 100) return; this._cardEffectFontSize = value;
-                OnPropertyChanged(nameof(CardEffectFontSize));
-            }
-        }
-
-        private int _cardEffectHeight = 45;
-        public int CardEffectHeight
-        {
-            get { return this._cardEffectHeight; }
-            set
-            {
-                this._cardEffectHeight = value;
-                OnPropertyChanged(nameof(CardEffectHeight));
-            }
-        }
-
-        private string _cardRubyColor = "White";
-        public string CardRubyColor
-        {
-            get { return this._cardRubyColor; }
-            set
-            {
-                this._cardRubyColor = value;
-                OnPropertyChanged(nameof(CardRubyColor));
-            }
-        }
-
-        private string _cardNameColor = "White";
-        public string CardNameColor
-        {
-            get { return this._cardNameColor; }
-            set
-            {
-                this._cardNameColor = value;
-                OnPropertyChanged(nameof(CardNameColor));
-            }
-        }
-
-        private string _cardEffectColor = "Black";
-        public string CardEffectColor
-        {
-            get { return this._cardEffectColor; }
-            set
-            {
-                this._cardEffectColor = value;
-                OnPropertyChanged(nameof(CardEffectColor));
-            }
-
-        }
-
-        private string _cardManaColor = "White";
-        public string CardManaColor
-        {
-            get { return this._cardManaColor; }
-            set
-            {
-                this._cardManaColor = value;
-                OnPropertyChanged(nameof(CardManaColor));
-            }
-        }
-
-        private string _cardSubManaColor = "White";
-        public string CardSubManaColor
-        {
-            get { return this._cardSubManaColor; }
-            set
-            {
-                this._cardSubManaColor = value;
-                OnPropertyChanged(nameof(CardSubManaColor));
-            }
-        }
-
 
         public string CardEffect
         {
@@ -564,7 +464,7 @@ namespace AsteriskTCGMaker3.ViewModels
 
         }
 
-        private string getOutputText(bool WithInf)
+        private string getOutputText(bool WithInf, bool clipMode)
         {
             /*
                   ,フォントサイズルビ,カード名,効果,フレーバーテキスト,テキストサイズ,β版か,バースト有無,リアクション有無,シールドトリガー有無,スペルステップ有無,
@@ -633,7 +533,24 @@ namespace AsteriskTCGMaker3.ViewModels
             }
 
             text += "\r\n\r\n";
-            text += SelectedCard.CardEffect.ToString() + "\r\n\r\n" + SelectedCard.FlavorText.ToString() + "\r\n\r\n" + SelectedCard.Illustration.ToString();
+            if (clipMode == true)
+            {
+                text = Regex.Replace(SelectedCard.CardEffect.ToString(), "\n　", "\n");
+                text += "\r\n\r\n";
+                var flavor = SelectedCard.FlavorText.ToString();
+                while (flavor.Substring(0, 1) == "　" || flavor.Substring(0, 1) == " ")
+                {
+                    flavor = flavor.Substring(1, flavor.Length - 1);
+                }
+                text += flavor;
+                text += "\r\n\r\n";
+                text += SelectedCard.Illustration.ToString();
+            }
+            else
+            {
+                text += SelectedCard.CardEffect.ToString() + "\r\n\r\n" + SelectedCard.FlavorText.ToString() + "\r\n\r\n" + SelectedCard.Illustration.ToString();
+            }
+
             return text;
         }
 
@@ -667,7 +584,7 @@ namespace AsteriskTCGMaker3.ViewModels
         {
             try
             {
-                File.WriteAllText(Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg", getOutputText(true));
+                File.WriteAllText(Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg", getOutputText(true, false));
 
                 StatusText = "セーブしました（" + Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg）";
             }
@@ -679,10 +596,26 @@ namespace AsteriskTCGMaker3.ViewModels
 
             try
             {
-                if (File.Exists(SelectedCard.ImageSource)) File.Copy(SelectedCard.ImageSource, Singleton.Instance.CardPath + SelectedCard.CardName + ".png");
+                if (File.Exists(SelectedCard.ImageSource))
+                {
+                    if (File.Exists(Singleton.Instance.CardPath + SelectedCard.CardName + ".png"))
+                    {
+                        FileInfo file = new FileInfo(Singleton.Instance.CardPath + SelectedCard.CardName + ".png");
+
+                        if ((file.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                        {
+                            file.Attributes = FileAttributes.Normal;
+                        }
+
+                        file.Delete();
+
+                    }
+                    File.Copy(SelectedCard.ImageSource, Singleton.Instance.CardPath + SelectedCard.CardName + ".png");
+                }
             }
             catch (Exception e)
             {
+                StatusText = "画像のみセーブに失敗しました（" + SelectedCard.ImageSource + "）";
             }
 
         }
@@ -789,7 +722,7 @@ namespace AsteriskTCGMaker3.ViewModels
                 {
                     this._copyToClipBoardCommand = new ViewModelCommand(() =>
                     {
-                        Clipboard.SetText(getOutputText(false));
+                        Clipboard.SetText(getOutputText(false, true));
                         StatusText = "クリップボードにコピーしました";
                     });
                 }
