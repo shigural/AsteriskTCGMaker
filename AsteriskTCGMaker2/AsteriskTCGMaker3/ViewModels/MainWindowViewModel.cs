@@ -255,6 +255,26 @@ namespace AsteriskTCGMaker3.ViewModels
             flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
             flavorRuns.FontSize = flavorFontSize;
 
+            //指定の文字を指定のアイコンに変換する
+            effectText = Regex.Replace(effectText, @"\[DT\]", "@DT@");
+            effectText = Regex.Replace(effectText, @"\[常\]", "@jo@");
+            effectText = Regex.Replace(effectText, @"\[起\]", "@ki@");
+            effectText = Regex.Replace(effectText, @"\[自\]", "@ji@");
+            effectText = Regex.Replace(effectText, @"\[出\]", "@syu@");
+            effectText = Regex.Replace(effectText, @"\(黒\)", "@K@");
+            effectText = Regex.Replace(effectText, @"\(青\)", "@B@");
+            effectText = Regex.Replace(effectText, @"\(赤\)", "@R@");
+            effectText = Regex.Replace(effectText, @"\(黄\)", "@Y@");
+            effectText = Regex.Replace(effectText, @"\(白\)", "@W@");
+            effectText = Regex.Replace(effectText, @"\(緑\)", "@G@");
+            effectText = Regex.Replace(effectText, @"\(無\)", "@N@");
+
+            //機種依存文字を利用しても、見栄えを重視する
+            effectText = Regex.Replace(effectText, "□", "◻");
+
+
+
+            //@でかこまれたものをオブジェクトにする
             if (CountChar(effectText, '@') % 2 == 0)//@が偶数個含まれる場合
             {
                 var loopMode = 0;
@@ -380,13 +400,26 @@ namespace AsteriskTCGMaker3.ViewModels
             {
                 foreach (string fileName in Directory.GetFiles(Singleton.Instance.CardPath, "*.atcg"))
                 {
-                    _cardList.Add(new CardData(fileName));
+                    try
+                    {
+                        _cardList.Add(new CardData(fileName));
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
                 }
+                _cardList = new ObservableCollection<CardData>(
+                _cardList.OrderBy(elm => elm.CostColor1)
+                .ThenByDescending(elm => elm.SteraSpell)
+                .ThenBy(elm => elm.CostMana1 + elm.CostMana2)
+                .ThenBy(elm => elm.Power));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+
             OnPropertyChanged(nameof(CardList));
         }
 
@@ -449,6 +482,24 @@ namespace AsteriskTCGMaker3.ViewModels
                     });
                 }
                 return this._createNewCardCommand;
+
+            }
+
+        }
+
+        private ViewModelCommand _reloadListCommand;
+        public ViewModelCommand ReloadListCommand
+        {
+            get
+            {
+                if (this._reloadListCommand == null)
+                {
+                    this._reloadListCommand = new ViewModelCommand(() =>
+                    {
+                        SetCardList();
+                    });
+                }
+                return this._reloadListCommand;
 
             }
 
@@ -600,7 +651,6 @@ namespace AsteriskTCGMaker3.ViewModels
                         else
                         {
                             Save();
-                            SetCardList();
                         }
 
 
@@ -1179,8 +1229,8 @@ namespace AsteriskTCGMaker3.ViewModels
             BR = "1";
             SpellType = "永続スペル";
             FlavorText = "FlavorText";
-            Illustration = "Illustration:翡翠 蒼輝";
-            CardRuby = "Ruby";
+            Illustration = "翡翠 蒼輝";
+            CardRuby = "";
         }
 
         public CardData(string filePath)
