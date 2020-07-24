@@ -624,7 +624,7 @@ namespace AsteriskTCGMaker3.ViewModels
             }
             catch (Exception e)
             {
-                StatusText = "画像のみセーブに失敗しました（" + SelectedCard.ImageSource + "）";
+                //StatusText = "画像のみセーブに失敗しました（" + SelectedCard.ImageSource + "）";
             }
 
         }
@@ -1093,6 +1093,20 @@ namespace AsteriskTCGMaker3.ViewModels
         public double TextBoxSize { get; set; } = 50;
         public bool Beta { get; set; } = false;
         public string ImageSource { get; set; }
+        public BitmapImage Source
+        {
+            get
+            {
+                BitmapImage bmpImage = new BitmapImage();
+                FileStream stream = File.OpenRead(ImageSource);
+                bmpImage.BeginInit();
+                bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmpImage.StreamSource = stream;
+                bmpImage.EndInit();
+                stream.Close();
+                return bmpImage;
+            }
+        }
         public double RubyFontSize { get; set; } = 4;
         public double CardNameFontSize { get; set; } = 10;
 
