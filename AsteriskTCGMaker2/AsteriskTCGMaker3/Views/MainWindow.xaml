@@ -152,7 +152,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.00β9" />
+                <TextBlock Text="ver3.00β10" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -351,8 +351,14 @@
                     <!--効果-->
                     <TextBlock Grid.Row="5" Grid.Column="1" Text="効果"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="CardEffectTextBox" Text="{Binding CardEffect, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="12" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="100" Margin="0,0,0,15" Grid.RowSpan="2"  TabIndex="3"/>
+
+                    <TextBox  x:Name="CardEffectTextBox"  Grid.Row="6" Grid.Column="1" Text="{Binding CardEffect, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"
+                                 FontSize="12" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="85" Margin="0,0,0,0" Grid.RowSpan="2"  TabIndex="3" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.VerticalScrollBarVisibility="Auto"
+         ScrollViewer.CanContentScroll="True"
+                              />
+
                     <xctk:DoubleUpDown Name="CardEffectFontSizeBox" FormatString="F2" Increment="0.1" Text="{Binding SelectedCard.EffectFontSize, UpdateSourceTrigger=PropertyChanged}" 
                                        Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Height="24" Margin="0,18"  TabIndex="202"  Minimum="0.1"/>
 

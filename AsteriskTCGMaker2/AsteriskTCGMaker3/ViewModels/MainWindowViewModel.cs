@@ -531,6 +531,15 @@ namespace AsteriskTCGMaker3.ViewModels
             {
                 text += SelectedCard.SpellType;
             }
+            if (clipMode)
+            {
+                if (SelectedCard.Burst || SelectedCard.ReAction || SelectedCard.SealedTrigger || SelectedCard.SpellStep || SelectedCard.KeepSpell) text += "\r\n";
+                if (SelectedCard.Burst) text += "【バースト】";
+                if (SelectedCard.ReAction) text += "【リアクション】";
+                if (SelectedCard.SealedTrigger) text += "【ダメージトリガー】";
+                if (SelectedCard.SpellStep) text += "【スペルステップ】";
+                if (SelectedCard.KeepSpell) text += "【永続スペル】";
+            }
 
             text += "\r\n\r\n";
             if (clipMode == true)
@@ -1163,7 +1172,7 @@ namespace AsteriskTCGMaker3.ViewModels
             }
             text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
             //イラスト
-            Illustration = Regex.Replace(text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4)),"Illustraion:","");
+            Illustration = Regex.Replace(text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4)), "Illustraion:", "");
         }
 
         public CardData()
