@@ -525,15 +525,11 @@ namespace AsteriskTCGMaker3.ViewModels
             else text += "　" + SelectedCard.CostColor2 + ":" + SelectedCard.CostMana2 + "〕\r\n";
             if (SelectedCard.SteraSpell == "ステラ")
             {
-                text += "パワー:" + SelectedCard.Power.ToString() + "　BR:" + SelectedCard.BR.ToString();
+                text += "パワー:" + SelectedCard.Power.ToString() + "　BR:" + SelectedCard.BR.ToString() + "\r\n"; ;
             }
-            else
-            {
-                text += SelectedCard.SpellType;
-            }
+
             if (clipMode)
             {
-                if (SelectedCard.Burst || SelectedCard.ReAction || SelectedCard.SealedTrigger || SelectedCard.SpellStep || SelectedCard.KeepSpell) text += "\r\n";
                 if (SelectedCard.Burst) text += "【バースト】";
                 if (SelectedCard.ReAction) text += "【リアクション】";
                 if (SelectedCard.SealedTrigger) text += "【ダメージトリガー】";
@@ -547,7 +543,7 @@ namespace AsteriskTCGMaker3.ViewModels
                 text += Regex.Replace(SelectedCard.CardEffect.ToString(), "\n　", "\n");
                 text += "\r\n\r\n";
                 var flavor = SelectedCard.FlavorText.ToString();
-                while (flavor.Substring(0, 1) == "　" || flavor.Substring(0, 1) == " ")
+                while (flavor.Length >= 1 && (flavor.Substring(0, 1) == "　" || flavor.Substring(0, 1) == " "))
                 {
                     flavor = flavor.Substring(1, flavor.Length - 1);
                 }
@@ -607,19 +603,7 @@ namespace AsteriskTCGMaker3.ViewModels
             {
                 if (File.Exists(SelectedCard.ImageSource))
                 {
-                    if (File.Exists(Singleton.Instance.CardPath + SelectedCard.CardName + ".png"))
-                    {
-                        FileInfo file = new FileInfo(Singleton.Instance.CardPath + SelectedCard.CardName + ".png");
-
-                        if ((file.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-                        {
-                            file.Attributes = FileAttributes.Normal;
-                        }
-
-                        file.Delete();
-
-                    }
-                    File.Copy(SelectedCard.ImageSource, Singleton.Instance.CardPath + SelectedCard.CardName + ".png");
+                    File.Copy(SelectedCard.ImageSource, Singleton.Instance.CardPath + SelectedCard.CardName + ".png", true);
                 }
             }
             catch (Exception e)
@@ -1097,6 +1081,7 @@ namespace AsteriskTCGMaker3.ViewModels
         {
             get
             {
+                if (ImageSource == null) return null;
                 BitmapImage bmpImage = new BitmapImage();
                 FileStream stream = File.OpenRead(ImageSource);
                 bmpImage.BeginInit();
@@ -1119,6 +1104,11 @@ namespace AsteriskTCGMaker3.ViewModels
 
         public void TextPaste(string text)
         {
+            Burst = false;
+            ReAction = false;
+            SealedTrigger = false;
+            SpellStep = false;
+            KeepSpell = false;
             SetInf(text);
             if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
         }
@@ -1159,6 +1149,15 @@ namespace AsteriskTCGMaker3.ViewModels
                 CostMana2 = text.Substring(0, text.IndexOf("〕"));
             }
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
+            //□□□□□□□□□□□□□□□
+            var spelltype = text.Substring(0, text.IndexOf("\r\n"));//要修正
+            SpellType = spelltype;
+            if (spelltype.IndexOf("【バースト】") >= 0) Burst = true;
+            if (spelltype.IndexOf("【リアクション】") >= 0) ReAction = true;
+            if (spelltype.IndexOf("【ダメージトリガー】") >= 0) SealedTrigger = true;
+            if (spelltype.IndexOf("【スペルステップ】") >= 0) SpellStep = true;
+            if (spelltype.IndexOf("【永続スペル】") >= 0) KeepSpell = true;
+            //□□□□□□□□□□□□□□□
 
             //[Power；パワー量 BR:BR量]/スペル種類
             switch (SteraSpell)
@@ -1176,7 +1175,6 @@ namespace AsteriskTCGMaker3.ViewModels
                     break;
 
                 case "スペル":
-                    SpellType = text.Substring(0, text.IndexOf("\r\n"));
                     text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
                     //効果
                     CardEffect = text.Substring(0, text.IndexOf("\r\n\r\n"));

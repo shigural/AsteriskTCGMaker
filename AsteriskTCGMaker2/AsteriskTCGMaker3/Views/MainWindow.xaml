@@ -152,7 +152,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.00β11" />
+                <TextBlock Text="ver3.00β12" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
