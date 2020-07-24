@@ -535,7 +535,7 @@ namespace AsteriskTCGMaker3.ViewModels
             text += "\r\n\r\n";
             if (clipMode == true)
             {
-                text = Regex.Replace(SelectedCard.CardEffect.ToString(), "\n　", "\n");
+                text += Regex.Replace(SelectedCard.CardEffect.ToString(), "\n　", "\n");
                 text += "\r\n\r\n";
                 var flavor = SelectedCard.FlavorText.ToString();
                 while (flavor.Substring(0, 1) == "　" || flavor.Substring(0, 1) == " ")
@@ -543,7 +543,7 @@ namespace AsteriskTCGMaker3.ViewModels
                     flavor = flavor.Substring(1, flavor.Length - 1);
                 }
                 text += flavor;
-                text += "\r\n\r\n";
+                text += "\r\n\r\nIllustraion:";
                 text += SelectedCard.Illustration.ToString();
             }
             else
@@ -1163,8 +1163,7 @@ namespace AsteriskTCGMaker3.ViewModels
             }
             text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
             //イラスト
-            Illustration = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
-
+            Illustration = Regex.Replace(text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4)),"Illustraion:","");
         }
 
         public CardData()
