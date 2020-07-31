@@ -1065,7 +1065,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public string Illustration { get; set; }
 
         //内部データ
-        public int Version { get; set; } = 3004;
+        public int Version { get; set; } = 3000;
         public string CardRuby { get; set; } = "";
         public double EffectFontSize { get; set; } = 8;
         public double FlavorFontSize { get; set; } = 6;
