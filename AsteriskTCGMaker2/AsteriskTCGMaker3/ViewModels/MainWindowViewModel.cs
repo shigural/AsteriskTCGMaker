@@ -280,13 +280,14 @@ namespace AsteriskTCGMaker3.ViewModels
 
 
 
-        private ObservableCollection<CardData> _cardList = new ObservableCollection<CardData>();
+        private ObservableCollection<CardData> _cardList;
         public ObservableCollection<CardData> CardList
         {
             get
             {
-                if (_cardList.Count == 0)
+                if (_cardList == null)
                 {
+                    _cardList = new ObservableCollection<CardData>();
                     SetCardList();
                 }
                 return _cardList;
@@ -333,15 +334,32 @@ namespace AsteriskTCGMaker3.ViewModels
             }
             set
             {
-                _selectedCard = value;
+                if (value != _selectedCard)
+                {
+                    _selectedCard = value;
+                }
                 this.OnPropertyChanged(nameof(SelectedCard));
                 this.OnPropertyChanged(nameof(CardEffect));
                 this.OnPropertyChanged(nameof(FlavorText));
                 this.OnPropertyChanged(nameof(EffectFontSize));
                 this.OnPropertyChanged(nameof(FlavorFontSize));
                 this.OnPropertyChanged(nameof(EffectDocument));
+
             }
         }
+
+        private int _selectedNo = 0;
+        public int SelectedNo
+        {
+            get { return _selectedNo; }
+            set
+            {
+                _selectedNo = value;
+                if (value >= 0) SelectedCard = CardList[value];
+                OnPropertyChanged(nameof(SelectedNo));
+            }
+        }
+
 
         private ViewModelCommand _graphicInsertCommand;
         public ViewModelCommand GraphicInsertCommand
@@ -373,11 +391,18 @@ namespace AsteriskTCGMaker3.ViewModels
                         }
                         else
                         {
-                            SelectedCard = new CardData();
-                            SelectedCard.CardName = CreateDeleateCardName;
-                            Save();
+                            var card = new CardData();
+                            card.CardName = CreateDeleateCardName;
+                            SelectedCard = card;
+                            Save(SelectedCard);
                             SetCardList();
-                            SelectedCard = new CardData();
+
+                            for (var i = 0; i < CardList.Count; i++)
+                            {
+                                if (CardList[i].CardName != card.CardName) continue;
+                                SelectedNo = i;
+                                break;
+                            }
                         }
                     });
                 }
@@ -535,8 +560,8 @@ namespace AsteriskTCGMaker3.ViewModels
                 if (SelectedCard.SealedTrigger) text += "【ダメージトリガー】";
                 if (SelectedCard.SpellStep) text += "【スペルステップ】";
                 if (SelectedCard.KeepSpell) text += "【永続スペル】";
+                if (SelectedCard.Burst || SelectedCard.ReAction || SelectedCard.SealedTrigger || SelectedCard.SpellStep || SelectedCard.KeepSpell) text += "\r\n";
             }
-
             text += "\r\n\r\n";
             if (clipMode == true)
             {
@@ -570,11 +595,11 @@ namespace AsteriskTCGMaker3.ViewModels
                     {
                         if (File.Exists(Singleton.Instance.CardPath + "\\" + SelectedCard.CardName + ".atcg"))
                         {
-                            Save();
+                            Save(SelectedCard);
                         }
                         else
                         {
-                            Save();
+                            Save(SelectedCard);
                         }
 
 
@@ -585,25 +610,25 @@ namespace AsteriskTCGMaker3.ViewModels
             }
 
         }
-        private void Save()
+        private void Save(CardData card)
         {
             try
             {
-                File.WriteAllText(Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg", getOutputText(true, false));
+                File.WriteAllText(Singleton.Instance.CardPath + card.CardName + ".atcg", getOutputText(true, false));
 
-                StatusText = "セーブしました（" + Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg）";
+                StatusText = "セーブしました（" + Singleton.Instance.CardPath + card.CardName + ".atcg）";
             }
             catch (Exception e)
             {
-                StatusText = "セーブに失敗しました（" + Singleton.Instance.CardPath + SelectedCard.CardName + ".atcg/" + SelectedCard.ImageSource + "）";
+                StatusText = "セーブに失敗しました（" + Singleton.Instance.CardPath + card.CardName + ".atcg/" + SelectedCard.ImageSource + "）";
             }
 
 
             try
             {
-                if (File.Exists(SelectedCard.ImageSource))
+                if (File.Exists(card.ImageSource))
                 {
-                    File.Copy(SelectedCard.ImageSource, Singleton.Instance.CardPath + SelectedCard.CardName + ".png", true);
+                    File.Copy(card.ImageSource, Singleton.Instance.CardPath + card.CardName + ".png", true);
                 }
             }
             catch (Exception e)
@@ -1134,7 +1159,7 @@ namespace AsteriskTCGMaker3.ViewModels
             text = text.Substring(text.IndexOf("〔") + 1, text.Length - (text.IndexOf("〔") + 1));
             CostColor1 = text.Substring(0, text.IndexOf(":"));
             text = text.Substring(text.IndexOf(":") + 1, text.Length - (text.IndexOf(":") + 1));
-            if (text.IndexOf("　") == -1)
+            if (text.Substring(0, text.IndexOf("〕")).IndexOf("　") == -1)
             {
                 CostMana1 = text.Substring(0, text.IndexOf("〕"));
                 CostColor2 = "無";
@@ -1149,39 +1174,35 @@ namespace AsteriskTCGMaker3.ViewModels
                 CostMana2 = text.Substring(0, text.IndexOf("〕"));
             }
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
-            //□□□□□□□□□□□□□□□
-            var spelltype = text.Substring(0, text.IndexOf("\r\n"));//要修正
+
+            //[Power；パワー量 BR:BR量]（ステラのみ）
+            if (SteraSpell == "ステラ")
+            {
+                text = text.Substring(text.IndexOf(":") + 1, text.Length - (text.IndexOf(":") + 1));
+                Power = text.Substring(0, text.IndexOf("　"));
+                text = text.Substring(text.IndexOf(":") + 1, text.Length - (text.IndexOf(":") + 1));
+                BR = text.Substring(0, text.IndexOf("\r\n"));
+                text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
+            }
+
+
+            //【永続スペル】などの表記+二回改行
+            var spelltype = text.Substring(0, text.IndexOf("\r\n"));
             SpellType = spelltype;
             if (spelltype.IndexOf("【バースト】") >= 0) Burst = true;
             if (spelltype.IndexOf("【リアクション】") >= 0) ReAction = true;
             if (spelltype.IndexOf("【ダメージトリガー】") >= 0) SealedTrigger = true;
             if (spelltype.IndexOf("【スペルステップ】") >= 0) SpellStep = true;
             if (spelltype.IndexOf("【永続スペル】") >= 0) KeepSpell = true;
-            //□□□□□□□□□□□□□□□
 
-            //[Power；パワー量 BR:BR量]/スペル種類
-            switch (SteraSpell)
-            {
-                case "ステラ":
-                    text = text.Substring(text.IndexOf(":") + 1, text.Length - (text.IndexOf(":") + 1));
-                    Power = text.Substring(0, text.IndexOf("　"));
-                    text = text.Substring(text.IndexOf(":") + 1, text.Length - (text.IndexOf(":") + 1));
-                    BR = text.Substring(0, text.IndexOf("\r\n"));
-                    text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
-                    //効果
-                    CardEffect = text.Substring(0, text.IndexOf("\r\n\r\n"));
-                    //フレーバーテキスト
-                    FlavorText = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.LastIndexOf("\r\n\r\n") - (text.IndexOf("\r\n\r\n") + 4));
-                    break;
 
-                case "スペル":
-                    text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
-                    //効果
-                    CardEffect = text.Substring(0, text.IndexOf("\r\n\r\n"));
-                    //フレーバーテキスト
-                    FlavorText = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.LastIndexOf("\r\n\r\n") - (text.IndexOf("\r\n\r\n") + 4));
-                    break;
-            }
+            text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
+            //効果
+            CardEffect = text.Substring(0, text.IndexOf("\r\n\r\n"));
+            //フレーバーテキスト
+            FlavorText = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.LastIndexOf("\r\n\r\n") - (text.IndexOf("\r\n\r\n") + 4));
+
+
             text = text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4));
             //イラスト
             Illustration = Regex.Replace(text.Substring(text.IndexOf("\r\n\r\n") + 4, text.Length - (text.IndexOf("\r\n\r\n") + 4)), "Illustraion:", "");
@@ -1189,20 +1210,20 @@ namespace AsteriskTCGMaker3.ViewModels
 
         public CardData()
         {
-            CardName = "Name";
-            CardEffect = "Effect";
-            SteraSpell = "ステラ";
-            Kind1 = "死神";
+            CardName = "";
+            CardEffect = "";
+            SteraSpell = "";
+            Kind1 = "";
             Kind2 = "";
             CostColor1 = "黒";
-            CostMana1 = "1";
+            CostMana1 = "";
             CostColor2 = "無";
-            CostMana2 = "5";
-            Power = "5000";
+            CostMana2 = "";
+            Power = "";
             BR = "1";
-            SpellType = "永続スペル";
-            FlavorText = "FlavorText";
-            Illustration = "翡翠 蒼輝";
+            SpellType = "";
+            FlavorText = "";
+            Illustration = "";
             CardRuby = "";
         }
 
