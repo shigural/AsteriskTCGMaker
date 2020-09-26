@@ -560,7 +560,7 @@ namespace AsteriskTCGMaker3.ViewModels
                 if (SelectedCard.SealedTrigger) text += "【ダメージトリガー】";
                 if (SelectedCard.SpellStep) text += "【スペルステップ】";
                 if (SelectedCard.KeepSpell) text += "【永続スペル】";
-                if (SelectedCard.Burst || SelectedCard.ReAction || SelectedCard.SealedTrigger || SelectedCard.SpellStep || SelectedCard.KeepSpell) text += "\r\n";
+                //if (SelectedCard.Burst || SelectedCard.ReAction || SelectedCard.SealedTrigger || SelectedCard.SpellStep || SelectedCard.KeepSpell) text += "\r\n";
             }
             text += "\r\n\r\n";
             if (clipMode == true)
