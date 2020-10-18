@@ -137,6 +137,60 @@ namespace AsteriskTCGMaker3.ViewModels
             return s.Length - s.Replace(c.ToString(), "").Length;
         }
 
+
+        private void createRunEffectText(Paragraph paragraph, string effectText, double effectFontSize)
+        {
+            //*でかこまれたものを太字にする
+            if (CountChar(effectText, '*') % 2 == 0)//偶数個含まれる場合
+            {
+                var loopMode = 0;
+                while (effectText != "")
+                {
+
+                    //*マークまで切り出す（存在しなければ最後まで）
+                    var atPlace = effectText.IndexOf("*");
+                    var str = "";
+                    if (atPlace >= 0)
+                    {
+                        str = effectText.Substring(0, atPlace);
+                        effectText = effectText.Substring(atPlace + 1, effectText.Length - atPlace - 1);
+                    }
+                    else
+                    {
+                        str = effectText;
+                        effectText = "";
+                    }
+
+                    var effectRuns = new Run();
+                    effectRuns.Text = str;
+                    effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                    effectRuns.FontSize = effectFontSize;
+
+                    if (loopMode == 0)
+                    {//通常のテキストに関する処理                       
+                        paragraph.Inlines.Add(effectRuns);
+                    }
+                    else
+                    {//太字にする部分
+                        paragraph.Inlines.Add(new Bold(effectRuns));
+                    }
+
+
+                    loopMode = (loopMode + 1) % 2;
+
+                }
+
+            }
+            else
+            {//奇数個含まれる場合
+                var effectRuns = new Run();
+                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                effectRuns.FontSize = effectFontSize;
+                paragraph.Inlines.Add(effectRuns);
+            }
+
+        }
+
         public FlowDocument createText()
         {
 
@@ -183,7 +237,7 @@ namespace AsteriskTCGMaker3.ViewModels
 
                     //@マークまで切り出す（存在しなければ最後まで）
                     var atPlace = effectText.IndexOf("@");
-                    var str = "";
+                    string str;
                     if (atPlace >= 0)
                     {
                         str = effectText.Substring(0, atPlace);
@@ -196,12 +250,7 @@ namespace AsteriskTCGMaker3.ViewModels
                     }
                     if (loopMode == 0)
                     {//通常のテキストに関する処理
-                     //Run情報を生成する
-                        var effectRuns = new Run();
-                        effectRuns.Text = str;
-                        effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-                        effectRuns.FontSize = effectFontSize;
-                        paragraph.Inlines.Add(effectRuns);
+                        createRunEffectText(paragraph, str, effectFontSize);
                     }
                     else
                     {//アイコンに関する処理
@@ -227,14 +276,11 @@ namespace AsteriskTCGMaker3.ViewModels
 
             }
             else
-            {//@が奇数個含まれる場合
-                var effectRuns = new Run();
-                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
-                effectRuns.FontSize = effectFontSize;
-
-                flavorRuns.Text = effectText;
-                paragraph.Inlines.Add(effectRuns);
+            {
+                createRunEffectText(paragraph, effectText, effectFontSize);
             }
+
+
 
             var gapRuns = new Run();
 
