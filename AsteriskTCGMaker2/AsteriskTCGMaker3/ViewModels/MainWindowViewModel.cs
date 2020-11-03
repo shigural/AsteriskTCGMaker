@@ -1191,8 +1191,8 @@ namespace AsteriskTCGMaker3.ViewModels
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
 
             //[色][ステラ/スペル]《種類1》《種類2》
-            MatchCollection matches1 = Regex.Matches(text, @"\[.*?\]");
-            MatchCollection matches2 = Regex.Matches(text, @"《.*?》");
+            MatchCollection matches1 = Regex.Matches(text.Substring(0,text.IndexOf("\r\n")), @"\[.*?\]");
+            MatchCollection matches2 = Regex.Matches(text.Substring(0,text.IndexOf("\r\n")), @"《.*?》");
             //Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
             SteraSpell = matches1[1].Value.Substring(1, matches1[1].Value.Length - 2);
             Kind1 = "";
