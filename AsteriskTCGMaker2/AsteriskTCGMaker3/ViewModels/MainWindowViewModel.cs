@@ -70,6 +70,22 @@ namespace AsteriskTCGMaker3.ViewModels
             }
         }
 
+
+        private string _filterCard="黒";
+        public string FilterCard
+        {
+            get
+            {
+                return _filterCard;
+            }
+            set
+            {
+                _filterCard = value;
+                SetCardList();
+            }
+        }
+
+
         public string CardEffect
         {
             get
@@ -358,9 +374,13 @@ namespace AsteriskTCGMaker3.ViewModels
                 }
                 _cardList = new ObservableCollection<CardData>(
                 _cardList.OrderBy(elm => elm.CostColor1)
-                .ThenByDescending(elm => elm.SteraSpell)
+                .ThenBy(elm => elm.SteraSpell)
                 .ThenByDescending(elm => elm.CostMana1 + elm.CostMana2)
                 .ThenByDescending(elm => elm.Power));
+                foreach (var item in _cardList.Where(elm => FilterCard.IndexOf(elm.CostColor1) == -1).ToList())
+                {
+                    _cardList.Remove(item);
+                }
             }
             catch (Exception e)
             {
@@ -1130,7 +1150,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public string CostColor2 { get; set; }
         public string CostMana2 { get; set; }
         public string Power { get; set; }
-        public string BR { get; set; } = "0";
+        public string BR { get; set; } = "1";
         public string SpellType { get; set; }
         public string FlavorText { get; set; }
         public string Illustration { get; set; }
@@ -1191,8 +1211,8 @@ namespace AsteriskTCGMaker3.ViewModels
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
 
             //[色][ステラ/スペル]《種類1》《種類2》
-            MatchCollection matches1 = Regex.Matches(text.Substring(0,text.IndexOf("\r\n")), @"\[.*?\]");
-            MatchCollection matches2 = Regex.Matches(text.Substring(0,text.IndexOf("\r\n")), @"《.*?》");
+            MatchCollection matches1 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"\[.*?\]");
+            MatchCollection matches2 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"《.*?》");
             //Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
             SteraSpell = matches1[1].Value.Substring(1, matches1[1].Value.Length - 2);
             Kind1 = "";
@@ -1262,7 +1282,7 @@ namespace AsteriskTCGMaker3.ViewModels
             Kind1 = "";
             Kind2 = "";
             CostColor1 = "黒";
-            CostMana1 = "";
+            CostMana1 = "1";
             CostColor2 = "無";
             CostMana2 = "";
             Power = "";

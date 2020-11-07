@@ -149,10 +149,10 @@
 
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Left">
-                <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.05" />
+                <TextBlock Text="ver3.06" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -161,7 +161,7 @@
         <Grid Background="Gray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="303" />
+                <ColumnDefinition Width="303"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -352,7 +352,7 @@
                     <TextBlock Grid.Row="5" Grid.Column="1" Text="効果"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
 
-                    <TextBox  x:Name="CardEffectTextBox"  Grid.Row="6" Grid.Column="1" Text="{Binding CardEffect, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"
+                    <TextBox  x:Name="CardEffectTextBox"  Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Text="{Binding CardEffect, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top"
                                  FontSize="12" Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True" Height="85" Margin="0,0,0,0" Grid.RowSpan="2"  TabIndex="3" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
          ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -508,12 +508,34 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="497" Margin="0,27,0,3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180"  FontSize="8" 
+                <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="497" Margin="0,57,0,3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180"  FontSize="8" 
                          ItemsSource="{Binding CardList}" SelectedIndex="{Binding SelectedNo,Mode=TwoWay}"     DisplayMemberPath="CardName"/>
                 <Button  Margin="10,0,5,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="リロード" Command="{Binding ReloadListCommand}"/>
                 <TextBox Margin="10,0,10,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CreateDeleateCardName}"/>
                 <Button  Margin="10,0,5,0" Grid.Row="3" Grid.Column="0"  Content="新規作成" Command="{Binding CreateNewCardCommand}"/>
                 <Button  Margin="5,0,10,0" Grid.Row="3" Grid.Column="1" Content="削除" Command="{Binding DeleteCardCommand}"/>
+
+
+                <Grid VerticalAlignment="Top" Margin="0,10" HorizontalAlignment="Center"  Grid.Column="0" Grid.ColumnSpan="2" Width="150" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <RadioButton Content="黒" Grid.Column="0"  Grid.Row="0" IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
+                    <RadioButton Content="青" Grid.Column="1"  Grid.Row="0"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
+                    <RadioButton Content="緑" Grid.Column="2"  Grid.Row="0"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
+
+                    <RadioButton Content="赤" Grid.Column="0"  Grid.Row="1"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
+                    <RadioButton Content="白" Grid.Column="1"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
+                    <RadioButton Content="黄" Grid.Column="2"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
+
+                </Grid>
+
 
             </Grid>
         </Grid>
