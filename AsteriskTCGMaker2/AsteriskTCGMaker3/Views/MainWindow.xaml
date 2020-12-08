@@ -525,6 +525,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <RadioButton Content="黒" Grid.Column="0"  Grid.Row="0" IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
                     <RadioButton Content="青" Grid.Column="1"  Grid.Row="0"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
@@ -533,7 +534,7 @@
                     <RadioButton Content="赤" Grid.Column="0"  Grid.Row="1"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
                     <RadioButton Content="白" Grid.Column="1"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
                     <RadioButton Content="黄" Grid.Column="2"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
-
+                   
                 </Grid>
 
 
