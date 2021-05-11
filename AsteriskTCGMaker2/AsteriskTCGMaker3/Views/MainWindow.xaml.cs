@@ -29,6 +29,8 @@ namespace AsteriskTCGMaker3.Views
             CardEffectImageUp.Source = new BitmapImage(new Uri(path + "Resources/TextBoxUp.png", UriKind.Absolute));
             CardEffectImageCenter.Source = new BitmapImage(new Uri(path + "Resources/TextBoxCenter.png", UriKind.Absolute));
             CardPowerImage.Source = new BitmapImage(new Uri(path + "Resources/PowerFlame.png", UriKind.Absolute));
+            CardKind1.Source = new BitmapImage(new Uri(path + "Resources/KindFrame.png", UriKind.Absolute));
+            CardKind2.Source = new BitmapImage(new Uri(path + "Resources/KindFrame.png", UriKind.Absolute));
             CardBreakImage1.Source = new BitmapImage(new Uri(path + "Resources/Break.png", UriKind.Absolute));
             CardBreakImage2.Source = new BitmapImage(new Uri(path + "Resources/Break.png", UriKind.Absolute));
             CardBreakImage3.Source = new BitmapImage(new Uri(path + "Resources/Break.png", UriKind.Absolute));

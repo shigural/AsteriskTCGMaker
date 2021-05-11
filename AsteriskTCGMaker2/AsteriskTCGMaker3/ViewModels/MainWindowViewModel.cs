@@ -968,12 +968,12 @@ namespace AsteriskTCGMaker3.ViewModels
     public class ColorToColor1SourceConverter : IValueConverter
     {
         private IDictionary<string, ImageSource> _color1SourceStera = new Dictionary<string, ImageSource>() {
-            {"黒",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_Black.png", UriKind.Absolute)) },
-            {"青",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_Blue.png", UriKind.Absolute))},
-            {"緑",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_Green.png", UriKind.Absolute))},
-            {"赤",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_Red.png", UriKind.Absolute))},
-            {"白",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_White.png", UriKind.Absolute))},
-            {"黄",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Main_Yellow.png", UriKind.Absolute))}
+            {"黒",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Black.png", UriKind.Absolute)) },
+            {"青",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Blue.png", UriKind.Absolute))},
+            {"緑",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Green.png", UriKind.Absolute))},
+            {"赤",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Red.png", UriKind.Absolute))},
+            {"白",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_White.png", UriKind.Absolute))},
+            {"黄",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Yellow.png", UriKind.Absolute))}
         };
         private IDictionary<string, ImageSource> _color1SourceSpell = new Dictionary<string, ImageSource>() {
             {"黒",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Only_Black.png", UriKind.Absolute)) },

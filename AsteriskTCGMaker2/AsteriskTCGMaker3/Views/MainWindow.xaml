@@ -88,7 +88,7 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="7"/>
+            <Setter Property="FontSize" Value="9"/>
             <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -100,7 +100,7 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
             <Setter Property="FontSize" Value="36"/>
-            <Setter Property="FontFamily" Value="Bahnschrift "/>
+            <Setter Property="FontFamily" Value="Arial "/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
@@ -111,7 +111,7 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
             <Setter Property="FontSize" Value="25"/>
-            <Setter Property="FontFamily" Value="Bahnschrift "/>
+            <Setter Property="FontFamily" Value="Arial "/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
@@ -179,8 +179,8 @@
                         <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Panel.ZIndex="-10" Margin="10" Width="220" Height="314"   HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
                         <Image  x:Name="CardFlame" Source="Resources/CardFlame.png" Panel.ZIndex="-5"  Width="240" Height="334" />
                         <Image  x:Name="CardSubImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor2, Converter={StaticResource ColorToColor2SourceConverter}}"  Width="115" Canvas.Left="12" Canvas.Bottom="250" Panel.ZIndex="0" />
-                        <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Width="292" Canvas.Left="-25" Canvas.Top="-20" Panel.ZIndex="5" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
-                        <Image   Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Width="292" Canvas.Left="-25" Canvas.Top="-20" Panel.ZIndex="5"  Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
+                        <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="5" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
+                        <Image   Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="5"  Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToTextBoxBottom}}" >
                             <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
                             <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="{Binding SelectedCard.TextBoxSize, Converter={StaticResource BoxSizeToBoxBottomConverter}}" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
@@ -196,6 +196,8 @@
 
                         </Canvas>
                         <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-28" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
+                        <Image  x:Name="CardKind1"  Stretch="Uniform" Source="Resources/KindFrame.png"  Width="55" Panel.ZIndex="16" Canvas.Left="55" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
+                        <Image  x:Name="CardKind2"  Stretch="Uniform" Source="Resources/KindFrame.png"  Width="55" Panel.ZIndex="17" Canvas.Left="12" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
                         <StackPanel x:Name="CardBreakUp" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="33" Height="18" Width="80" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
                             <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=5}"/>
                             <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=4}"/>
@@ -221,24 +223,24 @@
                         </StackPanel>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="100"
-                                       Canvas.Left="64" Canvas.Bottom="281"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
+                                       Canvas.Left="54" Canvas.Bottom="293"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
                                  Background="Transparent" BorderThickness="0"  TabIndex="304"/>
                         <TextBox x:Name="CardNameText" Text="{Binding SelectedCard.CardName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardNameTextStyle}"  Panel.ZIndex="100"
-                                   Canvas.Left="65" Canvas.Bottom="270"  FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.NameColor}" Background="Transparent" 
+                                   Canvas.Left="55" Canvas.Bottom="282"  FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.NameColor}" Background="Transparent" 
                                  BorderThickness="0"  TabIndex="303"/>
 
-                        <Grid  Canvas.Left="90" Canvas.Bottom="293" Panel.ZIndex="100"  Width="29">
+                        <Grid  Canvas.Left="24" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
                             <TextBox x:Name="CardRace1Text" Text="{Binding SelectedCard.Kind1}" Style="{StaticResource CardRaceTextStyle}"  
                                        HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}"
                                      Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="305"/>
                         </Grid>
-                        <Grid  Canvas.Left="133" Canvas.Bottom="293" Panel.ZIndex="100"  Width="29">
+                        <Grid  Canvas.Left="68" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
                             <TextBox x:Name="CardRace2Text" Text="{Binding SelectedCard.Kind2, Converter={StaticResource KindConverter}}" Style="{StaticResource CardRaceTextStyle}"  Panel.ZIndex="100"
                                         HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}" 
                                      Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="306"/>
                         </Grid>
 
-                        <Grid Canvas.Left="15" Canvas.Bottom="268" Width="50" Height="40" Panel.ZIndex="200">
+                        <Grid Canvas.Left="8" Canvas.Bottom="281" Width="50" Height="40" Panel.ZIndex="200">
                             <TextBox x:Name="CardMainManaText" Text="{Binding SelectedCard.CostMana1}" Style="{StaticResource CardMainManaTextStyle}"  Panel.ZIndex="1200"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding SelectedCard.NameColor}" 
                                      FontWeight="Bold" Background="Transparent" BorderThickness="0"  TabIndex="300"/>
@@ -420,18 +422,18 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <RadioButton Content="黒" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
+                            <RadioButton Content="黒" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
                             <RadioButton Content="青" Grid.Column="1"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
                             <RadioButton Content="緑" Grid.Column="2"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
-                            <RadioButton Content="赤" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
-                            <RadioButton Content="白" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
-                            <RadioButton Content="黄" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
+                            <RadioButton Content="赤" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
+                            <RadioButton Content="白" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
+                            <RadioButton Content="黄" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
                         </Grid>
                     </StackPanel>
 
                     <!--サブ色-->
                     <TextBlock Grid.Row="17" Grid.Column="1" Text="サブ色" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
-                    <StackPanel Grid.Row="18" Grid.Column="1" VerticalAlignment="Center" Margin="0,5">
+                    <StackPanel Grid.Row="18" Grid.Column="1" VerticalAlignment="Center" Margin="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -442,13 +444,14 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <RadioButton Content="黒" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
-                            <RadioButton Content="青" Grid.Column="1"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
-                            <RadioButton Content="緑" Grid.Column="2"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
-                            <RadioButton Content="赤" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
-                            <RadioButton Content="白" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
-                            <RadioButton Content="黄" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
-                            <RadioButton Content="無" Grid.Column="6"   IsChecked="{Binding SelectedCard.CostColor2, Converter={StaticResource BoolColorConverter} ,ConverterParameter='無'}"/>
+                            
+                            <TextBox Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Background="#DD212C" Text="{Binding SelectedCard.SubCostRed, UpdateSourceTrigger=PropertyChanged}"  TabIndex="20" />
+                            <TextBox Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Background="#005EAC" Text="{Binding SelectedCard.SubCostBlue, UpdateSourceTrigger=PropertyChanged}"  TabIndex="21" />
+                            <TextBox Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Background="#009C42" Text="{Binding SelectedCard.SubCostGreen, UpdateSourceTrigger=PropertyChanged}"  TabIndex="22" />
+                            <TextBox Grid.Column="3"  Style="{StaticResource InfoTextBoxStyle}" Background="#EEC600" Text="{Binding SelectedCard.SubCostYellow, UpdateSourceTrigger=PropertyChanged}"  TabIndex="23" />
+                            <TextBox Grid.Column="4"  Style="{StaticResource InfoTextBoxStyle}" Background="#4F4C4B" Text="{Binding SelectedCard.SubCostBlack, UpdateSourceTrigger=PropertyChanged}"  TabIndex="24" />
+                            <TextBox Grid.Column="5"  Style="{StaticResource InfoTextBoxStyle}" Background="#EFEFEF" Text="{Binding SelectedCard.SubCostWhite, UpdateSourceTrigger=PropertyChanged}"  TabIndex="25" />
+                            <TextBox Grid.Column="6"  Style="{StaticResource InfoTextBoxStyle}" Background="#999796" Text="{Binding SelectedCard.SubCostNone, UpdateSourceTrigger=PropertyChanged}"  TabIndex="26" />
                         </Grid>
                     </StackPanel>
 
@@ -489,8 +492,6 @@
                         <Button   Grid.Column="0"  Content="クリップボードから貼り付け"  Command="{Binding PasteFromClipBoardCommand}" />
                         <Button   Grid.Column="1"  Content="クリップボードにコピー"  Command="{Binding CopyToClipBoardCommand}" />
                     </Grid>
-                    <TextBox Name="CardSubManaColor"  Grid.Column="2" Grid.Row="18"  Style="{StaticResource InfoTextBoxStyle}" Margin="0,0,0,0" Height="18" FontSize="10"
-                            Text="{Binding SelectedCard.SubColorColor, UpdateSourceTrigger=PropertyChanged}"     TabIndex="105"/>
 
 
                 </Grid>
