@@ -587,6 +587,13 @@ namespace AsteriskTCGMaker3.ViewModels
                 text += ";" + SelectedCard.SealedTrigger.ToString();
                 text += ";" + SelectedCard.SpellStep.ToString();
                 text += ";" + SelectedCard.KeepSpell.ToString();
+                text += ";" + SelectedCard.SubCostRed.ToString();
+                text += ";" + SelectedCard.SubCostBlue.ToString();
+                text += ";" + SelectedCard.SubCostGreen.ToString();
+                text += ";" + SelectedCard.SubCostYellow.ToString();
+                text += ";" + SelectedCard.SubCostBlack.ToString();
+                text += ";" + SelectedCard.SubCostWhite.ToString();
+                text += ";" + SelectedCard.SubCostNone.ToString();
                 text += ";" + "\r\n";
                 text += ";" + SelectedCard.RubyColor.ToString();
                 text += ";" + SelectedCard.NameColor.ToString();
@@ -1156,7 +1163,7 @@ namespace AsteriskTCGMaker3.ViewModels
         public string Illustration { get; set; }
 
         //内部データ
-        public int Version { get; set; } = 3000;
+        public int Version { get; set; } = 0;
         public string CardRuby { get; set; } = "";
         public double EffectFontSize { get; set; } = 8;
         public double FlavorFontSize { get; set; } = 6;
@@ -1192,6 +1199,15 @@ namespace AsteriskTCGMaker3.ViewModels
         public string FlavorTextColor { get; set; } = "white";
         public string MainColorColor { get; set; } = "white";
         public string SubColorColor { get; set; } = "white";
+
+        public int SubCostRed { get; set; } = 0;
+        public int SubCostBlue { get; set; } = 0;
+        public int SubCostGreen { get; set; } = 0;
+        public int SubCostYellow { get; set; } = 0;
+        public int SubCostBlack { get; set; } = 0;
+        public int SubCostWhite { get; set; } = 0;
+        public int SubCostNone { get; set; } = 0;
+
 
         public void TextPaste(string text)
         {
@@ -1346,6 +1362,32 @@ namespace AsteriskTCGMaker3.ViewModels
             SpellStep = bool.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             KeepSpell = bool.Parse(getNextElement(WikiData));
+            
+
+            if (Version >= 3080)
+            {
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostRed = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostBlue = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostGreen = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostYellow = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostBlack = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostWhite = int.Parse(getNextElement(WikiData));
+
+                WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
+                SubCostNone = int.Parse(getNextElement(WikiData));
+
+            }
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
             RubyColor = getNextElement(WikiData);
@@ -1362,6 +1404,8 @@ namespace AsteriskTCGMaker3.ViewModels
             WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             CardRuby = getNextElement(WikiData);
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
+
+            Version = 3080;
 
             SetInf(WikiData);
             if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
