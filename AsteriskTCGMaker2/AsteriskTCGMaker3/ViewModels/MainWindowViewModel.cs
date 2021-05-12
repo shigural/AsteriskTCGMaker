@@ -691,6 +691,8 @@ namespace AsteriskTCGMaker3.ViewModels
                 {
                     this._savetCommand = new ViewModelCommand(() =>
                     {
+                        if (SelectedCard.SealedTrigger && !SelectedCard.CardEffect.Contains("[DT]")) MessageBox.Show("効果テキストにDTがありますが、カード左上にDTがありません");
+                        if (!SelectedCard.SealedTrigger && SelectedCard.CardEffect.Contains("[DT]")) MessageBox.Show("効果テキストにDTがありませんが、カード左上にDTがあります");
                         if (File.Exists(Singleton.Instance.CardPath + "\\" + SelectedCard.CardName + ".atcg"))
                         {
                             Save(SelectedCard);
