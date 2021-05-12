@@ -26,7 +26,8 @@
         <vm:IsSteraConverter x:Key="IsSteraCOnverter"/>
         <vm:IsSpellConverter x:Key="IsSpellConverter"/>
         <vm:SteraSpellToTextBoxBottom x:Key="SteraSpellToTextBoxBottom"/>
-
+        <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
+        
 
 
         <Style x:Key="InfoTextBlockStyle" TargetType="{x:Type TextBlock}"  >
@@ -114,6 +115,9 @@
             <Setter Property="FontFamily" Value="Arial "/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
         <Style x:Key="CardPowerTextStyle" TargetType="{x:Type TextBox}"  >
@@ -246,38 +250,129 @@
                         </Grid>
 
 
-                        <Grid Canvas.Left="55" Canvas.Bottom="200" Panel.ZIndex="210">
-                            <ItemsControl ItemsSource="{Binding SubCostRedData}" >
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" Background="Violet"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Canvas.Left="58" Canvas.Bottom="300" Panel.ZIndex="210" >
+                            <!--赤-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostRed,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--青-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubBlue}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostBlue,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--緑-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostGreen,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--黄-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostYellow,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--黒-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostBlack,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--白-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostWhite,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
+                            <!--無-->
+                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                                <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
+                                    <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="25"   />
+                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostNone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                </Grid>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="97" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=3}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="96" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=4}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="95" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=5}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="94" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=6}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="93" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=7}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="92" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=8}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="91" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=9}"/>
+                                <Image VerticalAlignment="Bottom" Margin="-3,1" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="90" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=10}"/>
+                            </StackPanel>
 
-                                        <Canvas  Width="80" Height="30">
-                                            <Image Canvas.Left="0" Canvas.Bottom="0" x:Name="CardSubImageRed"  Stretch="Uniform" Source="{Binding source}"  Width="30" Panel.ZIndex="100"  />
-                                            <TextBox Canvas.Left="6" Canvas.Bottom="0" x:Name="CardSubManaText" Text="{Binding num}" Style="{StaticResource CardSubManaTextStyle}"  
-                            HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="White" FontWeight="Bold" Panel.ZIndex="101"  />
 
-                                            <Image Canvas.Left="11" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}" Panel.ZIndex="99"  />
-                                            <Image Canvas.Left="16" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="98"/>
-                                            <Image Canvas.Left="22" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="97"/>
-                                            <Image Canvas.Left="27" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="96"/>
-                                            <Image Canvas.Left="32" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="95"/>
-                                            <Image Canvas.Left="37" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="94"/>
-                                            <Image Canvas.Left="42" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="93"/>
-
-
-                                        </Canvas>
-                                            
-                                            
-                                        
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
+                        </StackPanel>
 
                   
                         
@@ -476,7 +571,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <TextBox Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Background="#DD212C" Text="{Binding SelectedCard.SubCostRed, UpdateSourceTrigger=PropertyChanged}"  TabIndex="20" />
                             <TextBox Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Background="#005EAC" Text="{Binding SelectedCard.SubCostBlue, UpdateSourceTrigger=PropertyChanged}"  TabIndex="21" />
                             <TextBox Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Background="#009C42" Text="{Binding SelectedCard.SubCostGreen, UpdateSourceTrigger=PropertyChanged}"  TabIndex="22" />

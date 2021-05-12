@@ -32,11 +32,6 @@ using System.Windows.Input;
 
 namespace AsteriskTCGMaker3.ViewModels
 {
-    class SubColorData
-    {
-        public int num { get; set; }=0;
-        public ImageSource source { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Red.png", UriKind.Absolute));
-    }
 
     internal class MainWindowViewModel : ViewModelBase
     {
@@ -60,6 +55,26 @@ namespace AsteriskTCGMaker3.ViewModels
             }
         }
 
+        public ImageSource SourceSubRed { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Red.png", UriKind.Absolute));
+        public ImageSource SourceSubBlue { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Blue.png", UriKind.Absolute));
+        public ImageSource SourceSubGreen { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Green.png", UriKind.Absolute));
+        public ImageSource SourceSubYellow { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Yellow.png", UriKind.Absolute));
+        public ImageSource SourceSubBlack { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Black.png", UriKind.Absolute));
+        public ImageSource SourceSubWhite { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_White.png", UriKind.Absolute));
+        public ImageSource SourceSubNone { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Less.png", UriKind.Absolute));
+
+
+
+        public ImageSource SourceSubRedHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_RedHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubBlueHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_BlueHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubGreenHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_GreenHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubYellowHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_YellowHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubBlackHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_BlackHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubWhiteHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_WhiteHalf.png", UriKind.Absolute));
+        public ImageSource SourceSubNoneHalf { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_LessHalf.png", UriKind.Absolute));
+
+
+
         public string CreateDeleateCardName { get; set; } = "CardName";
 
         private string _statusText = "";
@@ -77,7 +92,7 @@ namespace AsteriskTCGMaker3.ViewModels
         }
 
 
-        private string _filterCard="黒";
+        private string _filterCard = "黒";
         public string FilterCard
         {
             get
@@ -106,6 +121,8 @@ namespace AsteriskTCGMaker3.ViewModels
             }
 
         }
+
+
 
         public string FlavorText
         {
@@ -160,12 +177,7 @@ namespace AsteriskTCGMaker3.ViewModels
         }
 
 
-        public ObservableCollection<SubColorData> SubCostRedData { get; set; } =new ObservableCollection<SubColorData>( Enumerable.Range(1,2).Select(x => new SubColorData()
-        {
-            num=0,
-            source = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Blue.png", UriKind.Absolute))
 
-        }).ToList());
 
 
         private void createRunEffectText(Paragraph paragraph, string effectText, double effectFontSize)
@@ -424,7 +436,6 @@ namespace AsteriskTCGMaker3.ViewModels
                 this.OnPropertyChanged(nameof(EffectFontSize));
                 this.OnPropertyChanged(nameof(FlavorFontSize));
                 this.OnPropertyChanged(nameof(EffectDocument));
-
             }
         }
 
@@ -892,6 +903,33 @@ namespace AsteriskTCGMaker3.ViewModels
         }
     }
 
+    /// <summary>
+    /// Bindingの値が引数より大きいければ表示するコンバーター
+    /// </summary>
+    public class CheckValueSizeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value.ToString() == "") return Visibility.Collapsed;
+            if (int.TryParse(value.ToString(), out _))
+            {
+                return (int.Parse(value.ToString()) > int.Parse(parameter.ToString())) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            else
+            {
+                if (int.Parse(parameter.ToString()) == 0) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return true;
+        }
+    }
+
 
     /// <summary>
     /// ある色情報を含んでいるか返すコンバーター
@@ -1214,13 +1252,14 @@ namespace AsteriskTCGMaker3.ViewModels
         public string MainColorColor { get; set; } = "white";
         public string SubColorColor { get; set; } = "white";
 
-        public int SubCostRed { get; set; } = 0;
-        public int SubCostBlue { get; set; } = 0;
-        public int SubCostGreen { get; set; } = 0;
-        public int SubCostYellow { get; set; } = 0;
-        public int SubCostBlack { get; set; } = 0;
-        public int SubCostWhite { get; set; } = 0;
-        public int SubCostNone { get; set; } = 0;
+
+        public string SubCostRed { get; set; } = "";
+        public string SubCostBlue { get; set; } = "";
+        public string SubCostGreen { get; set; } = "";
+        public string SubCostYellow { get; set; } = "";
+        public string SubCostBlack { get; set; } = "";
+        public string SubCostWhite { get; set; } = "";
+        public string SubCostNone { get; set; } = "";
 
 
         public void TextPaste(string text)
@@ -1376,30 +1415,30 @@ namespace AsteriskTCGMaker3.ViewModels
             SpellStep = bool.Parse(getNextElement(WikiData));
             WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
             KeepSpell = bool.Parse(getNextElement(WikiData));
-            
+
 
             if (Version >= 3080)
             {
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostRed = int.Parse(getNextElement(WikiData));
+                SubCostRed = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostBlue = int.Parse(getNextElement(WikiData));
+                SubCostBlue = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostGreen = int.Parse(getNextElement(WikiData));
+                SubCostGreen = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostYellow = int.Parse(getNextElement(WikiData));
+                SubCostYellow = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostBlack = int.Parse(getNextElement(WikiData));
+                SubCostBlack = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostWhite = int.Parse(getNextElement(WikiData));
+                SubCostWhite = getNextElement(WikiData);
 
                 WikiData = WikiData.Substring(WikiData.IndexOf(";", 1), WikiData.Length - (WikiData.IndexOf(";", 1)));
-                SubCostNone = int.Parse(getNextElement(WikiData));
+                SubCostNone = getNextElement(WikiData);
 
             }
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
