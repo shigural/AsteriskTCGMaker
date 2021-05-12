@@ -934,6 +934,93 @@ namespace AsteriskTCGMaker3.ViewModels
         }
     }
 
+
+    /// <summary>
+    /// 色に相当するリソースを返す
+    /// </summary>
+    public class SubCostResourceConverter : IValueConverter
+    {
+        static BitmapImage SubRed= new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Red.png", UriKind.Absolute));
+        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Blue.png", UriKind.Absolute));
+        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Green.png", UriKind.Absolute));
+        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Yellow.png", UriKind.Absolute));
+        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Black.png", UriKind.Absolute));
+        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_White.png", UriKind.Absolute));
+        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Less.png", UriKind.Absolute));
+
+
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch (value.ToString())
+            {
+                case "赤":
+                    return SubRed;
+                case "青":
+                    return SubBlue;
+                case "緑":
+                    return SubGreen;
+                case "黄":
+                    return SubYellow;
+                case "黒":
+                    return SubBlack;
+                case "白":
+                    return SubWhite;
+                default:
+                    return SubNone;
+            }
+         
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 色に相当するリソースの右半分を返す
+    /// </summary>
+    public class SubCostResourceHalfConverter : IValueConverter
+    {
+        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_RedHalf.png", UriKind.Absolute));
+        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_BlueHalf.png", UriKind.Absolute));
+        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_GreenHalf.png", UriKind.Absolute));
+        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_YellowHalf.png", UriKind.Absolute));
+        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_BlackHalf.png", UriKind.Absolute));
+        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_WhiteHalf.png", UriKind.Absolute));
+        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_LessHalf.png", UriKind.Absolute));
+
+
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch (value.ToString())
+            {
+                case "赤":
+                    return SubRed;
+                case "青":
+                    return SubBlue;
+                case "緑":
+                    return SubGreen;
+                case "黄":
+                    return SubYellow;
+                case "黒":
+                    return SubBlack;
+                case "白":
+                    return SubWhite;
+                default:
+                    return SubNone;
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return true;
+        }
+    }
+
     /// <summary>
     /// Bindingの値が引数より大きいければ表示するコンバーター
     /// </summary>
@@ -1489,9 +1576,40 @@ namespace AsteriskTCGMaker3.ViewModels
             CardRuby = getNextElement(WikiData);
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
-            Version = 3080;
+            
 
             SetInf(WikiData);
+
+            if (Version < 3080)
+            {
+
+                switch (CostColor2)
+                {
+                    case "赤":
+                        SubCostRed = CostMana2;
+                        break;
+                    case "青":
+                        SubCostBlue = CostMana2;
+                        break;
+                    case "緑":
+                        SubCostGreen = CostMana2;
+                        break;
+                    case "黄":
+                        SubCostYellow = CostMana2;
+                        break;
+                    case "黒":
+                        SubCostBlack = CostMana2;
+                        break;
+                    case "白":
+                        SubCostWhite = CostMana2;
+                        break;
+                    case "無":
+                        SubCostNone = CostMana2;
+                        break;
+                }
+            }
+
+            Version = 3080;
             if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
         }
 
