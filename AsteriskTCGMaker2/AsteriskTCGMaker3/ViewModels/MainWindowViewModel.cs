@@ -32,6 +32,12 @@ using System.Windows.Input;
 
 namespace AsteriskTCGMaker3.ViewModels
 {
+    class SubColorData
+    {
+        public int num { get; set; }=0;
+        public ImageSource source { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Red.png", UriKind.Absolute));
+    }
+
     internal class MainWindowViewModel : ViewModelBase
     {
         // Some useful code snippets for ViewModel are defined as l*(llcom, llcomn, lvcomm, lsprop, etc...).
@@ -152,6 +158,14 @@ namespace AsteriskTCGMaker3.ViewModels
         {
             return s.Length - s.Replace(c.ToString(), "").Length;
         }
+
+
+        public ObservableCollection<SubColorData> SubCostRedData { get; set; } =new ObservableCollection<SubColorData>( Enumerable.Range(1,2).Select(x => new SubColorData()
+        {
+            num=0,
+            source = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/Sub_Blue.png", UriKind.Absolute))
+
+        }).ToList());
 
 
         private void createRunEffectText(Paragraph paragraph, string effectText, double effectFontSize)

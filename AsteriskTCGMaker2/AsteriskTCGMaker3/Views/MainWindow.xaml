@@ -178,7 +178,6 @@
                         <!--画像は本来の240×334から各方位5ピクセルだけ引いている-->
                         <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Panel.ZIndex="-10" Margin="10" Width="220" Height="314"   HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
                         <Image  x:Name="CardFlame" Source="Resources/CardFlame.png" Panel.ZIndex="-5"  Width="240" Height="334" />
-                        <Image  x:Name="CardSubImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor2, Converter={StaticResource ColorToColor2SourceConverter}}"  Width="115" Canvas.Left="12" Canvas.Bottom="250" Panel.ZIndex="0" />
                         <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="5" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
                         <Image   Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="5"  Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToTextBoxBottom}}" >
@@ -214,7 +213,7 @@
                         </StackPanel>
 
 
-                        <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="111" Height="144" Width="30">
+                        <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="125" Height="144" Width="30">
                             <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage3" Stretch="Fill" Source="Resources/sealedtrigger.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SealedTrigger, Converter={StaticResource BoolVisibillityConverter}}"/>
@@ -245,10 +244,43 @@
                                        HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding SelectedCard.NameColor}" 
                                      FontWeight="Bold" Background="Transparent" BorderThickness="0"  TabIndex="300"/>
                         </Grid>
-                        <Grid Canvas.Left="55" Canvas.Bottom="291" Width="30" Height="30" Panel.ZIndex="205">
-                            <TextBox x:Name="CardSubManaText" Text="{Binding SelectedCard.CostMana2}" Style="{StaticResource CardSubManaTextStyle}"  Panel.ZIndex="100"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding SelectedCard.SubColorColor}" FontWeight="Bold"  TabIndex="302"/>
+
+
+                        <Grid Canvas.Left="55" Canvas.Bottom="200" Panel.ZIndex="210">
+                            <ItemsControl ItemsSource="{Binding SubCostRedData}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Background="Violet"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <Canvas  Width="80" Height="30">
+                                            <Image Canvas.Left="0" Canvas.Bottom="0" x:Name="CardSubImageRed"  Stretch="Uniform" Source="{Binding source}"  Width="30" Panel.ZIndex="100"  />
+                                            <TextBox Canvas.Left="6" Canvas.Bottom="0" x:Name="CardSubManaText" Text="{Binding num}" Style="{StaticResource CardSubManaTextStyle}"  
+                            HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="White" FontWeight="Bold" Panel.ZIndex="101"  />
+
+                                            <Image Canvas.Left="11" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}" Panel.ZIndex="99"  />
+                                            <Image Canvas.Left="16" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="98"/>
+                                            <Image Canvas.Left="22" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="97"/>
+                                            <Image Canvas.Left="27" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="96"/>
+                                            <Image Canvas.Left="32" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="95"/>
+                                            <Image Canvas.Left="37" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="94"/>
+                                            <Image Canvas.Left="42" Canvas.Bottom="0" Width="25" Stretch="Uniform" Source="{Binding source}"   Panel.ZIndex="93"/>
+
+
+                                        </Canvas>
+                                            
+                                            
+                                        
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Grid>
+
+                  
+                        
                         <Grid Canvas.Left="112" Canvas.Bottom="18" Width="80" Height="30" Panel.ZIndex="205">
                             <TextBox x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
                                        HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"  Background="Transparent" BorderThickness="0"
