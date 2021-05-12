@@ -112,7 +112,7 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontFamily" Value="Arial "/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -269,7 +269,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                  <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostRed,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostRed,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubRedHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -286,7 +286,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlue}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostBlue,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostBlue,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlueHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -303,7 +303,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostGreen,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostGreen,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubGreenHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -320,7 +320,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostYellow,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostYellow,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubYellowHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -337,7 +337,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostBlack,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostBlack,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubBlackHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -354,7 +354,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostWhite,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostWhite,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubWhiteHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -371,7 +371,7 @@
                             <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Height="30" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="25"   />
-                                    <TextBox Margin="3,0" Text="{Binding SelectedCard.SubCostNone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <TextBox Margin="3,2" Text="{Binding SelectedCard.SubCostNone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="99" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=1}"/>
                                 <Image VerticalAlignment="Bottom" Margin="-3,2" Width="10" Stretch="Uniform" Source="{Binding SourceSubNoneHalf}"   Panel.ZIndex="98" Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=2}"/>
@@ -519,17 +519,15 @@
 
 
 
-                    <!--メイン/サブ/パワー-->
-                    <TextBlock Grid.Row="9" Grid.Column="1" Text="メイン/サブ/パワー" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                    <!--メイン/パワー-->
+                    <TextBlock Grid.Row="9" Grid.Column="1" Text="メイン/パワー" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
                     <Grid Grid.Row="10" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Row="0" Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.CostMana1, UpdateSourceTrigger=PropertyChanged}"  TabIndex="5" />
-                        <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.CostMana2, UpdateSourceTrigger=PropertyChanged}"   TabIndex="6"/>
-                        <TextBox Grid.Row="0" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Power, UpdateSourceTrigger=PropertyChanged}"   TabIndex="7"/>
+                        <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Power, UpdateSourceTrigger=PropertyChanged}"   TabIndex="7"/>
                     </Grid>
 
 
