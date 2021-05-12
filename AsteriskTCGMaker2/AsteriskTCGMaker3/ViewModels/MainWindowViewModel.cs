@@ -560,6 +560,31 @@ namespace AsteriskTCGMaker3.ViewModels
         }
 
 
+        private  ListenerCommand<object> _outputAllImageCommand;
+        public ListenerCommand<object> OutputAllImageCommand
+        {
+            get
+            {
+                if (this._outputAllImageCommand == null)
+                {
+                    this._outputAllImageCommand = new ListenerCommand<object>((elem) =>
+                    {
+                        
+                       foreach(var outputCard in CardList)
+                        {
+                            SelectedCard = outputCard;
+                            OutputCardImage(SelectedCard, (FrameworkElement)elem);
+                        }
+                        
+                    });
+                }
+                return this._outputAllImageCommand;
+
+            }
+
+        }
+        
+
 
         private ViewModelCommand _printCommand;
         public ViewModelCommand PrintCommand
@@ -738,6 +763,40 @@ namespace AsteriskTCGMaker3.ViewModels
 
         }
 
+        private void OutputCardImage(CardData card, FrameworkElement elem)
+        {
+            var inputPath = Singleton.Instance.Path + "Result/Input.png";
+            var outputName = card.CardName;
+            try
+            {
+                StatusText = "画像出力中...";
+                doEvent();
+
+
+
+                //ファイル名に使えない文字を削除
+                outputName = outputName.Replace(":", "");
+                outputName = outputName.Replace("：", "");
+
+
+                var outputPath1 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\big\\" + card.CostColor1 + "\\" + outputName + ".png");
+                var outputPath2 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\small\\" + card.CostColor1 + "\\" + outputName + ".png");
+                var outputPath3 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\Output.png");
+                if (File.Exists(outputPath1)) System.IO.File.Delete(outputPath1);
+                if (File.Exists(outputPath2)) System.IO.File.Delete(outputPath2);
+
+                Directory.CreateDirectory(Singleton.Instance.Path + "Result\\big\\" + card.CostColor1);
+                Directory.CreateDirectory(Singleton.Instance.Path + "Result\\small\\" + card.CostColor1);
+                SaveImage(elem, outputPath1, 10);
+                SaveImage(elem, outputPath2, 1);
+                SaveImage(elem, outputPath3, 10);
+                StatusText = "出力完了（" + outputPath1 + "）";
+            }
+            catch (Exception e)
+            {
+                StatusText = "出力失敗";
+            }
+        }
 
         private ListenerCommand<object> _outputCommand;
         public ListenerCommand<object> OutputCommand
@@ -748,37 +807,7 @@ namespace AsteriskTCGMaker3.ViewModels
                 {
                     this._outputCommand = new ListenerCommand<object>((elem) =>
                     {
-                        var inputPath = Singleton.Instance.Path + "Result/Input.png";
-                        var outputName = SelectedCard.CardName;
-                        try
-                        {
-                            StatusText = "画像出力中...";
-                            doEvent();
-
-
-
-                            //ファイル名に使えない文字を削除
-                            outputName = outputName.Replace(":", "");
-                            outputName = outputName.Replace("：", "");
-
-
-                            var outputPath1 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\big\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png");
-                            var outputPath2 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\small\\" + SelectedCard.CostColor1 + "\\" + outputName + ".png");
-                            var outputPath3 = System.IO.Path.Combine(Singleton.Instance.Path, "Result\\Output.png");
-                            if (File.Exists(outputPath1)) System.IO.File.Delete(outputPath1);
-                            if (File.Exists(outputPath2)) System.IO.File.Delete(outputPath2);
-
-                            Directory.CreateDirectory(Singleton.Instance.Path + "Result\\big\\" + SelectedCard.CostColor1);
-                            Directory.CreateDirectory(Singleton.Instance.Path + "Result\\small\\" + SelectedCard.CostColor1);
-                            SaveImage((FrameworkElement)elem, outputPath1, 10);
-                            SaveImage((FrameworkElement)elem, outputPath2, 1);
-                            SaveImage((FrameworkElement)elem, outputPath3, 10);
-                            StatusText = "出力完了（" + outputPath1 + "）";
-                        }
-                        catch (Exception e)
-                        {
-                            StatusText = "出力失敗";
-                        }
+                        OutputCardImage(SelectedCard, (FrameworkElement)elem);
                     });
                 }
                 return this._outputCommand;
