@@ -23,29 +23,6 @@ namespace AsteriskTCGMaker4.Views
         {
             InitializeComponent();
             path = System.AppDomain.CurrentDomain.BaseDirectory;
-            //CardFlameST.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Stera_Black.png", UriKind.Absolute));
-            //CardFlameSP.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Spell_Black.png", UriKind.Absolute));
-            //CardImage.Source = new BitmapImage(new Uri(path + "Resources/2/InputSample.png", UriKind.Absolute));
-            CardEffectImageDown.Source = new BitmapImage(new Uri(path + "Resources/2/TextBoxDown.png", UriKind.Absolute));
-            CardEffectImageUp.Source = new BitmapImage(new Uri(path + "Resources/2/TextBoxUp.png", UriKind.Absolute));
-            CardEffectImageCenter.Source = new BitmapImage(new Uri(path + "Resources/2/TextBoxCenter.png", UriKind.Absolute));
-            CardPowerImage.Source = new BitmapImage(new Uri(path + "Resources/2/PowerFlame.png", UriKind.Absolute));
-            CardKind1.Source = new BitmapImage(new Uri(path + "Resources/2/KindFrame.png", UriKind.Absolute));
-            CardKind2.Source = new BitmapImage(new Uri(path + "Resources/2/KindFrame.png", UriKind.Absolute));
-            CardBreakImage1.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage2.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage3.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage4.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage5.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage6.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage7.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage8.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardBreakImage9.Source = new BitmapImage(new Uri(path + "Resources/2/Break.png", UriKind.Absolute));
-            CardTypeImage1.Source = new BitmapImage(new Uri(path + "Resources/2/Burst.png", UriKind.Absolute));
-            CardTypeImage2.Source = new BitmapImage(new Uri(path + "Resources/2/re-action.png", UriKind.Absolute));
-            CardTypeImage3.Source = new BitmapImage(new Uri(path + "Resources/2/sealedtrigger.png", UriKind.Absolute));
-            CardTypeImage4.Source = new BitmapImage(new Uri(path + "Resources/2/spellstep.png", UriKind.Absolute));
-            CardTypeImage5.Source = new BitmapImage(new Uri(path + "Resources/2/Ke.png", UriKind.Absolute));
         }
 
         //指定要素を画像として保存する

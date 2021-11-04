@@ -35,6 +35,26 @@ namespace AsteriskTCGMaker4.ViewModels
 
     internal class MainWindowViewModel : ViewModelBase
     {
+
+        public string CardEffectColor { get; set; } = "white";
+
+        public string CardEffectTitle
+        {
+            get
+            {
+                if (SelectedCard == null) return "《ステラ》 サンプル/サンプル";
+                var text = SelectedCard.SteraSpell;
+                if (SelectedCard.Kind1 != "") text += SelectedCard.Kind1;
+                if (SelectedCard.Kind2 != "") text += "/" + SelectedCard.Kind2;
+                if (SelectedCard.Kind3 != "") text += "/" + SelectedCard.Kind3;
+                text += "aaaa";
+                return text;
+            }
+
+        }
+
+
+
         // Some useful code snippets for ViewModel are defined as l*(llcom, llcomn, lvcomm, lsprop, etc...).
         public void Initialize()
         {
@@ -548,7 +568,7 @@ namespace AsteriskTCGMaker4.ViewModels
         }
 
 
-        private  ListenerCommand<object> _outputAllImageCommand;
+        private ListenerCommand<object> _outputAllImageCommand;
         public ListenerCommand<object> OutputAllImageCommand
         {
             get
@@ -557,13 +577,13 @@ namespace AsteriskTCGMaker4.ViewModels
                 {
                     this._outputAllImageCommand = new ListenerCommand<object>((elem) =>
                     {
-                        
-                       foreach(var outputCard in CardList)
+
+                        foreach (var outputCard in CardList)
                         {
                             SelectedCard = outputCard;
                             OutputCardImage(SelectedCard, (FrameworkElement)elem);
                         }
-                        
+
                     });
                 }
                 return this._outputAllImageCommand;
@@ -571,7 +591,7 @@ namespace AsteriskTCGMaker4.ViewModels
             }
 
         }
-        
+
 
 
         private ViewModelCommand _printCommand;
@@ -650,6 +670,7 @@ namespace AsteriskTCGMaker4.ViewModels
             {
                 text += "[" + SelectedCard.CostColor1.ToString() + "][ステラ]《" + SelectedCard.Kind1.ToString() + "》";
                 if (SelectedCard.Kind2.ToString() != "") text += "《" + SelectedCard.Kind2.ToString() + "》";
+                if (SelectedCard.Kind3.ToString() != "") text += "《" + SelectedCard.Kind3.ToString() + "》";
             }
             else
             {
@@ -928,7 +949,7 @@ namespace AsteriskTCGMaker4.ViewModels
     /// </summary>
     public class SubCostResourceConverter : IValueConverter
     {
-        static BitmapImage SubRed= new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Red.png", UriKind.Absolute));
+        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Red.png", UriKind.Absolute));
         static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Blue.png", UriKind.Absolute));
         static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Green.png", UriKind.Absolute));
         static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Yellow.png", UriKind.Absolute));
@@ -957,7 +978,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 default:
                     return SubNone;
             }
-         
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -965,6 +986,27 @@ namespace AsteriskTCGMaker4.ViewModels
             return true;
         }
     }
+
+
+    /// <summary>
+    ///空ならhideden
+    /// </summary>
+    public class CheckEmptyConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value.ToString() == "") return Visibility.Hidden;
+            else return Visibility.Visible;
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return Visibility.Visible;
+        }
+    }
+
 
     /// <summary>
     /// 色に相当するリソースの右半分を返す
@@ -1014,7 +1056,7 @@ namespace AsteriskTCGMaker4.ViewModels
     /// </summary>
     public class KindFontSizeConverter : IValueConverter
     {
-    
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value.ToString().Length < 4) return 9;
@@ -1028,7 +1070,7 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
-    
+
 
     /// <summary>
     /// Bindingの値が引数より大きいければ表示するコンバーター
@@ -1115,7 +1157,7 @@ namespace AsteriskTCGMaker4.ViewModels
         {
             var BR = Int64.Parse(value.ToString());
             var para = Int64.Parse(parameter.ToString());
-            if (BR >= para) return Visibility.Visible;
+            if (BR == para) return Visibility.Visible;
             else return Visibility.Hidden;
         }
 
@@ -1234,20 +1276,6 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
-    public class SteraSpellToTextBoxBottom : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value.ToString() == "ステラ") return 55;
-            else return 20;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
-    }
 
 
     public class IsSpellConverter : IValueConverter
@@ -1323,14 +1351,84 @@ namespace AsteriskTCGMaker4.ViewModels
         #endregion  // イベントハンドラ
     }
 
+
+
+    public class BRImageConverter : IMultiValueConverter
+    {//BR_None
+
+        private ImageSource NoneImage = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_None.png", UriKind.Absolute));
+
+        private IDictionary<int, ImageSource> BlackImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Black_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Black_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Black_3.png", UriKind.Absolute))},
+        };
+        private IDictionary<int, ImageSource> RedImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Red_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Red_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Red_3.png", UriKind.Absolute))},
+        };
+        private IDictionary<int, ImageSource> BlueImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Blue_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Blue_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Blue_3.png", UriKind.Absolute))},
+        };
+        private IDictionary<int, ImageSource> GreenImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Green_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Green_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Green_3.png", UriKind.Absolute))},
+        };
+        private IDictionary<int, ImageSource> WhiteImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_White_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_White_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_White_3.png", UriKind.Absolute))},
+        };
+        private IDictionary<int, ImageSource> YellowImage = new Dictionary<int, ImageSource>() {
+            {1,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Yellow_1.png", UriKind.Absolute)) },
+            {2,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Yellow_2.png", UriKind.Absolute))},
+            {3,new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/BR_Yellow_3.png", UriKind.Absolute))},
+        };
+
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values[0].ToString() == "0") return NoneImage;
+            //入力引数は「BR,色」の順
+            switch (values[1].ToString())
+            {
+                case "黒":
+                    return BlackImage[int.Parse(values[0].ToString())];
+                case "赤":
+                    return RedImage[int.Parse(values[0].ToString())];
+                case "青":
+                    return BlueImage[int.Parse(values[0].ToString())];
+                case "緑":
+                    return GreenImage[int.Parse(values[0].ToString())];
+                case "黄":
+                    return YellowImage[int.Parse(values[0].ToString())];
+                case "白":
+                    return WhiteImage[int.Parse(values[0].ToString())];
+            }
+            return "";
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value.ToString().Split(':');
+        }
+    }
+
+
     class CardData
     {
         //Wiki&内部データ
         public string CardName { get; set; }
         public string CardEffect { get; set; }
         public string SteraSpell { get; set; }
+
+        private string _Kind1 = "test";
         public string Kind1 { get; set; }
         public string Kind2 { get; set; } = "";
+        public string Kind3 { get; set; } = "";
         public string CostColor1 { get; set; }
         public string CostMana1 { get; set; }
         public string CostColor2 { get; set; }
@@ -1413,8 +1511,10 @@ namespace AsteriskTCGMaker4.ViewModels
             SteraSpell = matches1[1].Value.Substring(1, matches1[1].Value.Length - 2);
             Kind1 = "";
             Kind2 = "";
+            Kind3 = "";
             if (matches2.Count >= 1) Kind1 = matches2[0].Value.Substring(1, matches2[0].Value.Length - 2);
             if (matches2.Count >= 2) Kind2 = matches2[1].Value.Substring(1, matches2[1].Value.Length - 2);
+            if (matches2.Count >= 3) Kind3 = matches2[1].Value.Substring(1, matches2[2].Value.Length - 2);
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
 
             //〔色:コスト 色:コスト〕
@@ -1477,6 +1577,7 @@ namespace AsteriskTCGMaker4.ViewModels
             SteraSpell = "";
             Kind1 = "";
             Kind2 = "";
+            Kind3 = "";
             CostColor1 = "黒";
             CostMana1 = "1";
             CostColor2 = "無";
@@ -1585,7 +1686,7 @@ namespace AsteriskTCGMaker4.ViewModels
             CardRuby = getNextElement(WikiData);
             WikiData = WikiData.Substring(WikiData.IndexOf("\r\n") + 2, WikiData.Length - (WikiData.IndexOf("\r\n") + 2));
 
-            
+
 
             SetInf(WikiData);
 

@@ -25,11 +25,12 @@
         <vm:ValueEqualParaToVisibillityConverter x:Key="ValueEqualParaToVisibillityConverter"/>
         <vm:IsSteraConverter x:Key="IsSteraCOnverter"/>
         <vm:IsSpellConverter x:Key="IsSpellConverter"/>
-        <vm:SteraSpellToTextBoxBottom x:Key="SteraSpellToTextBoxBottom"/>
         <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
-        <vm:SubCostResourceHalfConverter x:Key="SubCostResourceHalfConverter"/>
+        <vm:CheckEmptyConverter x:Key="CheckEmptyConverter"/>
         <vm:KindFontSizeConverter x:Key="KindFontSizeConverter"/>
+        <vm:BRImageConverter x:Key="BRImageConverter"/>
+
 
 
         <Style x:Key="InfoTextBlockStyle" TargetType="{x:Type TextBlock}"  >
@@ -40,7 +41,7 @@
 
         <Style x:Key="InfoTextBoxStyle" TargetType="{x:Type TextBox}"  >
             <Setter Property="CaretBrush" Value="Red"/>
-            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="Width" Value="auto"/>
             <Setter Property="Height" Value="25"/>
             <Setter Property="AcceptsReturn" Value="False"/>
@@ -87,6 +88,7 @@
         </Style>
 
         <Style x:Key="CardRaceTextStyle" TargetType="{x:Type TextBox}"  >
+            <Setter Property="FontSize" Value="8"/>
             <Setter Property="CaretBrush" Value="Red"/>
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
@@ -126,7 +128,7 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontFamily" Value="Bahnschrift "/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -157,7 +159,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver3.08" />
+                <TextBlock Text="ver4.00" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -184,45 +186,14 @@
                         <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Panel.ZIndex="-10" Margin="10" Width="220" Height="314"   HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
                         <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
-                        <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToTextBoxBottom}}" >
-                            <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/2/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
-                            <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/2/TextBoxUp.png" Canvas.Bottom="{Binding SelectedCard.TextBoxSize, Converter={StaticResource BoxSizeToBoxBottomConverter}}" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
-                            <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/2/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="{Binding SelectedCard.TextBoxSize}"   Opacity="0.5" />
-
-
+                        <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="20" >
 
                             <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Bottom="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
                                                     Width="220" Foreground="{Binding CardEffectColor}" Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
-
                             </vm:BindableRichTextBox>
-
                         </Canvas>
-                        <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/2/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-28" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardKind1"  Stretch="Uniform" Source="Resources/2/KindFrame.png"  Width="55" Panel.ZIndex="16" Canvas.Left="55" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardKind2"  Stretch="Uniform" Source="Resources/2/KindFrame.png"  Width="55" Panel.ZIndex="17" Canvas.Left="12" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
-                        <StackPanel x:Name="CardBreakUp" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="33" Height="18" Width="80" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
-                            <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=5}"/>
-                            <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=4}"/>
-                            <Image  x:Name="CardBreakImage3"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=3}"/>
-                            <Image  x:Name="CardBreakImage2"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=2}"/>
-                            <Image  x:Name="CardBreakImage1"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=1}"/>
-                        </StackPanel>
-
-                        <StackPanel  x:Name="CardBreakDown" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="35" Canvas.Bottom="20" Height="18" Width="80" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
-                            <Image  x:Name="CardBreakImage9"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=9}"/>
-                            <Image  x:Name="CardBreakImage8"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=8}"/>
-                            <Image  x:Name="CardBreakImage7"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=7}"/>
-                            <Image  x:Name="CardBreakImage6"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=6}"/>
-                        </StackPanel>
 
 
-                        <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="125" Height="144" Width="30">
-                            <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/2/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/2/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage3" Stretch="Fill" Source="Resources/2/sealedtrigger.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SealedTrigger, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/2/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/2/Ke.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
-                        </StackPanel>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
                                        Canvas.Left="54" Canvas.Bottom="293"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
@@ -231,17 +202,15 @@
                                    Canvas.Left="55" Canvas.Bottom="282"  FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.NameColor}" Background="Transparent" 
                                  BorderThickness="0"  TabIndex="303"/>
 
-                        <Grid  Canvas.Left="24" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
-                            <TextBox x:Name="CardRace1Text" Text="{Binding SelectedCard.Kind1}" Style="{StaticResource CardRaceTextStyle}"  
-                                       HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}" FontSize="{Binding SelectedCard.Kind1,Converter={StaticResource KindFontSizeConverter}}"
-                                     Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="305"/>
-                        </Grid>
-                        <Grid  Canvas.Left="68" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
-                            <TextBox x:Name="CardRace2Text" Text="{Binding SelectedCard.Kind2, Converter={StaticResource KindConverter}}" Style="{StaticResource CardRaceTextStyle}"  Panel.ZIndex="100"
-                                        HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}"   FontSize="{Binding SelectedCard.Kind2,Converter={StaticResource KindFontSizeConverter}}"
-                                     Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="306"/>
-                        </Grid>
-
+                        <!--種族-->
+                        <StackPanel  Canvas.Left="15" Canvas.Bottom="95" Panel.ZIndex="100"  Orientation="Horizontal">
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.SteraSpell,StringFormat=《{0}》, UpdateSourceTrigger=PropertyChanged}"  TabIndex="8"/>
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"                   Visibility="{Binding SelectedCard.Kind1,Converter={StaticResource CheckEmptyConverter}}"  TabIndex="8"/>
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind2,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind3, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
+                        </StackPanel>
 
                         <!--メインマナ-->
                         <Grid Canvas.Left="8" Canvas.Bottom="270" Panel.ZIndex="200">
@@ -251,7 +220,7 @@
                                      FontWeight="Bold" Background="Transparent" BorderThickness="0"  TabIndex="300"/>
                         </Grid>
 
-      
+
 
                         <!--サブマナ-->
                         <StackPanel Orientation="Horizontal" Canvas.Left="40" Canvas.Bottom="290" Panel.ZIndex="180" >
@@ -304,24 +273,39 @@
                                     <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostNone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
                                 </Grid>
                             </StackPanel>
-
-
                         </StackPanel>
 
 
-
-                        <Grid Canvas.Left="112" Canvas.Bottom="18" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
-                            <TextBox Margin="10,0,5,0" Width="80" x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
+                        <!--パワー-->
+                        <Grid Canvas.Left="2" Canvas.Bottom="2" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
+                            <TextBox Margin="10,0,5,0" x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
                                        HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"  Background="Transparent" BorderThickness="0" 
                                    FontStyle="Italic"    Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  TabIndex="307"/>
                         </Grid>
-                        <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
-                                       Canvas.Left="25" Canvas.Bottom="3" Foreground="White" FontSize="6" />
-                        <TextBox x:Name="betaMessage" Text="このカードはβ版です。アンダーンでのみ使用できます。" Style="{StaticResource CardIllustrationtStyle}" 
-                                       Panel.ZIndex="100" Canvas.Left="95" Canvas.Bottom="2" Foreground="White" FontSize="6" IsReadOnly="True"
-                                 Visibility="{Binding SelectedCard.Beta, Converter={StaticResource BoolVisibillityConverter }}"/>
-                        <TextBox x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
-                            Canvas.Left="54" Canvas.Bottom="3" Foreground="White" FontSize="6"  TabIndex="308" Canvas.Top="324"/>
+
+                        <!--BR-->
+                        <Grid Panel.ZIndex="150" Canvas.Left="60" Canvas.Bottom="5" HorizontalAlignment="Center" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
+                            <Image Width="20">
+                                <Image.Source>
+                                    <MultiBinding Converter="{StaticResource BRImageConverter}">
+                                        <Binding Path="SelectedCard.BR"/>
+                                        <Binding Path="SelectedCard.CostColor1"/>
+                                    </MultiBinding>
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+
+
+                        <!--イラストレーションのクレジット-->
+                        <Grid HorizontalAlignment="Right"  Canvas.Right="15" Canvas.Bottom="100" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
+                                      Foreground="White" FontSize="6" />
+                                <TextBox x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
+                                   Foreground="White" FontSize="6"  TabIndex="308" Canvas.Top="324"/>
+                            </StackPanel>
+                        </Grid>
+
 
                     </Canvas>
                 </Viewbox>
@@ -335,19 +319,12 @@
                     <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <RadioButton x:Name="suteraBox" Content="ステラ" Grid.Column="0"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSteraCOnverter}}"/>
                         <RadioButton Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
-                        <CheckBox Name="BetaCheck" Margin="3,0,0,0" Grid.Row="11" Grid.Column="4" Content="β版" IsChecked="{Binding SelectedCard.Beta}" VerticalAlignment="center" HorizontalAlignment="Right" />
-                    </StackPanel>
-
-                    <!--テキストサイズ-->
-                    <StackPanel  Grid.Row="1">
-                        <TextBlock  Text="{Binding SelectedCard.TextBoxSize,StringFormat=テキストサイズ:{0}}"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                        <Slider x:Name="slider2"  Value="{Binding SelectedCard.TextBoxSize}" Maximum="300" IsSnapToTickEnabled="True" />
                     </StackPanel>
 
                     <!--Break-->
                     <StackPanel  Grid.Row="2">
                         <TextBlock Text="{Binding SelectedCard.BR,StringFormat=break:{0}}"  HorizontalAlignment="Center"/>
-                        <Slider Value="{Binding SelectedCard.BR }"  Maximum="5" IsSnapToTickEnabled="True" />
+                        <Slider Value="{Binding SelectedCard.BR }"  Maximum="3" IsSnapToTickEnabled="True" />
                     </StackPanel>
 
                 </Grid>
@@ -368,9 +345,6 @@
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="20"/>
@@ -458,9 +432,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Row="0" Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"   TabIndex="8"/>
                         <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Kind2, UpdateSourceTrigger=PropertyChanged}"   TabIndex="9"/>
+                        <TextBox Grid.Row="0" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Kind3, UpdateSourceTrigger=PropertyChanged}"   TabIndex="9"/>
                     </Grid>
 
                     <!--illustration-->
@@ -514,34 +490,13 @@
                         </Grid>
                     </StackPanel>
 
-                    <!--タイプ-->
-                    <TextBlock Grid.Row="19" Grid.Column="1" Text="タイプ" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
-                    <StackPanel Grid.Row="20" Grid.Column="1" Grid.RowSpan="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="burst" Content="バースト" Grid.Row="0"  Grid.Column="0" IsChecked="{Binding  SelectedCard.Burst}"/>
-                            <CheckBox x:Name="reAction"  Content="リアクション"  Grid.Row="0" Grid.Column="1" IsChecked="{Binding  SelectedCard.ReAction}"/>
-                            <CheckBox x:Name="sealdtrigger"  Content="ダメージトリガー"  Grid.Row="1" Grid.Column="0"  IsChecked="{Binding  SelectedCard.SealedTrigger}"/>
-                            <CheckBox  x:Name="spellstep" Content="スペルステップ"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding  SelectedCard.SpellStep}"/>
-                            <CheckBox  x:Name="keepspell" Content="永続スペル"  Grid.Row="2" Grid.Column="0" IsChecked="{Binding  SelectedCard.KeepSpell}"/>
-                        </Grid>
-
-                    </StackPanel>
 
 
                     <!--ボタン-->
-                    <Button Name="ImageInsertButton" Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Content="グラフィック挿入" Command="{Binding GraphicInsertCommand}"  />
-                    <Button Name="Save" Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Content="保存"  Command="{Binding SaveCommand}" />
-                    <Button Name="SaveButton" Grid.Row="21" Grid.Column="2" Grid.ColumnSpan="2" Content="カード出力" Command="{Binding OutputCommand}" CommandParameter="{Binding ElementName=OutPutCanvas}"/>
-                    <Button Name="PrintButton" Grid.Row="22" Grid.Column="2" Grid.ColumnSpan="2" Content="印刷" Command="{Binding PrintCommand}" />
+                    <Button Name="ImageInsertButton" Grid.Row="17" Grid.Column="2" Grid.ColumnSpan="2" Content="グラフィック挿入" Command="{Binding GraphicInsertCommand}"  />
+                    <Button Name="Save" Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="2" Content="保存"  Command="{Binding SaveCommand}" />
+                    <Button Name="SaveButton" Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2" Content="カード出力" Command="{Binding OutputCommand}" CommandParameter="{Binding ElementName=OutPutCanvas}"/>
+                    <Button Name="PrintButton" Grid.Row="20" Grid.Column="2" Grid.ColumnSpan="2" Content="印刷" Command="{Binding PrintCommand}" />
 
                     <Grid Grid.Row="22" Grid.Column="1" >
                         <Grid.ColumnDefinitions>
