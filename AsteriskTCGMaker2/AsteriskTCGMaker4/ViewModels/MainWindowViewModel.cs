@@ -74,13 +74,13 @@ namespace AsteriskTCGMaker4.ViewModels
             }
         }
 
-        public ImageSource SourceSubRed { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Red.png", UriKind.Absolute));
-        public ImageSource SourceSubBlue { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Blue.png", UriKind.Absolute));
-        public ImageSource SourceSubGreen { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Green.png", UriKind.Absolute));
-        public ImageSource SourceSubYellow { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Yellow.png", UriKind.Absolute));
-        public ImageSource SourceSubBlack { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Black.png", UriKind.Absolute));
-        public ImageSource SourceSubWhite { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_White.png", UriKind.Absolute));
-        public ImageSource SourceSubNone { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Less.png", UriKind.Absolute));
+        public ImageSource SourceSubRed { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Red.png", UriKind.Absolute));
+        public ImageSource SourceSubBlue { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Blue.png", UriKind.Absolute));
+        public ImageSource SourceSubGreen { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Green.png", UriKind.Absolute));
+        public ImageSource SourceSubYellow { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Yellow.png", UriKind.Absolute));
+        public ImageSource SourceSubBlack { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Black.png", UriKind.Absolute));
+        public ImageSource SourceSubWhite { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_White.png", UriKind.Absolute));
+        public ImageSource SourceSubNone { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Less.png", UriKind.Absolute));
 
         public string CreateDeleateCardName { get; set; } = "CardName";
 
@@ -930,19 +930,65 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
+    /// <summary>
+    /// 色に相当するリソースを返す
+    /// </summary>
+    public class MainCostResourceConverter : IValueConverter
+    {
+
+        static BitmapImage MainRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Red.png", UriKind.Absolute));
+        static BitmapImage MainBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Blue.png", UriKind.Absolute));
+        static BitmapImage MainGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Green.png", UriKind.Absolute));
+        static BitmapImage MainYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Yellow.png", UriKind.Absolute));
+        static BitmapImage MainBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Black.png", UriKind.Absolute));
+        static BitmapImage MainWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_White.png", UriKind.Absolute));
+        static BitmapImage MainNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/MainMana_Less.png", UriKind.Absolute));
+
+
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch (value.ToString())
+            {
+                case "赤":
+                    return MainRed;
+                case "青":
+                    return MainBlue;
+                case "緑":
+                    return MainGreen;
+                case "黄":
+                    return MainYellow;
+                case "黒":
+                    return MainBlack;
+                case "白":
+                    return MainWhite;
+                default:
+                    return MainNone;
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return true;
+        }
+    }
+
 
     /// <summary>
     /// 色に相当するリソースを返す
     /// </summary>
     public class SubCostResourceConverter : IValueConverter
     {
-        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Red.png", UriKind.Absolute));
-        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Blue.png", UriKind.Absolute));
-        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Green.png", UriKind.Absolute));
-        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Yellow.png", UriKind.Absolute));
-        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Black.png", UriKind.Absolute));
-        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_White.png", UriKind.Absolute));
-        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Less.png", UriKind.Absolute));
+
+
+        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Red.png", UriKind.Absolute));
+        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Blue.png", UriKind.Absolute));
+        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Green.png", UriKind.Absolute));
+        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Yellow.png", UriKind.Absolute));
+        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Black.png", UriKind.Absolute));
+        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_White.png", UriKind.Absolute));
+        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Less.png", UriKind.Absolute));
 
 
 
@@ -1000,13 +1046,13 @@ namespace AsteriskTCGMaker4.ViewModels
     /// </summary>
     public class SubCostResourceHalfConverter : IValueConverter
     {
-        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_RedHalf.png", UriKind.Absolute));
-        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_BlueHalf.png", UriKind.Absolute));
-        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_GreenHalf.png", UriKind.Absolute));
-        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_YellowHalf.png", UriKind.Absolute));
-        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_BlackHalf.png", UriKind.Absolute));
-        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_WhiteHalf.png", UriKind.Absolute));
-        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_LessHalf.png", UriKind.Absolute));
+        static BitmapImage SubRed = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_RedHalf.png", UriKind.Absolute));
+        static BitmapImage SubBlue = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_BlueHalf.png", UriKind.Absolute));
+        static BitmapImage SubGreen = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_GreenHalf.png", UriKind.Absolute));
+        static BitmapImage SubYellow = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_YellowHalf.png", UriKind.Absolute));
+        static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_BlackHalf.png", UriKind.Absolute));
+        static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_WhiteHalf.png", UriKind.Absolute));
+        static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_LessHalf.png", UriKind.Absolute));
 
 
 
@@ -1204,32 +1250,6 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
-
-    /// <summary>
-    /// Color-Color2Source
-    /// </summary>
-    public class ColorToColor2SourceConverter : IValueConverter
-    {
-        private IDictionary<string, ImageSource> _color2Source = new Dictionary<string, ImageSource>() {
-            {"黒",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Black.png", UriKind.Absolute)) },
-            {"青",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Blue.png", UriKind.Absolute))},
-            {"緑",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Green.png", UriKind.Absolute))},
-            {"赤",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Red.png", UriKind.Absolute))},
-            {"白",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_White.png", UriKind.Absolute))},
-            {"黄",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Yellow.png", UriKind.Absolute))},
-            {"無",new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Mana_Less.png", UriKind.Absolute))},
-        };
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return _color2Source[value.ToString()];
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
-    }
 
     /// <summary>
     /// Color-Color2Source
