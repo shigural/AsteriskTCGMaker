@@ -186,14 +186,12 @@
                         <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Panel.ZIndex="-10" Margin="10" Width="220" Height="314"   HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
                         <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
-                        <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="20" >
-
-                            <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Bottom="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
-                                                    Width="220" Foreground="{Binding CardEffectColor}" Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
+                        <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="10" Canvas.Top="243" >
+                            <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Top="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
+                                                    Width="220" Foreground="{Binding CardEffectColor}"  Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                             </vm:BindableRichTextBox>
                         </Canvas>
-
-
+                        <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding CardEffectColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
                                        Canvas.Left="54" Canvas.Bottom="293"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
@@ -203,7 +201,7 @@
                                  BorderThickness="0"  TabIndex="303"/>
 
                         <!--種族-->
-                        <StackPanel  Canvas.Left="15" Canvas.Bottom="95" Panel.ZIndex="100"  Orientation="Horizontal">
+                        <StackPanel  Canvas.Left="10" Canvas.Bottom="95" Panel.ZIndex="100"  Orientation="Horizontal">
                             <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.SteraSpell,StringFormat=《{0}》, UpdateSourceTrigger=PropertyChanged}"  TabIndex="8"/>
                             <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"                   Visibility="{Binding SelectedCard.Kind1,Converter={StaticResource CheckEmptyConverter}}"  TabIndex="8"/>
                             <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
@@ -300,7 +298,7 @@
                         <Grid HorizontalAlignment="Right"  Canvas.Right="15" Canvas.Bottom="100" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
-                                      Foreground="White" FontSize="6" />
+                                      Foreground="White" FontSize="6"/>
                                 <TextBox x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
                                    Foreground="White" FontSize="6"  TabIndex="308" Canvas.Top="324"/>
                             </StackPanel>
@@ -395,6 +393,9 @@
          ScrollViewer.VerticalScrollBarVisibility="Auto"
          ScrollViewer.CanContentScroll="True"
                               />
+
+                    
+
 
                     <xctk:DoubleUpDown Name="CardEffectFontSizeBox" FormatString="F2" Increment="0.1" Text="{Binding EffectFontSize, UpdateSourceTrigger=PropertyChanged}" 
                                        Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Height="24" Margin="0,18"  TabIndex="202"  Minimum="0.1"/>

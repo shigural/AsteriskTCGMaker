@@ -246,18 +246,12 @@ namespace AsteriskTCGMaker4.ViewModels
 
             var effectText = SelectedCard.CardEffect;
             var effectFontSize = SelectedCard.EffectFontSize;
-            var flavorText = SelectedCard.FlavorText;
             var flavorFontSize = SelectedCard.FlavorFontSize;
 
             var outputDocument = new FlowDocument();
             var paragraph = new Paragraph();
 
 
-
-            var flavorRuns = new Run();
-            flavorRuns.Text = flavorText;
-            flavorRuns.FontFamily = new FontFamily("HGS 明朝B");
-            flavorRuns.FontSize = flavorFontSize;
 
             //指定の文字を指定のアイコンに変換する
             effectText = Regex.Replace(effectText, @"\[DT\]", "@DT@");
@@ -342,7 +336,7 @@ namespace AsteriskTCGMaker4.ViewModels
 
             //paragraph.Inlines.Add(effectRuns);
             paragraph.Inlines.Add(gapRuns);
-            paragraph.Inlines.Add(flavorRuns);
+
 
 
 
