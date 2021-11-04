@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\3\Kaisotai-Next-UP-B.ttf" />
     <None Remove="Resources\3\siteseeing.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\3\Kaisotai-Next-UP-B.ttf" />
     <Resource Include="Resources\3\siteseeing.ttf" />
   </ItemGroup>
 

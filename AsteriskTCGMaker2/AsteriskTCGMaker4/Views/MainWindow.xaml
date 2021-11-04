@@ -56,7 +56,7 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
+            <Setter Property="FontFamily" Value="/AsteriskTCGMaker4;component/Resources/3/#Kaisotai Next UP B"/>
         </Style>
 
         <Style x:Key="CardRubyTextStyle" TargetType="{x:Type TextBox}"  >
@@ -64,7 +64,7 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
+            <Setter Property="FontFamily" Value="HGゴシックM"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
@@ -124,9 +124,10 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontFamily" Value="/AsteriskTCGMaker4;component/Resources/3/#site seeing shop"/>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
@@ -303,14 +304,26 @@
 
 
                         <!--パワー-->
-                        <Grid Canvas.Left="2" Canvas.Bottom="2" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
-                            <TextBox Margin="10,0,5,0" x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
-                                       HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"   Background="Transparent" BorderThickness="0" 
-                                Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  TabIndex="307">
-                                <TextBox.RenderTransform>
-                                    <ScaleTransform ScaleX="1.25"/>
-                                </TextBox.RenderTransform>
-                            </TextBox>
+                        <Grid Canvas.Left="14" Canvas.Bottom="14" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
+                            <ItemsControl ItemsSource="{Binding SelectedCard.Power}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Path={},Mode=OneWay}"  Style="{StaticResource CardPowerTextStyle}" 
+                                                   Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  Margin="0,0,0.5,0">
+                                            <TextBox.RenderTransform>
+                                                <ScaleTransform ScaleX="1.25"/>
+                                            </TextBox.RenderTransform>
+                                        </TextBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+
                         </Grid>
 
                         <!--BR-->
