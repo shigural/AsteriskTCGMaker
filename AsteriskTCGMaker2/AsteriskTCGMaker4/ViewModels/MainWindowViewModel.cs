@@ -1359,6 +1359,30 @@ namespace AsteriskTCGMaker4.ViewModels
     }
 
 
+    public class CardInfoConverter : IMultiValueConverter
+    {//BR_None
+
+
+
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            //入力引数は「ステラ・スペル、種族1、種族2、種族3」の順
+
+
+            var text = "《" + values[0].ToString() + "》";
+            if (values[1].ToString() != "") text += values[1].ToString();
+            if (values[2].ToString() != "") text += " / " + values[2].ToString();
+            if (values[3].ToString() != "") text += " / " + values[3].ToString();
+
+            return text;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value.ToString().Split(':');
+        }
+    }
+
 
     public class BRImageConverter : IMultiValueConverter
     {//BR_None

@@ -32,6 +32,8 @@
         <vm:CheckEmptyConverter x:Key="CheckEmptyConverter"/>
         <vm:KindFontSizeConverter x:Key="KindFontSizeConverter"/>
         <vm:BRImageConverter x:Key="BRImageConverter"/>
+        <vm:CardInfoConverter x:Key="CardInfoConverter"/>
+
 
 
 
@@ -98,6 +100,7 @@
             <Setter Property="FontFamily" Value="/AsteriskTCGMaker4;component/Resources/3/#Kaisotai Next UP B"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="white"/>
         </Style>
 
         <Style x:Key="ManaTextStyle" TargetType="{x:Type exfont:OutlineText}"  >
@@ -195,18 +198,31 @@
                                        Canvas.Left="14" Canvas.Bottom="285"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
                                  Background="Transparent" BorderThickness="0"  TabIndex="304"/>
                         <TextBox x:Name="CardNameText" Text="{Binding SelectedCard.CardName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardNameTextStyle}"  Panel.ZIndex="410"
-                                   Canvas.Left="14" Canvas.Bottom="270"  FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.NameColor}" Background="Transparent" 
+                                   Canvas.Left="14" Canvas.Bottom="270"  FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.RubyColor}" Background="Transparent" 
                                  BorderThickness="0"  TabIndex="303" />
 
                         <!--種族-->
-                        <StackPanel  Canvas.Left="10" Canvas.Bottom="95" Panel.ZIndex="100"  Orientation="Horizontal">
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.SteraSpell,StringFormat=《{0}》, UpdateSourceTrigger=PropertyChanged}"  TabIndex="8"/>
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"                   Visibility="{Binding SelectedCard.Kind1,Converter={StaticResource CheckEmptyConverter}}"  TabIndex="8"/>
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind2,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind3, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
-                        </StackPanel>
+
+                        <ItemsControl Canvas.Left="10" Canvas.Bottom="93" Panel.ZIndex="100" >
+                            <ItemsControl.ItemsSource>
+                                <MultiBinding Converter="{StaticResource CardInfoConverter}">
+                                    <Binding Path="SelectedCard.SteraSpell"/>
+                                    <Binding Path="SelectedCard.Kind1"/>
+                                    <Binding Path="SelectedCard.Kind2"/>
+                                    <Binding Path="SelectedCard.Kind3"/>
+                                </MultiBinding>
+                            </ItemsControl.ItemsSource>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path={},Mode=OneWay}" Style="{StaticResource CardRaceTextStyle}"  Margin="0,0,-4,0"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
                         <!--メインマナ-->
                         <Image VerticalAlignment="Center" Margin="-3,-2,0,0" Canvas.Left="0" Canvas.Top="0"  Width="250"  Source="{Binding SelectedCard.CostColor1, Converter={StaticResource MainCostResourceConverter}}"   Panel.ZIndex="99" />
@@ -221,9 +237,9 @@
 
 
                         <!--サブマナ-->
-                        <StackPanel Orientation="Horizontal" Canvas.Left="32" Canvas.Bottom="294" Panel.ZIndex="180" >
+                        <StackPanel Orientation="Horizontal" Canvas.Left="34" Canvas.Bottom="294" Panel.ZIndex="180" >
                             <!--黒-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}" Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlack}" >
@@ -234,7 +250,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--緑-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostGreen}" >
@@ -245,7 +261,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--黄-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostYellow}" >
@@ -256,7 +272,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--白-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="35"    />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostWhite}" >
@@ -267,7 +283,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--赤-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostRed}" >
@@ -278,7 +294,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--青-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlue}"  Width="35"   />
 
@@ -290,7 +306,7 @@
                                 </Grid>
                             </StackPanel>
                             <!--無-->
-                            <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
+                            <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostNone}" >
@@ -314,6 +330,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Path={},Mode=OneWay}"  Style="{StaticResource CardPowerTextStyle}" 
+                                                 Foreground="{Binding Path=DataContext.SelectedCard.RubyColor,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}"
                                                    Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  Margin="0,0,0.5,0">
                                             <TextBox.RenderTransform>
                                                 <ScaleTransform ScaleX="1.25"/>
@@ -425,10 +442,6 @@
                            Text="{Binding SelectedCard.CardName, UpdateSourceTrigger=PropertyChanged}"   TabIndex="2" />
                     <xctk:DoubleUpDown Name="CardNameFontSizeBox" FormatString="F2" Increment="0.1" Grid.Row="4" Grid.Column="3"   Minimum="0.1"
                                        Text="{Binding SelectedCard.CardNameFontSize, UpdateSourceTrigger=PropertyChanged}"    TabIndex="201" />
-                    <TextBox Name="CardNameColor" Grid.Row="4" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
-                            Text="{Binding SelectedCard.NameColor, UpdateSourceTrigger=PropertyChanged}"    TabIndex="101" />
-                    <TextBox Name="EffectTextColor" Grid.Row="6" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
-                            Text="{Binding SelectedCard.EffectTextColor, UpdateSourceTrigger=PropertyChanged}"    TabIndex="101" />
 
 
 
@@ -507,14 +520,14 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <RadioButton Content="緑" Grid.Column="2"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
                             <RadioButton Content="黒" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
                             <RadioButton Content="黄" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
                             <RadioButton Content="白" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
                             <RadioButton Content="赤" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
                             <RadioButton Content="青" Grid.Column="1"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
-                         
+
                         </Grid>
                     </StackPanel>
 
@@ -533,12 +546,12 @@
                                 <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Background="#DD212C" Text="{Binding SelectedCard.SubCostRed, UpdateSourceTrigger=PropertyChanged}"  TabIndex="20" Grid.ColumnSpan="2" />
-                            <TextBox Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Background="#005EAC" Text="{Binding SelectedCard.SubCostBlue, UpdateSourceTrigger=PropertyChanged}"  TabIndex="21" />
-                            <TextBox Grid.Column="3"  Style="{StaticResource InfoTextBoxStyle}" Background="#009C42" Text="{Binding SelectedCard.SubCostGreen, UpdateSourceTrigger=PropertyChanged}"  TabIndex="22" />
-                            <TextBox Grid.Column="4"  Style="{StaticResource InfoTextBoxStyle}" Background="#EEC600" Text="{Binding SelectedCard.SubCostYellow, UpdateSourceTrigger=PropertyChanged}"  TabIndex="23" />
-                            <TextBox Grid.Column="5"  Style="{StaticResource InfoTextBoxStyle}" Background="#4F4C4B" Text="{Binding SelectedCard.SubCostBlack, UpdateSourceTrigger=PropertyChanged}"  TabIndex="24" />
-                            <TextBox Grid.Column="6"  Style="{StaticResource InfoTextBoxStyle}" Background="#EFEFEF" Text="{Binding SelectedCard.SubCostWhite, UpdateSourceTrigger=PropertyChanged}"  TabIndex="25" />
+                            <TextBox Grid.Column="0" Grid.ColumnSpan="2"   Style="{StaticResource InfoTextBoxStyle}" Background="#4F4C4B" Text="{Binding SelectedCard.SubCostBlack, UpdateSourceTrigger=PropertyChanged}"  TabIndex="24" />
+                            <TextBox Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Background="#009C42" Text="{Binding SelectedCard.SubCostGreen, UpdateSourceTrigger=PropertyChanged}"  TabIndex="22" />
+                            <TextBox Grid.Column="3"  Style="{StaticResource InfoTextBoxStyle}" Background="#EEC600" Text="{Binding SelectedCard.SubCostYellow, UpdateSourceTrigger=PropertyChanged}"  TabIndex="23" />
+                            <TextBox Grid.Column="4"  Style="{StaticResource InfoTextBoxStyle}" Background="#EFEFEF" Text="{Binding SelectedCard.SubCostWhite, UpdateSourceTrigger=PropertyChanged}"  TabIndex="25" />
+                            <TextBox Grid.Column="5"  Style="{StaticResource InfoTextBoxStyle}" Background="#DD212C" Text="{Binding SelectedCard.SubCostRed, UpdateSourceTrigger=PropertyChanged}"  TabIndex="20" />
+                            <TextBox Grid.Column="6"  Style="{StaticResource InfoTextBoxStyle}" Background="#005EAC" Text="{Binding SelectedCard.SubCostBlue, UpdateSourceTrigger=PropertyChanged}"  TabIndex="21" />
                             <TextBox Grid.Column="7"  Style="{StaticResource InfoTextBoxStyle}" Background="#999796" Text="{Binding SelectedCard.SubCostNone, UpdateSourceTrigger=PropertyChanged}"  TabIndex="26" />
                         </Grid>
                     </StackPanel>
