@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\3\siteseeing.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\3\siteseeing.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.6.0" />
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="LivetCask" Version="3.2.1" />

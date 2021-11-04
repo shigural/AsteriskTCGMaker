@@ -36,7 +36,6 @@ namespace AsteriskTCGMaker4.ViewModels
     internal class MainWindowViewModel : ViewModelBase
     {
 
-        public string CardEffectColor { get; set; } = "white";
 
         public string CardEffectTitle
         {

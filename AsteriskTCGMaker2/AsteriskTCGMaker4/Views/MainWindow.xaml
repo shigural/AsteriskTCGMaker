@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+    xmlns:exfont="clr-namespace:ExtendFont"
     xmlns:v="clr-namespace:AsteriskTCGMaker4.Views"
     xmlns:vm="clr-namespace:AsteriskTCGMaker4.ViewModels"
     xmlns:b="clr-namespace:AsteriskTCGMaker4.Views.Behaviors"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="AsteriskTCGMaker4"
+    SizeToContent="WidthAndHeight"
     x:Name="MyWindow"
     
     Width="1024" Height="640">
@@ -98,29 +100,23 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
-        <Style x:Key="CardMainManaTextStyle" TargetType="{x:Type TextBox}"  >
-            <Setter Property="CaretBrush" Value="Red"/>
+        <Style x:Key="ManaTextStyle" TargetType="{x:Type exfont:OutlineText}"  >
             <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="36"/>
-            <Setter Property="FontFamily" Value="Arial "/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="/AsteriskTCGMaker4;component/Resources/3/#site seeing shop"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Stroke" Value="Black"/>
+            <Setter Property="Fill" Value="White"/>
+            <Setter Property="StrokeThickness" Value="1"/>
         </Style>
 
-        <Style x:Key="CardSubManaTextStyle" TargetType="{x:Type TextBox}"  >
-            <Setter Property="CaretBrush" Value="Red"/>
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
-            <Setter Property="Padding" Value="0,0"/>
+        <Style x:Key="SubManaTextStyle" BasedOn="{StaticResource ManaTextStyle}" TargetType="{x:Type exfont:OutlineText}" >
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontFamily" Value="Arial "/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="MainManaTextStyle" BasedOn="{StaticResource ManaTextStyle}" TargetType="{x:Type exfont:OutlineText}" >
+            <Setter Property="FontSize" Value="25"/>
         </Style>
 
         <Style x:Key="CardPowerTextStyle" TargetType="{x:Type TextBox}"  >
@@ -128,8 +124,8 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontFamily" Value="Bahnschrift "/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="/AsteriskTCGMaker4;component/Resources/3/#site seeing shop"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
@@ -144,6 +140,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
+
 
     </Window.Resources>
 
@@ -188,10 +185,10 @@
                         <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="10" Canvas.Top="243" >
                             <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Top="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
-                                                    Width="220" Foreground="{Binding CardEffectColor}"  Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
+                                                    Width="220" Foreground="{Binding SelectedCard.EffectTextColor}"  Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                             </vm:BindableRichTextBox>
                         </Canvas>
-                        <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding CardEffectColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
+                        <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding SelectedCard.EffectTextColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
                                        Canvas.Left="54" Canvas.Bottom="293"  FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
@@ -202,20 +199,22 @@
 
                         <!--種族-->
                         <StackPanel  Canvas.Left="10" Canvas.Bottom="95" Panel.ZIndex="100"  Orientation="Horizontal">
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.SteraSpell,StringFormat=《{0}》, UpdateSourceTrigger=PropertyChanged}"  TabIndex="8"/>
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"                   Visibility="{Binding SelectedCard.Kind1,Converter={StaticResource CheckEmptyConverter}}"  TabIndex="8"/>
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind2,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
-                            <TextBox Foreground="{Binding SelectedCard.NameColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind3, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.SteraSpell,StringFormat=《{0}》, UpdateSourceTrigger=PropertyChanged}"  TabIndex="8"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind1, UpdateSourceTrigger=PropertyChanged}"                   Visibility="{Binding SelectedCard.Kind1,Converter={StaticResource CheckEmptyConverter}}"  TabIndex="8"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind2,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind2,Converter={StaticResource CheckEmptyConverter}}"   TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="/" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
+                            <TextBox Foreground="{Binding SelectedCard.EffectTextColor}" Style="{StaticResource CardRaceTextStyle}" Text="{Binding SelectedCard.Kind3, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding SelectedCard.Kind3,Converter={StaticResource CheckEmptyConverter}}"    TabIndex="9"/>
                         </StackPanel>
 
                         <!--メインマナ-->
                         <Grid Canvas.Left="8" Canvas.Bottom="270" Panel.ZIndex="200">
-                            <Image VerticalAlignment="Bottom" Margin="-3,2" Width="50" Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource SubCostResourceConverter}}"   Panel.ZIndex="99" />
-                            <TextBox x:Name="CardMainManaText" Text="{Binding SelectedCard.CostMana1}" Style="{StaticResource CardMainManaTextStyle}"  Panel.ZIndex="1200"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding SelectedCard.NameColor}" 
-                                     FontWeight="Bold" Background="Transparent" BorderThickness="0"  TabIndex="300"/>
+                            <Image VerticalAlignment="Center" Margin="-3,2" Width="50" Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource SubCostResourceConverter}}"   Panel.ZIndex="99" />
+                            <exfont:OutlineText    Style="{StaticResource MainManaTextStyle}"   Text="{Binding SelectedCard.CostMana1}"  Panel.ZIndex="160">
+                                <exfont:OutlineText.RenderTransform>
+                                    <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                </exfont:OutlineText.RenderTransform>
+                            </exfont:OutlineText>
                         </Grid>
 
 
@@ -226,49 +225,78 @@
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostRed,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostRed}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--青-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlue}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostBlue,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlue}">
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--緑-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostGreen,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostGreen}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--黄-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostYellow,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostYellow}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--黒-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostBlack,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlack}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--白-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostWhite,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostWhite}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                             <!--無-->
                             <StackPanel Margin="0,0,-6,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="35"   />
-                                    <TextBox Margin="3,10" Text="{Binding SelectedCard.SubCostNone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardSubManaTextStyle}"  />
+                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostNone}" >
+                                        <exfont:OutlineText.RenderTransform>
+                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                        </exfont:OutlineText.RenderTransform>
+                                    </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
@@ -277,8 +305,12 @@
                         <!--パワー-->
                         <Grid Canvas.Left="2" Canvas.Bottom="2" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
                             <TextBox Margin="10,0,5,0" x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
-                                       HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"  Background="Transparent" BorderThickness="0" 
-                                   FontStyle="Italic"    Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  TabIndex="307"/>
+                                       HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"   Background="Transparent" BorderThickness="0" 
+                                Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  TabIndex="307">
+                                <TextBox.RenderTransform>
+                                    <ScaleTransform ScaleX="1.25"/>
+                                </TextBox.RenderTransform>
+                            </TextBox>
                         </Grid>
 
                         <!--BR-->
@@ -382,6 +414,10 @@
                                        Text="{Binding SelectedCard.CardNameFontSize, UpdateSourceTrigger=PropertyChanged}"    TabIndex="201" />
                     <TextBox Name="CardNameColor" Grid.Row="4" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
                             Text="{Binding SelectedCard.NameColor, UpdateSourceTrigger=PropertyChanged}"    TabIndex="101" />
+                    <TextBox Name="EffectTextColor" Grid.Row="6" Grid.Column="2" Style="{StaticResource InfoTextBoxStyle}"
+                            Text="{Binding SelectedCard.EffectTextColor, UpdateSourceTrigger=PropertyChanged}"    TabIndex="101" />
+
+
 
                     <!--効果-->
                     <TextBlock Grid.Row="5" Grid.Column="1" Text="効果"
@@ -394,7 +430,7 @@
          ScrollViewer.CanContentScroll="True"
                               />
 
-                    
+
 
 
                     <xctk:DoubleUpDown Name="CardEffectFontSizeBox" FormatString="F2" Increment="0.1" Text="{Binding EffectFontSize, UpdateSourceTrigger=PropertyChanged}" 
