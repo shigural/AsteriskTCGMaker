@@ -17,7 +17,7 @@
             <Viewbox Grid.Row="0" Grid.Column="0">
                 <Grid Name="InputGrid" Height="892" Width=" 631" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <!--806 582-->
-                    <Image x:Name="OutsideFlame" Stretch="Uniform" Source="Resources/2/OutsideFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Image x:Name="OutsideFlame" Stretch="Uniform" Source="Resources/OutsideFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <Grid Height="806" Width=" 582" ClipToBounds="False"  Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -30,20 +30,20 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="card0"  Grid.Row="0" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card1"  Grid.Row="0" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card2"  Grid.Row="0" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card3"  Grid.Row="1" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card4"  Grid.Row="1" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card5"  Grid.Row="1" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card6"  Grid.Row="2" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card7"  Grid.Row="2" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
-                        <Image x:Name="card8"  Grid.Row="2" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/2/output.png" />
+                        <Image x:Name="card0"  Grid.Row="0" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card1"  Grid.Row="0" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card2"  Grid.Row="0" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card3"  Grid.Row="1" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card4"  Grid.Row="1" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card5"  Grid.Row="1" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card6"  Grid.Row="2" Grid.Column="0" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card7"  Grid.Row="2" Grid.Column="1" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
+                        <Image x:Name="card8"  Grid.Row="2" Grid.Column="2" Stretch="Fill" Width="194" Height="268" HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/output.png" />
 
 
                     </Grid>
-                    <Image x:Name="PrintFlame" Stretch="Uniform" Source="Resources/2/PrintFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Image x:Name="backPackage" Stretch="Uniform" Source="Resources/2/backPackage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                    <Image x:Name="PrintFlame" Stretch="Uniform" Source="Resources/PrintFlame.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image x:Name="backPackage" Stretch="Uniform" Source="Resources/backPackage.png" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                 </Grid>
             </Viewbox>
             <CheckBox x:Name="downView" Content="低解像度" Grid.Column="0" HorizontalAlignment="Right" Margin="0,861,325,0" VerticalAlignment="Top" Width="76" />

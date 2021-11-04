@@ -182,12 +182,13 @@
                     <Canvas Panel.ZIndex="100" Width="240"  Height="334" ClipToBounds="True" x:Name="OutPutCanvas" >
                         <!--画像は本来の240×334から各方位5ピクセルだけ引いている-->
                         <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Panel.ZIndex="-10" Margin="10" Width="220" Height="314"   HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
-                        <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
+                        <Image  x:Name="CardFlame" Source="Resources/CardFlame.png" Panel.ZIndex="-5"  Width="240" Height="334" />
+                        <Image  x:Name="CardTitleImage"  Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="190" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
+                        <Image   Stretch="Uniform" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Width="292" Canvas.Left="-32" Canvas.Top="-32" Panel.ZIndex="195"  Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="15" Canvas.Bottom="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToTextBoxBottom}}" >
-                            <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/2/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
-                            <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/2/TextBoxUp.png" Canvas.Bottom="{Binding SelectedCard.TextBoxSize, Converter={StaticResource BoxSizeToBoxBottomConverter}}" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
-                            <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/2/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="{Binding SelectedCard.TextBoxSize}"   Opacity="0.5" />
+                            <Image  x:Name="CardEffectImageDown"  Stretch="Fill" Source="Resources/TextBoxDown.png" Canvas.Bottom="0" Panel.ZIndex="10" Width="210" Height="12" Opacity="0.5" />
+                            <Image  x:Name="CardEffectImageUp"  Stretch="Fill" Source="Resources/TextBoxUp.png" Canvas.Bottom="{Binding SelectedCard.TextBoxSize, Converter={StaticResource BoxSizeToBoxBottomConverter}}" Panel.ZIndex="10" Width="210" Height="12"  Opacity="0.5" />
+                            <Image  x:Name="CardEffectImageCenter"  Stretch="Fill" Source="Resources/TextBoxCenter.png" Canvas.Bottom="12" Panel.ZIndex="10" Width="210" Height="{Binding SelectedCard.TextBoxSize}"   Opacity="0.5" />
 
 
 
@@ -198,31 +199,31 @@
 
 
                         </Canvas>
-                        <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/2/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-28" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardKind1"  Stretch="Uniform" Source="Resources/2/KindFrame.png"  Width="55" Panel.ZIndex="16" Canvas.Left="55" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardKind2"  Stretch="Uniform" Source="Resources/2/KindFrame.png"  Width="55" Panel.ZIndex="17" Canvas.Left="12" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
+                        <Image  x:Name="CardPowerImage"  Stretch="None" Source="Resources/PowerFlame.png"  Width="250" Panel.ZIndex="15" Canvas.Left="30" Canvas.Bottom="-28" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
+                        <Image  x:Name="CardKind1"  Stretch="Uniform" Source="Resources/KindFrame.png"  Width="55" Panel.ZIndex="16" Canvas.Left="55" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
+                        <Image  x:Name="CardKind2"  Stretch="Uniform" Source="Resources/KindFrame.png"  Width="55" Panel.ZIndex="17" Canvas.Left="12" Canvas.Bottom="18" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"/>
                         <StackPanel x:Name="CardBreakUp" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="27" Canvas.Bottom="33" Height="18" Width="80" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
-                            <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=5}"/>
-                            <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=4}"/>
-                            <Image  x:Name="CardBreakImage3"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=3}"/>
-                            <Image  x:Name="CardBreakImage2"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=2}"/>
-                            <Image  x:Name="CardBreakImage1"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=1}"/>
+                            <Image  x:Name="CardBreakImage5"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=5}"/>
+                            <Image  x:Name="CardBreakImage4"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=4}"/>
+                            <Image  x:Name="CardBreakImage3"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=3}"/>
+                            <Image  x:Name="CardBreakImage2"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=2}"/>
+                            <Image  x:Name="CardBreakImage1"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=1}"/>
                         </StackPanel>
 
                         <StackPanel  x:Name="CardBreakDown" Orientation="Horizontal" Panel.ZIndex="15" Canvas.Left="35" Canvas.Bottom="20" Height="18" Width="80" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
-                            <Image  x:Name="CardBreakImage9"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=9}"/>
-                            <Image  x:Name="CardBreakImage8"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=8}"/>
-                            <Image  x:Name="CardBreakImage7"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=7}"/>
-                            <Image  x:Name="CardBreakImage6"  Stretch="Fill" Source="Resources/2/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=6}"/>
+                            <Image  x:Name="CardBreakImage9"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=9}"/>
+                            <Image  x:Name="CardBreakImage8"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=8}"/>
+                            <Image  x:Name="CardBreakImage7"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=7}"/>
+                            <Image  x:Name="CardBreakImage6"  Stretch="Fill" Source="Resources/break.png"  Width="14" Margin="1,1,1,1" Visibility="{Binding SelectedCard.BR, Converter={StaticResource BRToVisibillityConverter},ConverterParameter=6}"/>
                         </StackPanel>
 
 
                         <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="125" Height="144" Width="30">
-                            <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/2/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/2/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage3" Stretch="Fill" Source="Resources/2/sealedtrigger.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SealedTrigger, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/2/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/2/Ke.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage3" Stretch="Fill" Source="Resources/sealedtrigger.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SealedTrigger, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/Ke.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
                         </StackPanel>
 
                         <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
