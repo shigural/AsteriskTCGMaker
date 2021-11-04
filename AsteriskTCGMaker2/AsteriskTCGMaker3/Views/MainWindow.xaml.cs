@@ -23,8 +23,8 @@ namespace AsteriskTCGMaker3.Views
         {
             InitializeComponent();
             path = System.AppDomain.CurrentDomain.BaseDirectory;
-            CardFlameST.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Stera_Black.png", UriKind.Absolute));
-            CardFlameSP.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Spell_Black.png", UriKind.Absolute));
+            //CardFlameST.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Stera_Black.png", UriKind.Absolute));
+            //CardFlameSP.Source = new BitmapImage(new Uri(path + "Resources/3/CardFlame_Spell_Black.png", UriKind.Absolute));
             //CardImage.Source = new BitmapImage(new Uri(path + "Resources/2/InputSample.png", UriKind.Absolute));
             CardEffectImageDown.Source = new BitmapImage(new Uri(path + "Resources/2/TextBoxDown.png", UriKind.Absolute));
             CardEffectImageUp.Source = new BitmapImage(new Uri(path + "Resources/2/TextBoxUp.png", UriKind.Absolute));
