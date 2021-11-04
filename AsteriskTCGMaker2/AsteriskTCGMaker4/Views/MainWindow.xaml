@@ -112,12 +112,12 @@
         </Style>
 
         <Style x:Key="SubManaTextStyle" BasedOn="{StaticResource ManaTextStyle}" TargetType="{x:Type exfont:OutlineText}" >
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="6,0,0,0"/>
         </Style>
 
         <Style x:Key="MainManaTextStyle" BasedOn="{StaticResource ManaTextStyle}" TargetType="{x:Type exfont:OutlineText}" >
-            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontSize" Value="16.5"/>
         </Style>
 
         <Style x:Key="CardPowerTextStyle" TargetType="{x:Type TextBox}"  >
@@ -210,7 +210,7 @@
 
                         <!--メインマナ-->
                         <Image VerticalAlignment="Center" Margin="-3,-2,0,0" Canvas.Left="0" Canvas.Top="0"  Width="250"  Source="{Binding SelectedCard.CostColor1, Converter={StaticResource MainCostResourceConverter}}"   Panel.ZIndex="99" />
-                        <Grid Canvas.Left="20" Canvas.Bottom="300" Panel.ZIndex="200" HorizontalAlignment="Center">
+                        <Grid Canvas.Left="20" Canvas.Bottom="299" Panel.ZIndex="200" HorizontalAlignment="Center">
                             <exfont:OutlineText Margin="2,0,0,0"   Style="{StaticResource MainManaTextStyle}"   Text="{Binding SelectedCard.CostMana1}"  Panel.ZIndex="160">
                                 <exfont:OutlineText.RenderTransform>
                                     <ScaleTransform ScaleX="1.75" CenterX="9"/>
@@ -221,7 +221,7 @@
 
 
                         <!--サブマナ-->
-                        <StackPanel Orientation="Horizontal" Canvas.Left="34" Canvas.Bottom="294" Panel.ZIndex="180" >
+                        <StackPanel Orientation="Horizontal" Canvas.Left="32" Canvas.Bottom="294" Panel.ZIndex="180" >
                             <!--黒-->
                             <StackPanel Margin="0,0,-8,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
@@ -304,7 +304,7 @@
 
 
                         <!--パワー-->
-                        <Grid Canvas.Left="16" Canvas.Bottom="17" Width="90" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
+                        <Grid Canvas.Left="16" Canvas.Bottom="16" Width="90" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
                             <ItemsControl ItemsSource="{Binding SelectedCard.Power}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -327,8 +327,8 @@
                         </Grid>
 
                         <!--BR-->
-                        <Grid Panel.ZIndex="150" Canvas.Left="68" Canvas.Bottom="5" HorizontalAlignment="Center" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
-                            <Image Width="20">
+                        <Grid Panel.ZIndex="150" Canvas.Left="66" Canvas.Bottom="5" HorizontalAlignment="Center" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}">
+                            <Image Width="23">
                                 <Image.Source>
                                     <MultiBinding Converter="{StaticResource BRImageConverter}">
                                         <Binding Path="SelectedCard.BR"/>
@@ -343,9 +343,9 @@
                         <Grid HorizontalAlignment="Right"  Canvas.Right="12" Canvas.Bottom="100" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
-                                      Foreground="White" FontSize="4"/>
-                                <TextBox Margin="-4,0,0,0"  x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
-                                   Foreground="White" FontSize="4"  TabIndex="308" Canvas.Top="324"/>
+                                      Foreground="White" FontSize="5"/>
+                                <TextBox Margin="-3,0,0,0"  x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
+                                   Foreground="White" FontSize="5"  TabIndex="308" Canvas.Top="324"/>
                             </StackPanel>
                         </Grid>
 
