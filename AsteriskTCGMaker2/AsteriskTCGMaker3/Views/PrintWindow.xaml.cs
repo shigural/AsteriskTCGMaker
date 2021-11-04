@@ -52,9 +52,9 @@ namespace AsteriskTCGMaker3.Views
             card6.Source = output_bi;
             card7.Source = output_bi;
             card8.Source = output_bi;
-            PrintFlame.Source = new BitmapImage(new Uri(path + "Resources/PrintFlame.png", UriKind.Absolute));
-            OutsideFlame.Source = new BitmapImage(new Uri(path + "Resources/OutsideFlame.png", UriKind.Absolute));
-            backPackage.Source = new BitmapImage(new Uri(path + "Resources/backPackage.png", UriKind.Absolute));
+            PrintFlame.Source = new BitmapImage(new Uri(path + "Resources/2/PrintFlame.png", UriKind.Absolute));
+            OutsideFlame.Source = new BitmapImage(new Uri(path + "Resources/2/OutsideFlame.png", UriKind.Absolute));
+            backPackage.Source = new BitmapImage(new Uri(path + "Resources/2/backPackage.png", UriKind.Absolute));
         }
 
         //画面を更新する
