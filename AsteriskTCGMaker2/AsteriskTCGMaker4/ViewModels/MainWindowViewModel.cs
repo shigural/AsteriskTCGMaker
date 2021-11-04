@@ -212,7 +212,7 @@ namespace AsteriskTCGMaker4.ViewModels
 
                     var effectRuns = new Run();
                     effectRuns.Text = str;
-                    effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                    effectRuns.FontFamily = new FontFamily("小塚ゴシック Pr6N R");
                     effectRuns.FontSize = effectFontSize;
 
                     if (loopMode == 0)
@@ -233,7 +233,7 @@ namespace AsteriskTCGMaker4.ViewModels
             else
             {//奇数個含まれる場合
                 var effectRuns = new Run();
-                effectRuns.FontFamily = new FontFamily("HGS ゴシックM");
+                effectRuns.FontFamily = new FontFamily("小塚ゴシック Pr6N R");
                 effectRuns.FontSize = effectFontSize;
                 paragraph.Inlines.Add(effectRuns);
             }
@@ -265,6 +265,7 @@ namespace AsteriskTCGMaker4.ViewModels
             effectText = Regex.Replace(effectText, @"\(白\)", "@W@");
             effectText = Regex.Replace(effectText, @"\(緑\)", "@G@");
             effectText = Regex.Replace(effectText, @"\(無\)", "@N@");
+            effectText = Regex.Replace(effectText, @"\r\n\r\n", "@SPACE@");
 
             //機種依存文字を利用しても、見栄えを重視する
             effectText = Regex.Replace(effectText, "□", "◻");
@@ -298,7 +299,20 @@ namespace AsteriskTCGMaker4.ViewModels
                     else
                     {//アイコンに関する処理
 
-                        if (File.Exists(Singleton.Instance.Path + "Icon/" + str + ".png") == true)
+                        if (str == "SPACE")
+                        {
+                            var gapRuns = new Run();
+
+                            gapRuns.FontFamily = new FontFamily("小塚ゴシック Pr6N R");
+                            gapRuns.FontSize = 3;
+                            gapRuns.Text = "\n    あ   \n";
+                            gapRuns.Foreground = new SolidColorBrush(Colors.Transparent);
+
+
+                            //paragraph.Inlines.Add(effectRuns);
+                            paragraph.Inlines.Add(gapRuns);
+                        }
+                        else if (File.Exists(Singleton.Instance.Path + "Icon/" + str + ".png") == true)
                         {
                             Image image = new Image();
                             image.Width = effectFontSize;
@@ -323,27 +337,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 createRunEffectText(paragraph, effectText, effectFontSize);
             }
 
-
-
-            var gapRuns = new Run();
-
-            gapRuns.FontFamily = new FontFamily("HGS ゴシックM");
-            gapRuns.FontSize = 3;
-            gapRuns.Text = "\n    あ   \n";
-            gapRuns.Foreground = new SolidColorBrush(Colors.Transparent);
-
-
-            //paragraph.Inlines.Add(effectRuns);
-            paragraph.Inlines.Add(gapRuns);
-
-
-
-
-
             outputDocument.Blocks.Add(paragraph);
-
-
-
             return outputDocument;
         }
 
