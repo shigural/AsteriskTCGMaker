@@ -1022,6 +1022,27 @@ namespace AsteriskTCGMaker3.ViewModels
     }
 
     /// <summary>
+    /// 色に相当するリソースの右半分を返す
+    /// </summary>
+    public class KindFontSizeConverter : IValueConverter
+    {
+    
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value.ToString().Length < 4) return 9;
+            else return 7;
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return true;
+        }
+    }
+
+    
+
+    /// <summary>
     /// Bindingの値が引数より大きいければ表示するコンバーター
     /// </summary>
     public class CheckValueSizeConverter : IValueConverter

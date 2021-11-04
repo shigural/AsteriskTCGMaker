@@ -29,7 +29,8 @@
         <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
         <vm:SubCostResourceHalfConverter x:Key="SubCostResourceHalfConverter"/>
-
+        <vm:KindFontSizeConverter x:Key="KindFontSizeConverter"/>
+        
 
         <Style x:Key="InfoTextBlockStyle" TargetType="{x:Type TextBlock}"  >
             <Setter Property="FontSize" Value="12" />
@@ -90,7 +91,6 @@
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="0,0"/>
-            <Setter Property="FontSize" Value="9"/>
             <Setter Property="FontFamily" Value="HGS創英ﾌﾟﾚｾﾞﾝｽEB"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -235,12 +235,12 @@
 
                         <Grid  Canvas.Left="24" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
                             <TextBox x:Name="CardRace1Text" Text="{Binding SelectedCard.Kind1}" Style="{StaticResource CardRaceTextStyle}"  
-                                       HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}"
+                                       HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}" FontSize="{Binding SelectedCard.Kind1,Converter={StaticResource KindFontSizeConverter}}"
                                      Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="305"/>
                         </Grid>
                         <Grid  Canvas.Left="68" Canvas.Bottom="22" Panel.ZIndex="100"  Width="29">
                             <TextBox x:Name="CardRace2Text" Text="{Binding SelectedCard.Kind2, Converter={StaticResource KindConverter}}" Style="{StaticResource CardRaceTextStyle}"  Panel.ZIndex="100"
-                                        HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}" 
+                                        HorizontalAlignment="Center" Foreground="{Binding SelectedCard.NameColor}"   FontSize="{Binding SelectedCard.Kind2,Converter={StaticResource KindFontSizeConverter}}"
                                      Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource ValueEqualParaToVisibillityConverter},ConverterParameter=ステラ}"  TabIndex="306"/>
                         </Grid>
 
@@ -390,9 +390,9 @@
 
                   
                         
-                        <Grid Canvas.Left="112" Canvas.Bottom="18" Width="80" Height="30" Panel.ZIndex="205">
-                            <TextBox x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"  Background="Transparent" BorderThickness="0"
+                        <Grid Canvas.Left="112" Canvas.Bottom="18" Width="80" Height="30" Panel.ZIndex="205" HorizontalAlignment="Center">
+                            <TextBox Margin="10,0,5,0" Width="80" x:Name="CardPowerText" Text="{Binding SelectedCard.Power,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardPowerTextStyle}"  Panel.ZIndex="100"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"  Background="Transparent" BorderThickness="0" 
                                    FontStyle="Italic"    Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity}, ConverterParameter=ステラ}"  TabIndex="307"/>
                         </Grid>
                         <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
