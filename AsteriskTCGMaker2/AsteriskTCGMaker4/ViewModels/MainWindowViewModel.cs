@@ -712,8 +712,6 @@ namespace AsteriskTCGMaker4.ViewModels
                 {
                     this._savetCommand = new ViewModelCommand(() =>
                     {
-                        if (SelectedCard.SealedTrigger && !SelectedCard.CardEffect.Contains("[DT]")) MessageBox.Show("効果テキストにDTがありますが、カード左上にDTがありません");
-                        if (!SelectedCard.SealedTrigger && SelectedCard.CardEffect.Contains("[DT]")) MessageBox.Show("効果テキストにDTがありませんが、カード左上にDTがあります");
                         if (File.Exists(Singleton.Instance.CardPath + "\\" + SelectedCard.CardName + ".atcg"))
                         {
                             Save(SelectedCard);
@@ -1498,8 +1496,8 @@ namespace AsteriskTCGMaker4.ViewModels
                 return bmpImage;
             }
         }
-        public double RubyFontSize { get; set; } = 4;
-        public double CardNameFontSize { get; set; } = 10;
+        public double RubyFontSize { get; set; } = 3;
+        public double CardNameFontSize { get; set; } = 15;
 
         public string RubyColor { get; set; } = "white";
         public string NameColor { get; set; } = "white";
@@ -1605,7 +1603,7 @@ namespace AsteriskTCGMaker4.ViewModels
         {
             CardName = "";
             CardEffect = "";
-            SteraSpell = "";
+            SteraSpell = "ステラ";
             Kind1 = "";
             Kind2 = "";
             Kind3 = "";
