@@ -73,7 +73,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 }));
             }
         }
-
+        public ImageSource SourceSample { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/Sample.png", UriKind.Absolute));
         public ImageSource SourceSubRed { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Red.png", UriKind.Absolute));
         public ImageSource SourceSubBlue { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Blue.png", UriKind.Absolute));
         public ImageSource SourceSubGreen { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Green.png", UriKind.Absolute));
@@ -81,6 +81,9 @@ namespace AsteriskTCGMaker4.ViewModels
         public ImageSource SourceSubBlack { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Black.png", UriKind.Absolute));
         public ImageSource SourceSubWhite { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_White.png", UriKind.Absolute));
         public ImageSource SourceSubNone { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Less.png", UriKind.Absolute));
+
+        private bool _sampleOutputMode = false;
+        public bool SampleOutputMode { get { return _sampleOutputMode; } set { _sampleOutputMode = value; OnPropertyChanged(nameof(SampleOutputMode)); } }
 
         public string CreateDeleateCardName { get; set; } = "CardName";
 
@@ -1039,6 +1042,7 @@ namespace AsteriskTCGMaker4.ViewModels
     }
 
 
+
     /// <summary>
     /// 色に相当するリソースの右半分を返す
     /// </summary>
@@ -1212,6 +1216,20 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
+    public class BoolToVisibillityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var beta = bool.Parse(value.ToString());
+            if (beta == true) return Visibility.Visible;
+            else return Visibility.Hidden;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
 
 
     /// <summary>

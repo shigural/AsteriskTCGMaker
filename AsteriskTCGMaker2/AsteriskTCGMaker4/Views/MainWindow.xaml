@@ -29,6 +29,9 @@
         <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
         <vm:MainCostResourceConverter x:Key="MainCostResourceConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
+        <vm:BoolToVisibillityConverter x:Key="BoolToVisibillityConverter"/>
+        
+        
         <vm:CheckEmptyConverter x:Key="CheckEmptyConverter"/>
         <vm:KindFontSizeConverter x:Key="KindFontSizeConverter"/>
         <vm:BRImageConverter x:Key="BRImageConverter"/>
@@ -188,12 +191,14 @@
                         
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
                         <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
+                        <Image  x:Name="Sample" Panel.ZIndex="200"  Width="240" Height="334" Source="{Binding SourceSample}" Visibility="{Binding SampleOutputMode,Converter={StaticResource BoolToVisibillityConverter}}"/>
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="10" Canvas.Top="243" >
                             <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Top="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
                                                     Width="220" Foreground="{Binding SelectedCard.EffectTextColor}"  Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                             </vm:BindableRichTextBox>
                         </Canvas>
                         <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding SelectedCard.EffectTextColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
+                        <TextBox Text="このカードは公式デュエルでは使用できません" Visibility="{Binding SelectedCard.Beta,Converter={StaticResource BoolToVisibillityConverter}}" FontFamily="HGP教科書体" Foreground="White" FontSize="6" Canvas.Top="40" Canvas.Left="38" Background="Transparent" BorderThickness="0"/>
 
                         <StackPanel Canvas.Left="37" Canvas.Bottom="270" Orientation="Vertical" HorizontalAlignment="Center" Width="240">
                             <TextBox Margin="0,0,0,-3" x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
@@ -381,8 +386,9 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                        <RadioButton x:Name="suteraBox" Content="ステラ" Grid.Column="0"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSteraCOnverter}}"/>
-                        <RadioButton Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
+                        <RadioButton Margin="0,0,10,0" x:Name="suteraBox" Content="ステラ" Grid.Column="0"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSteraCOnverter}}"/>
+                        <RadioButton Margin="0,0,10,0" Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
+                        <CheckBox Margin="0,0,10,0" Content="アンダーン" Grid.Column="2" IsChecked="{Binding SelectedCard.Beta,Mode=TwoWay}"/>
                     </StackPanel>
 
                     <!--Break-->
@@ -481,14 +487,16 @@
 
 
                     <!--メイン/パワー-->
-                    <TextBlock Grid.Row="9" Grid.Column="1" Text="メイン/パワー" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
+                    <TextBlock Grid.Row="9" Grid.Column="1" Text="メイン/無色コスト/パワー" TextAlignment="Left"  Style="{StaticResource InfoTextBlockStyle}"/>
                     <Grid Grid.Row="10" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Row="0" Grid.Column="0"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.CostMana1, UpdateSourceTrigger=PropertyChanged}"  TabIndex="5" />
-                        <TextBox Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Power, UpdateSourceTrigger=PropertyChanged}"   TabIndex="7"/>
+                        <TextBox  Grid.Row="0" Grid.Column="1"  Style="{StaticResource InfoTextBoxStyle}"  Text="{Binding SelectedCard.SubCostNone, UpdateSourceTrigger=PropertyChanged}"  TabIndex="6" />
+                        <TextBox Grid.Row="0" Grid.Column="2"  Style="{StaticResource InfoTextBoxStyle}" Text="{Binding SelectedCard.Power, UpdateSourceTrigger=PropertyChanged}"   TabIndex="7"/>
                     </Grid>
 
 
@@ -522,15 +530,14 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <RadioButton Content="緑" Grid.Column="2"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
-                            <RadioButton Content="黒" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
-                            <RadioButton Content="黄" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
-                            <RadioButton Content="白" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
-                            <RadioButton Content="赤" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
-                            <RadioButton Content="青" Grid.Column="1"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
+                            <RadioButton Content="黒" Grid.Column="0"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
+                            <RadioButton Content="緑" Grid.Column="1"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='緑'}"/>
+                            <RadioButton Content="黄" Grid.Column="2"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
+                            <RadioButton Content="白" Grid.Column="3"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
+                            <RadioButton Content="赤" Grid.Column="4"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='赤'}"/>
+                            <RadioButton Content="青" Grid.Column="5"   IsChecked="{Binding SelectedCard.CostColor1, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
 
                         </Grid>
                     </StackPanel>
@@ -547,7 +554,6 @@
                                 <ColumnDefinition Width="50*"/>
                                 <ColumnDefinition Width="50*"/>
                                 <ColumnDefinition Width="50*"/>
-                                <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBox Grid.Column="0" Grid.ColumnSpan="2"   Style="{StaticResource InfoTextBoxStyle}" Background="#4F4C4B" Text="{Binding SelectedCard.SubCostBlack, UpdateSourceTrigger=PropertyChanged}"  TabIndex="24" />
@@ -556,7 +562,6 @@
                             <TextBox Grid.Column="4"  Style="{StaticResource InfoTextBoxStyle}" Background="#EFEFEF" Text="{Binding SelectedCard.SubCostWhite, UpdateSourceTrigger=PropertyChanged}"  TabIndex="25" />
                             <TextBox Grid.Column="5"  Style="{StaticResource InfoTextBoxStyle}" Background="#DD212C" Text="{Binding SelectedCard.SubCostRed, UpdateSourceTrigger=PropertyChanged}"  TabIndex="20" />
                             <TextBox Grid.Column="6"  Style="{StaticResource InfoTextBoxStyle}" Background="#005EAC" Text="{Binding SelectedCard.SubCostBlue, UpdateSourceTrigger=PropertyChanged}"  TabIndex="21" />
-                            <TextBox Grid.Column="7"  Style="{StaticResource InfoTextBoxStyle}" Background="#999796" Text="{Binding SelectedCard.SubCostNone, UpdateSourceTrigger=PropertyChanged}"  TabIndex="26" />
                         </Grid>
                     </StackPanel>
 
@@ -601,6 +606,7 @@
                 <Button  Margin="10,0,5,0" Grid.Row="3" Grid.Column="0"  Content="新規作成" Command="{Binding CreateNewCardCommand}"/>
                 <Button  Margin="5,0,10,0" Grid.Row="3" Grid.Column="1" Content="削除" Command="{Binding DeleteCardCommand}"/>
                 <Button  Margin="10,0,5,0" Grid.Row="4" Grid.Column="0" Content="まとめて出力" Command="{Binding OutputAllImageCommand}" CommandParameter="{Binding ElementName=OutPutCanvas}"/>
+                <CheckBox Margin="10,0,5,0" Grid.Row="4" Grid.Column="1" Content="Sample出力" IsChecked="{Binding SampleOutputMode,Mode=TwoWay}"/>
 
 
                 <Grid VerticalAlignment="Top" Margin="0,10" HorizontalAlignment="Center"  Grid.Column="0" Grid.ColumnSpan="2" Width="150" >
