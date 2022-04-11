@@ -30,8 +30,8 @@
         <vm:MainCostResourceConverter x:Key="MainCostResourceConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
         <vm:BoolToVisibillityConverter x:Key="BoolToVisibillityConverter"/>
-        
-        
+
+
         <vm:CheckEmptyConverter x:Key="CheckEmptyConverter"/>
         <vm:KindFontSizeConverter x:Key="KindFontSizeConverter"/>
         <vm:BRImageConverter x:Key="BRImageConverter"/>
@@ -185,10 +185,11 @@
                 <Viewbox Grid.Row="0" VerticalAlignment="Bottom">
                     <Canvas Panel.ZIndex="100" Width="240"  Height="334" ClipToBounds="True" x:Name="OutPutCanvas">
                         <!--画像は本来の240×334から各方位5ピクセルだけ引いている-->
-                        <Grid Width="218" Height="269" Canvas.Left="11" Canvas.Top="15" Background="Transparent" Opacity="1" VerticalAlignment="Center" Panel.ZIndex="-190"><!--基本位置は65-->
+                        <Grid Width="218" Height="269" Canvas.Left="11" Canvas.Top="15" Background="Transparent" Opacity="1" VerticalAlignment="Center" Panel.ZIndex="-190">
+                            <!--基本位置は65-->
                             <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Stretch="Uniform"/>
                         </Grid>
-                        
+
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
                         <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
                         <Image  x:Name="Sample" Panel.ZIndex="200"  Width="240" Height="334" Source="{Binding SourceSample}" Visibility="{Binding SampleOutputMode,Converter={StaticResource BoolToVisibillityConverter}}"/>
@@ -197,7 +198,7 @@
                                                     Width="220" Foreground="{Binding SelectedCard.EffectTextColor}"  Document="{Binding EffectDocument, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True">
                             </vm:BindableRichTextBox>
                         </Canvas>
-                        <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding SelectedCard.EffectTextColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
+                        <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding SelectedCard.EffectTextColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0" FontWeight="Bold"/>
                         <TextBox Text="このカードは公式デュエルでは使用できません" Visibility="{Binding SelectedCard.Beta,Converter={StaticResource BoolToVisibillityConverter}}" FontFamily="HGP教科書体" Foreground="White" FontSize="6" Canvas.Top="40" Canvas.Left="38" Background="Transparent" BorderThickness="0"/>
 
                         <StackPanel Canvas.Left="37" Canvas.Bottom="270" Orientation="Vertical" HorizontalAlignment="Center" Width="240">
@@ -208,7 +209,7 @@
                                     FontSize="{Binding SelectedCard.CardNameFontSize}" Foreground="{Binding SelectedCard.RubyColor}" Background="Transparent" 
                                  BorderThickness="0"  TabIndex="303" />
                         </StackPanel>
-                        
+
 
                         <!--種族-->
 
@@ -368,10 +369,97 @@
                         <!--イラストレーションのクレジット-->
                         <Grid HorizontalAlignment="Right"  Canvas.Right="12" Canvas.Bottom="100" >
                             <StackPanel Orientation="Horizontal">
-                                <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True"
-                                      Foreground="White" FontSize="5"/>
-                                <TextBox Margin="-3,0,0,0"  x:Name="CardIllustrationText_Copy" Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100"
-                                   Foreground="White" FontSize="5"  TabIndex="308" Canvas.Top="324"/>
+                                <Grid>
+                                    <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.3" Y="0" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.3" Y="0" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0" Y="0.3" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0" Y="-0.3" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+
+                                    <TextBox  Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.21" Y="0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.21" Y="0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.21" Y="-0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="Black" FontSize="5" >
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.21" Y="-0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox Margin="0,0,0,0" Text="Illustration:" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" IsReadOnly="True" Foreground="White" FontSize="5" />
+                                </Grid>
+                                <Grid Margin="-3,0,0,0" >
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.3" Y="0" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.3" Y="0" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0" Y="0.3" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0" Y="-0.3" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.21" Y="0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.21" Y="0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="0.21" Y="-0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="Black" FontSize="5"  TabIndex="308" Canvas.Top="324">
+                                        <TextBox.RenderTransform>
+                                            <TranslateTransform X="-0.21" Y="-0.21" />
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox  Text="{Binding SelectedCard.Illustration, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardIllustrationtStyle}"  Panel.ZIndex="100" Foreground="White" FontSize="5"  TabIndex="308" Canvas.Top="324"/>
+                                </Grid>
+
+
+
                             </StackPanel>
                         </Grid>
 
@@ -480,7 +568,7 @@
                     <TextBlock Grid.Row="7" Grid.Column="1" Text="フレーバーテキスト"
                                    Style="{StaticResource InfoTextBlockStyle}"/>
                     <TextBox Grid.Row="7" Grid.Column="1" x:Name="CardFlavorTextBox" Text="{Binding FlavorText, UpdateSourceTrigger=PropertyChanged}" Height="40" FontSize="12"
-                                Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True"  Grid.RowSpan="3"  TabIndex="4"/>
+                                Style="{StaticResource InfoTextBoxStyle}"  AcceptsReturn="True"  Grid.RowSpan="3"  TabIndex="4" />
                     <xctk:DoubleUpDown Name="CardFlavorEffectFontSizeBox"  FormatString="F2" Increment="0.1"  Minimum="0.1"
                                        Text="{Binding FlavorFontSize,UpdateSourceTrigger=PropertyChanged}"  Grid.Row="8" Grid.Column="3"  VerticalAlignment="Center"  TabIndex="203"/>
 

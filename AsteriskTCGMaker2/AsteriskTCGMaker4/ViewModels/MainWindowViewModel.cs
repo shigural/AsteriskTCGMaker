@@ -403,7 +403,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 .ThenBy(elm => elm.SteraSpell)
                 .ThenByDescending(elm => elm.CostMana1 + elm.CostMana2)
                 .ThenByDescending(elm => elm.Power));
-                foreach (var item in _cardList.Where(elm => FilterCard.IndexOf(elm.CostColor1) == -1).ToList())
+                foreach (var item in _cardList.Where(elm => FilterCard.Contains(elm.CostColor1) == false).ToList())
                 {
                     _cardList.Remove(item);
                 }
