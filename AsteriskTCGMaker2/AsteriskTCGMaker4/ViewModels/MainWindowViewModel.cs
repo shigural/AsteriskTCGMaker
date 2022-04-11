@@ -1795,7 +1795,7 @@ namespace AsteriskTCGMaker4.ViewModels
                     JsonSerializer serializer = new JsonSerializer();
                     var jsonData = (CardJSONData)serializer.Deserialize(file, typeof(CardJSONData));
                     jsonData.SetCardData(this);
-                    Version = 4050;
+                    Version = 4070;
                     if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
                 }
             }
@@ -1924,7 +1924,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 }
             }
 
-            Version = 4050;
+            Version = 4070;
             if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
         }
 
