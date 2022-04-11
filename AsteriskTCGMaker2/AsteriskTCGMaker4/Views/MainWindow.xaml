@@ -145,7 +145,6 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-
     </Window.Resources>
 
     <Window.DataContext>
@@ -154,13 +153,12 @@
 
 
     <DockPanel>
-
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Left">
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver4.04" />
+                <TextBlock Text="ver4.06" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -184,7 +182,7 @@
                 <Viewbox Grid.Row="0" VerticalAlignment="Bottom">
                     <Canvas Panel.ZIndex="100" Width="240"  Height="334" ClipToBounds="True" x:Name="OutPutCanvas">
                         <!--画像は本来の240×334から各方位5ピクセルだけ引いている-->
-                        <Grid Width="217" Height="269" Canvas.Left="11" Canvas.Top="15" Background="Transparent" Opacity="1" VerticalAlignment="Center" Panel.ZIndex="-190"><!--基本位置は65-->
+                        <Grid Width="218" Height="269" Canvas.Left="11" Canvas.Top="15" Background="Transparent" Opacity="1" VerticalAlignment="Center" Panel.ZIndex="-190"><!--基本位置は65-->
                             <Image  x:Name="CardImage" Source="{Binding SelectedCard.Source}" Stretch="Uniform"/>
                         </Grid>
                         
@@ -198,7 +196,7 @@
                         <TextBox Text="{Binding FlavorText}" FontFamily="HGP教科書体" Foreground="{Binding SelectedCard.EffectTextColor}" FontSize="6" Canvas.Bottom="20" Canvas.Right="12" Background="Transparent" BorderThickness="0"/>
 
                         <StackPanel Canvas.Left="37" Canvas.Bottom="270" Orientation="Vertical" HorizontalAlignment="Center" Width="240">
-                            <TextBox x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
+                            <TextBox Margin="0,0,0,-3" x:Name="CardRubyText" Text="{Binding SelectedCard.CardRuby}" Style="{StaticResource CardRubyTextStyle}"  Panel.ZIndex="400"
                                         FontSize="{Binding SelectedCard.RubyFontSize, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding SelectedCard.RubyColor}"
                                  Background="Transparent" BorderThickness="0"  TabIndex="304"/>
                             <TextBox x:Name="CardNameText" Text="{Binding SelectedCard.CardName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CardNameTextStyle}"  Panel.ZIndex="410"
