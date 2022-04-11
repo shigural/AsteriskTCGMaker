@@ -29,6 +29,8 @@ using System.Windows.Controls.Primitives;
 using AsteriskTCGMaker4.Views;
 using System.Windows.Threading;
 using System.Windows.Input;
+using Newtonsoft.Json;
+
 
 namespace AsteriskTCGMaker4.ViewModels
 {
@@ -732,11 +734,18 @@ namespace AsteriskTCGMaker4.ViewModels
             }
 
         }
+
+
+
         private void Save(CardData card)
         {
             try
             {
-                File.WriteAllText(Singleton.Instance.CardPath + card.CardName + ".atcg", getOutputText(true, false));
+                var jsonfile = new CardJSONData(card);
+                string json = JsonConvert.SerializeObject(jsonfile, Formatting.Indented);
+                File.WriteAllText(Singleton.Instance.CardPath + card.CardName + ".atcg", json);
+
+                //File.WriteAllText(Singleton.Instance.CardPath + card.CardName + ".atcg", getOutputText(true, false));
 
                 StatusText = "セーブしました（" + Singleton.Instance.CardPath + card.CardName + ".atcg）";
             }
@@ -973,6 +982,140 @@ namespace AsteriskTCGMaker4.ViewModels
         {
             return true;
         }
+    }
+
+    public class CardJSONData
+    {
+        public int Version;
+        public double RubyFontSize;
+        public double CardNameFontSize;
+        public double EffectFontSize;
+        public double FlavorFontSize;
+        public double TextBoxSize;
+        public String SubCostRed;
+        public String SubCostBlue;
+        public String SubCostGreen;
+        public String SubCostYellow;
+        public String SubCostBlack;
+        public String SubCostWhite;
+        public String SubCostNone;
+        public String RubyColor;
+        public String NameColor;
+        public String EffectTextColor;
+        public String FlavorTextColor;
+        public String MainColorColor;
+        public String SubColorColor;
+        public String CardRuby;
+        public String CardName;
+        public String SteraSpell;
+        public String CostColor1;
+        public String CostColor2;
+        public String CostMana1;
+        public String CostMana2;
+        public String Power;
+        public String BR;
+        public bool Burst;
+        public bool ReAction;
+        public bool SealedTrigger;
+        public bool SpellStep;
+        public bool KeepSpell;
+        public String CardEffect;
+        public String FlavorText;
+        public String Illustration;
+        public String Kind1;
+        public String Kind2;
+        public String Kind3;
+
+        public CardJSONData() { }
+        public CardJSONData(CardData d)
+        {
+            Version = d.Version;
+            RubyFontSize = d.RubyFontSize;
+            CardNameFontSize = d.CardNameFontSize;
+            EffectFontSize = d.EffectFontSize;
+            FlavorFontSize = d.FlavorFontSize;
+            TextBoxSize = d.TextBoxSize;
+            SubCostRed = d.SubCostRed;
+            SubCostBlue = d.SubCostBlue;
+            SubCostGreen = d.SubCostGreen;
+            SubCostYellow = d.SubCostYellow;
+            SubCostBlack = d.SubCostBlack;
+            SubCostWhite = d.SubCostWhite;
+            SubCostNone = d.SubCostNone;
+            RubyColor = d.RubyColor;
+            NameColor = d.NameColor;
+            EffectTextColor = d.EffectTextColor;
+            FlavorTextColor = d.FlavorTextColor;
+            MainColorColor = d.MainColorColor;
+            SubColorColor = d.SubColorColor;
+            CardRuby = d.CardRuby;
+            CardName = d.CardName;
+            SteraSpell = d.SteraSpell;
+            CostColor1 = d.CostColor1;
+            CostColor2 = d.CostColor2;
+            CostMana1 = d.CostMana1;
+            CostMana2 = d.CostMana2;
+            Power = d.Power;
+            BR = d.BR;
+            Burst = d.Burst;
+            ReAction = d.ReAction;
+            SealedTrigger = d.SealedTrigger;
+            SpellStep = d.SpellStep;
+            KeepSpell = d.KeepSpell;
+            CardEffect = d.CardEffect;
+            FlavorText = d.FlavorText;
+            Illustration = d.Illustration;
+            Kind1 = d.Kind1;
+            Kind2 = d.Kind2;
+            Kind3 = d.Kind3;
+
+        }
+
+
+
+        public void SetCardData(CardData d)
+        {
+            d.Version = Version;
+            d.RubyFontSize = RubyFontSize;
+            d.CardNameFontSize = CardNameFontSize;
+            d.EffectFontSize = EffectFontSize;
+            d.FlavorFontSize = FlavorFontSize;
+            d.TextBoxSize = TextBoxSize;
+            d.SubCostRed = SubCostRed;
+            d.SubCostBlue = SubCostBlue;
+            d.SubCostGreen = SubCostGreen;
+            d.SubCostYellow = SubCostYellow;
+            d.SubCostBlack = SubCostBlack;
+            d.SubCostWhite = SubCostWhite;
+            d.SubCostNone = SubCostNone;
+            d.RubyColor = RubyColor;
+            d.NameColor = NameColor;
+            d.EffectTextColor = EffectTextColor;
+            d.FlavorTextColor = FlavorTextColor;
+            d.MainColorColor = MainColorColor;
+            d.SubColorColor = SubColorColor;
+            d.CardRuby = CardRuby;
+            d.CardName = CardName;
+            d.SteraSpell = SteraSpell;
+            d.CostColor1 = CostColor1;
+            d.CostColor2 = CostColor2;
+            d.CostMana1 = CostMana1;
+            d.CostMana2 = CostMana2;
+            d.Power = Power;
+            d.BR = BR;
+            d.Burst = Burst;
+            d.ReAction = ReAction;
+            d.SealedTrigger = SealedTrigger;
+            d.SpellStep = SpellStep;
+            d.KeepSpell = KeepSpell;
+            d.CardEffect = CardEffect;
+            d.FlavorText = FlavorText;
+            d.Illustration = Illustration;
+            d.Kind1 = Kind1;
+            d.Kind2 = Kind2;
+            d.Kind3 = Kind3;
+        }
+
     }
 
 
@@ -1465,7 +1608,7 @@ namespace AsteriskTCGMaker4.ViewModels
     }
 
 
-    class CardData
+    public class CardData
     {
         //Wiki&内部データ
         public string CardName { get; set; }
@@ -1640,9 +1783,24 @@ namespace AsteriskTCGMaker4.ViewModels
         public CardData(string filePath)
         {
             CardName = Path.GetFileName(filePath);
+            String text = "";
             using (var reader = new StreamReader(filePath))
             {
-                string text = reader.ReadToEnd();
+                text = reader.ReadToEnd();
+            }
+            if (text.StartsWith("{"))
+            {
+                using (StreamReader file = File.OpenText(filePath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    var jsonData = (CardJSONData)serializer.Deserialize(file, typeof(CardJSONData));
+                    jsonData.SetCardData(this);
+                    Version = 4050;
+                    if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
+                }
+            }
+            else
+            {
                 WikiToData(text);
             }
         }
@@ -1766,7 +1924,7 @@ namespace AsteriskTCGMaker4.ViewModels
                 }
             }
 
-            Version = 3080;
+            Version = 4050;
             if (File.Exists(Singleton.Instance.CardPath + "\\" + CardName + ".png")) ImageSource = Singleton.Instance.CardPath + "\\" + CardName + ".png";
         }
 
