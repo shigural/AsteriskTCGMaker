@@ -161,7 +161,7 @@
                 <TextBlock x:Name="StatusText"  Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
             <StatusBarItem DockPanel.Dock="Right">
-                <TextBlock Text="ver4.07" />
+                <TextBlock Text="ver4.08" />
             </StatusBarItem>
             <Separator DockPanel.Dock="Right" />
             <TextBlock />
@@ -213,8 +213,6 @@
                         </StackPanel>
 
                         <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="235" Height="30" Width="300" Orientation="Horizontal">
-                            <Image  x:Name="CardTypeImage1" Stretch="Fill" Source="Resources/3/burst.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.Burst, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage2" Stretch="Fill" Source="Resources/3/re-action.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.ReAction, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/3/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
                             <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/3/Ke.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
                         </StackPanel>
@@ -538,7 +536,7 @@
                         <ColumnDefinition Width="30"  />
                         <ColumnDefinition  Width="350"/>
                         <ColumnDefinition  Width="60" />
-                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition  Width="50"/>
                     </Grid.ColumnDefinitions>
 
                     <!--カードルビ-->
@@ -690,8 +688,6 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="burst" Content="バースト" Grid.Row="0"  Grid.Column="0" IsChecked="{Binding  SelectedCard.Burst}"/>
-                        <CheckBox x:Name="reAction"  Content="リアクション"  Grid.Row="0" Grid.Column="1" IsChecked="{Binding  SelectedCard.ReAction}"/>
                         <CheckBox x:Name="sealdtrigger"  Content="ダメージトリガー"  Grid.Row="1" Grid.Column="0"  IsChecked="{Binding  SelectedCard.SealedTrigger}"/>
                         <CheckBox  x:Name="spellstep" Content="スペルステップ"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding  SelectedCard.SpellStep}"/>
                         <CheckBox  x:Name="keepspell" Content="永続スペル"  Grid.Row="2" Grid.Column="0" IsChecked="{Binding  SelectedCard.KeepSpell}"/>
