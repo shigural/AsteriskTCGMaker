@@ -84,6 +84,18 @@ namespace AsteriskTCGMaker4.ViewModels
         public ImageSource SourceSubWhite { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_White.png", UriKind.Absolute));
         public ImageSource SourceSubNone { get; set; } = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Less.png", UriKind.Absolute));
 
+        private String _searchText = "";
+        public String SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                SetCardList();
+            }
+        }
+
         private bool _sampleOutputMode = false;
         public bool SampleOutputMode { get { return _sampleOutputMode; } set { _sampleOutputMode = value; OnPropertyChanged(nameof(SampleOutputMode)); } }
 
@@ -403,9 +415,18 @@ namespace AsteriskTCGMaker4.ViewModels
                 .ThenBy(elm => elm.SteraSpell)
                 .ThenByDescending(elm => elm.CostMana1 + elm.CostMana2)
                 .ThenByDescending(elm => elm.Power));
+
                 foreach (var item in _cardList.Where(elm => FilterCard.Contains(elm.CostColor1) == false).ToList())
                 {
                     _cardList.Remove(item);
+                }
+
+                if (SearchText != "")
+                {
+                    foreach (var item in _cardList.Where(elm =>elm.Expantion==null || elm.Expantion.Contains(SearchText) == false).ToList())
+                    {
+                        _cardList.Remove(item);
+                    }
                 }
             }
             catch (Exception e)
@@ -1025,6 +1046,7 @@ namespace AsteriskTCGMaker4.ViewModels
         public String Kind1;
         public String Kind2;
         public String Kind3;
+        public String Expantion;
 
         public CardJSONData() { }
         public CardJSONData(CardData d)
@@ -1068,7 +1090,7 @@ namespace AsteriskTCGMaker4.ViewModels
             Kind1 = d.Kind1;
             Kind2 = d.Kind2;
             Kind3 = d.Kind3;
-
+            Expantion = d.Expantion;
         }
 
 
@@ -1114,6 +1136,7 @@ namespace AsteriskTCGMaker4.ViewModels
             d.Kind1 = Kind1;
             d.Kind2 = Kind2;
             d.Kind3 = Kind3;
+            d.Expantion = Expantion;
         }
 
     }
@@ -1641,6 +1664,8 @@ namespace AsteriskTCGMaker4.ViewModels
         public bool KeepSpell { get; set; }
         public double TextBoxSize { get; set; } = 50;
         public bool Beta { get; set; } = false;
+        public string Expantion { get; set; } = "";
+
         public string ImageSource { get; set; }
         public BitmapImage Source
         {

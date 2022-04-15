@@ -489,6 +489,11 @@
                         <RadioButton Margin="0,0,10,0" Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
                         <CheckBox Margin="0,0,10,0" Content="アンダーン" Grid.Column="2" IsChecked="{Binding SelectedCard.Beta,Mode=TwoWay}"/>
                     </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <Label Content="エクスパンション"/>
+                        <TextBox Width="150" Text="{Binding SelectedCard.Expantion}"/>
+                    </StackPanel>
+
 
                     <!--Break-->
                     <StackPanel  Grid.Row="2">
@@ -719,7 +724,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="497" Margin="0,57,0,3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180"  FontSize="8" 
+
+
+                    <ListView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="497" Margin="0,57,0,3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180"  FontSize="8" 
                          ItemsSource="{Binding CardList}" SelectedIndex="{Binding SelectedNo,Mode=TwoWay}"     DisplayMemberPath="CardName"/>
                 <Button  Margin="10,0,5,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="リロード" Command="{Binding ReloadListCommand}"/>
                 <TextBox Margin="10,0,10,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CreateDeleateCardName}"/>
@@ -739,6 +746,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <RadioButton Content="黒" Grid.Column="0"  Grid.Row="0" IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黒'}"/>
                     <RadioButton Content="青" Grid.Column="1"  Grid.Row="0"  IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='青'}"/>
@@ -748,6 +757,9 @@
                     <RadioButton Content="白" Grid.Column="1"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='白'}"/>
                     <RadioButton Content="黄" Grid.Column="2"   Grid.Row="1"   IsChecked="{Binding FilterCard, Converter={StaticResource BoolColorConverter} ,ConverterParameter='黄'}"/>
 
+
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Exp"/>
+                    <TextBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
 
 
