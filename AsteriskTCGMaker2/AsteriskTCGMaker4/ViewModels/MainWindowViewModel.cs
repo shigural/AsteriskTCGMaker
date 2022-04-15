@@ -423,7 +423,7 @@ namespace AsteriskTCGMaker4.ViewModels
 
                 if (SearchText != "")
                 {
-                    foreach (var item in _cardList.Where(elm =>elm.Expantion==null || elm.Expantion.Contains(SearchText) == false).ToList())
+                    foreach (var item in _cardList.Where(elm => elm.Expantion == null || elm.Expantion.Contains(SearchText) == false).ToList())
                     {
                         _cardList.Remove(item);
                     }
@@ -814,9 +814,9 @@ namespace AsteriskTCGMaker4.ViewModels
 
                 Directory.CreateDirectory(Singleton.Instance.Path + "Result\\big\\" + card.CostColor1);
                 Directory.CreateDirectory(Singleton.Instance.Path + "Result\\small\\" + card.CostColor1);
-                SaveImage(elem, outputPath1, 10);
-                SaveImage(elem, outputPath2, 1);
-                SaveImage(elem, outputPath3, 10);
+                SaveImage(elem, outputPath1, 10, false);
+                SaveImage(elem, outputPath2, 1, true);
+                SaveImage(elem, outputPath3, 10, false);
                 StatusText = "出力完了（" + outputPath1 + "）";
             }
             catch (Exception e)
@@ -842,7 +842,7 @@ namespace AsteriskTCGMaker4.ViewModels
         }
 
         //指定要素を画像として保存する
-        private void SaveImage(FrameworkElement target, string path, int resolutionRate = 10)
+        private void SaveImage(FrameworkElement target, string path, int resolutionRate = 10, bool IsTrim = false)
         {
             if (target == null) throw new ArgumentNullException("target");
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("pathが未設定");
@@ -864,9 +864,20 @@ namespace AsteriskTCGMaker4.ViewModels
             // pngで保存
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
-            using (var fs = File.Open(path, FileMode.Create))
+            using (var fs = new MemoryStream())
             {
                 encoder.Save(fs);
+
+                var bitmap = new System.Drawing.Bitmap(fs);
+
+                if (IsTrim)
+                {
+                    var rect = new System.Drawing.Rectangle(6, 6, 240 - 12, 334 - 12);
+                    bitmap = bitmap.Clone(rect, bitmap.PixelFormat);
+                }
+
+                bitmap.Save(path);
+
             }
 
         }
