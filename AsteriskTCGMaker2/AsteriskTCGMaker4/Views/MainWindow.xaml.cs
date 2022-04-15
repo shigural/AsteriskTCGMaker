@@ -27,6 +27,11 @@ namespace AsteriskTCGMaker4.Views
         {
             InitializeComponent();
             path = System.AppDomain.CurrentDomain.BaseDirectory;
+            CardTypeImage1.Source = new BitmapImage(new Uri(path + "Resources/3/burst.png", UriKind.Absolute));
+            CardTypeImage2.Source = new BitmapImage(new Uri(path + "Resources/3/re-action.png", UriKind.Absolute));
+            CardTypeImage4.Source = new BitmapImage(new Uri(path + "Resources/3/spellstep.png", UriKind.Absolute));
+            CardTypeImage5.Source = new BitmapImage(new Uri(path + "Resources/3/Ke.png", UriKind.Absolute));
+            DT.Source= new BitmapImage(new Uri(path + "Resources/3/effect.png", UriKind.Absolute));
         }
 
         //指定要素を画像として保存する
