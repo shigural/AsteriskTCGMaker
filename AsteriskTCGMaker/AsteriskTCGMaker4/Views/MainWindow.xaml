@@ -29,6 +29,9 @@
         <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
         <vm:MainCostResourceConverter x:Key="MainCostResourceConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
+        <vm:CostFontScaleXConverter x:Key="CostFontScaleXConverter"/>
+        <vm:MainCostCenterXConverter x:Key="MainCostCenterXConverter"/>
+        <vm:SubCostCenterXConverter x:Key="SubCostCenterXConverter"/>
         <vm:BoolToVisibillityConverter x:Key="BoolToVisibillityConverter"/>
 
 
@@ -248,7 +251,7 @@
                         <Grid Canvas.Left="20" Canvas.Bottom="299" Panel.ZIndex="200" HorizontalAlignment="Center">
                             <exfont:OutlineText Margin="2,0,0,0"   Style="{StaticResource MainManaTextStyle}"   Text="{Binding SelectedCard.CostMana1}"  Panel.ZIndex="160">
                                 <exfont:OutlineText.RenderTransform>
-                                    <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                    <ScaleTransform ScaleX="{Binding SelectedCard.CostMana1, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.CostMana1, Converter={StaticResource MainCostCenterXConverter}}"/>
                                 </exfont:OutlineText.RenderTransform>
                             </exfont:OutlineText>
                         </Grid>
@@ -263,7 +266,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}" Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlack}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostBlack, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostBlack, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -274,7 +277,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostGreen}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostGreen, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostGreen, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -285,7 +288,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostYellow}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostYellow, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostYellow, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -296,7 +299,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="35"    />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostWhite}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostWhite, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostWhite, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -307,7 +310,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostRed}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostRed, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostRed, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -319,7 +322,7 @@
 
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlue}">
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostBlue, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostBlue, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
@@ -330,7 +333,7 @@
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="35"   />
                                     <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostNone}" >
                                         <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
+                                            <ScaleTransform ScaleX="{Binding SelectedCard.SubCostNone, Converter={StaticResource CostFontScaleXConverter}}" CenterX="{Binding SelectedCard.SubCostNone, Converter={StaticResource SubCostCenterXConverter}}"/>
                                         </exfont:OutlineText.RenderTransform>
                                     </exfont:OutlineText>
                                 </Grid>
