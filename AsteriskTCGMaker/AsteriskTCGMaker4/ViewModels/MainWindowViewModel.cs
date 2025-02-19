@@ -460,6 +460,7 @@ namespace AsteriskTCGMaker4.ViewModels
             }
         }
 
+
         private int _selectedNo = 0;
         public int SelectedNo
         {
@@ -972,6 +973,76 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
+    abstract public class CostValueConverterTest
+    {
+        protected object TestValues(object value, double num, double x)
+        {
+            switch (value.ToString())
+            {
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                    return num;
+                default:
+                    return x;
+            }
+        }
+    }
+
+    public class CostFontScaleXConverter : CostValueConverterTest, IValueConverter
+    {
+        const double _numScaleXValue = 1.75;
+        const double _xScaleXValue = 1.1;
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+
+            return TestValues(value, _numScaleXValue, _xScaleXValue);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return 0.0f;
+        }
+    }
+
+
+
+    public class MainCostCenterXConverter : CostValueConverterTest,IValueConverter
+    {
+        const double _numCenterXValue = 9.0;
+        const double _xCenterXValue = 68.0;
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return TestValues(value, _numCenterXValue, _xCenterXValue);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return 0.0f;
+        }
+    }
+
+    public class SubCostCenterXConverter : CostValueConverterTest, IValueConverter
+    {
+        const double _numCenterXValue = 9.0;
+        const double _xCenterXValue = 38.0;
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return TestValues(value, _numCenterXValue, _xCenterXValue);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return 0.0f;
+        }
+    }
+
     /// <summary>
     /// 色に相当するリソースを返す
     /// </summary>
@@ -1167,6 +1238,7 @@ namespace AsteriskTCGMaker4.ViewModels
         static BitmapImage SubBlack = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Black.png", UriKind.Absolute));
         static BitmapImage SubWhite = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_White.png", UriKind.Absolute));
         static BitmapImage SubNone = new BitmapImage(new Uri(Singleton.Instance.Path + "Resources/3/SubMana_Less.png", UriKind.Absolute));
+
 
 
 
