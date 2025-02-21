@@ -199,6 +199,7 @@ namespace ExtendFont
             if (this.FormattedText != null || this.Text == null)
                 return;
 
+#pragma warning disable CS0618 // 型またはメンバーが旧型式だが互換性維持のため問題ない
             this.FormattedText = new FormattedText(
                 this.Text,
                 CultureInfo.CurrentUICulture,
@@ -206,6 +207,7 @@ namespace ExtendFont
                 new Typeface(this.FontFamily, this.FontStyle, this.FontWeight, FontStretches.Normal),
                 this.FontSize,
                 Brushes.Black);
+#pragma warning restore CS0618 // 型またはメンバーが旧型式です
 
             this.UpdateFormattedText();
         }

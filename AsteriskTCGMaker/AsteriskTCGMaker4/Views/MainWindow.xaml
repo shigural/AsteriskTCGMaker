@@ -121,7 +121,6 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="6,0,0,0"/>
         </Style>
-
         <Style x:Key="MainManaTextStyle" BasedOn="{StaticResource ManaTextStyle}" TargetType="{x:Type exfont:OutlineText}" >
             <Setter Property="FontSize" Value="16.5"/>
         </Style>
@@ -191,7 +190,7 @@
                         </Grid>
 
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
+                        <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ルクス}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ルクス}"/>
 
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="10" Canvas.Top="243" >
                             <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Top="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
@@ -214,7 +213,7 @@
 
                         <StackPanel   Panel.ZIndex="15" Canvas.Left="17" Canvas.Bottom="235" Height="30" Width="300" Orientation="Horizontal">
                             <Image  x:Name="CardTypeImage4" Stretch="Fill" Source="Resources/3/spellstep.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.SpellStep, Converter={StaticResource BoolVisibillityConverter}}"/>
-                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/3/Ke.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
+                            <Image  x:Name="CardTypeImage5" Stretch="Fill" Source="Resources/3/Keepspell.png"  Width="24" Margin="1,1,1,1" Visibility="{Binding SelectedCard.KeepSpell, Converter={StaticResource BoolVisibillityConverter}}"/>
                         </StackPanel>
 
 
@@ -246,10 +245,33 @@
                         <!--メインマナ-->
                         <Image VerticalAlignment="Center" Margin="-3,-2,0,0" Canvas.Left="0" Canvas.Top="0"  Width="250"  Source="{Binding SelectedCard.CostColor1, Converter={StaticResource MainCostResourceConverter}}"   Panel.ZIndex="99" />
                         <Grid Canvas.Left="20" Canvas.Bottom="299" Panel.ZIndex="200" HorizontalAlignment="Center">
-                            <exfont:OutlineText Margin="2,0,0,0"   Style="{StaticResource MainManaTextStyle}"   Text="{Binding SelectedCard.CostMana1}"  Panel.ZIndex="160">
-                                <exfont:OutlineText.RenderTransform>
-                                    <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                </exfont:OutlineText.RenderTransform>
+                            <exfont:OutlineText Margin="2,0,0,0" Text="{Binding SelectedCard.CostMana1}" Panel.ZIndex="160">
+                                <!-- MainManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                <exfont:OutlineText.Style>
+                                    <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource MainManaTextStyle}">
+                                        <!-- デフォルトは ScaleX=1.75 -->
+                                        <Setter Property="RenderTransform">
+                                            <Setter.Value>
+                                                <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <!-- CostMana1 が X のときは ScaleX=0.75 にする -->
+                                            <DataTrigger Binding="{Binding SelectedCard.CostMana1}" Value="X">
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="0.75" CenterX="9"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <TranslateTransform X="-6" Y="-0.5"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </exfont:OutlineText.Style>
                             </exfont:OutlineText>
                         </Grid>
 
@@ -261,10 +283,33 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlack,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlack}" Width="35"   />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlack}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostBlack}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostBlack}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -272,10 +317,33 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostGreen,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubGreen}"  Width="35"   />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostGreen}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostGreen}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostGreen}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -283,21 +351,68 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostYellow,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubYellow}"  Width="35"   />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostYellow}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostYellow}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostYellow}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
+
                                 </Grid>
                             </StackPanel>
                             <!--白-->
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostWhite,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubWhite}"  Width="35"    />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostWhite}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostWhite}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostWhite}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -305,10 +420,33 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostRed,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubRed}"  Width="35"   />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostRed}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostRed}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostRed}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -316,11 +454,33 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostBlue,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubBlue}"  Width="35"   />
-
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostBlue}">
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostBlue}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostBlue}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -328,10 +488,33 @@
                             <StackPanel Margin="0,0,-7,0" Orientation="Horizontal" VerticalAlignment="Bottom"  Visibility="{Binding SelectedCard.SubCostNone,Converter={StaticResource CheckValueSizeConverter},ConverterParameter=0}">
                                 <Grid Panel.ZIndex="100" VerticalAlignment="Bottom" Margin="0,0,-4,0">
                                     <Image   Stretch="Uniform" Source="{Binding SourceSubNone}"  Width="35"   />
-                                    <exfont:OutlineText Style="{StaticResource SubManaTextStyle}"   Text="{Binding SelectedCard.SubCostNone}" >
-                                        <exfont:OutlineText.RenderTransform>
-                                            <ScaleTransform ScaleX="1.75" CenterX="9"/>
-                                        </exfont:OutlineText.RenderTransform>
+                                    <exfont:OutlineText Text="{Binding SelectedCard.SubCostNone}" Panel.ZIndex="160">
+                                        <!-- SubManaTextStyle を継承したい場合は BasedOn で指定 -->
+                                        <exfont:OutlineText.Style>
+                                            <Style TargetType="exfont:OutlineText" BasedOn="{StaticResource SubManaTextStyle}">
+                                                <!-- デフォルトは ScaleX=1.75 -->
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.75" CenterX="9" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <!-- CostMana1 が X のときは ScaleX=1 にする -->
+                                                    <DataTrigger Binding="{Binding SelectedCard.SubCostNone}" Value="X">
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <ScaleTransform ScaleX="1" CenterX="9" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter Property="RenderTransform">
+                                                            <Setter.Value>
+                                                                <TranslateTransform X="-3" Y="0"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </exfont:OutlineText.Style>
                                     </exfont:OutlineText>
                                 </Grid>
                             </StackPanel>
@@ -484,7 +667,7 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <RadioButton Margin="0,0,10,0" x:Name="suteraBox" Content="ステラ" Grid.Column="0"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSteraCOnverter}}"/>
-                        <RadioButton Margin="0,0,10,0" Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
+                        <RadioButton Margin="0,0,10,0" Content="ルクス" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
                         <CheckBox Margin="0,0,10,0" Content="アンダーン" Grid.Column="2" IsChecked="{Binding SelectedCard.Beta,Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">

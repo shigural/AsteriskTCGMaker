@@ -687,7 +687,7 @@ namespace AsteriskTCGMaker4.ViewModels
             }
             else
             {
-                text += "[" + SelectedCard.CostColor1.ToString() + "][スペル]";
+                text += "[" + SelectedCard.CostColor1.ToString() + "][ルクス]";
             }
             text += "\r\n";
             text += "〔" + SelectedCard.CostColor1 + ":" + SelectedCard.CostMana1;
@@ -1472,7 +1472,7 @@ namespace AsteriskTCGMaker4.ViewModels
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if ((bool)value) return "ステラ";
-            else return "スペル";
+            else return "ルクス";
         }
     }
 
@@ -1483,12 +1483,12 @@ namespace AsteriskTCGMaker4.ViewModels
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value.ToString() == "スペル";
+            return value.ToString() == "ルクス";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if ((bool)value) return "スペル";
+            if ((bool)value) return "ルクス";
             else return "ステラ";
         }
     }
@@ -1560,6 +1560,7 @@ namespace AsteriskTCGMaker4.ViewModels
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             //入力引数は「ステラ・スペル、種族1、種族2、種族3」の順
+            //入力引数は「ステラ・ルクス、種族1、種族2、種族3」の順 (2025/02/18変更)
 
 
             var text = "《" + values[0].ToString() + "》";
@@ -1731,6 +1732,7 @@ namespace AsteriskTCGMaker4.ViewModels
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
 
             //[色][ステラ/スペル]《種類1》《種類2》
+            //[色][ステラ/ルクス]《種類1》《種類2》(2025/02/18変更)
             MatchCollection matches1 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"\[.*?\]");
             MatchCollection matches2 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"《.*?》");
             //Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
