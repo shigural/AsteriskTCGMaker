@@ -194,7 +194,7 @@
                         </Grid>
 
                         <Image  x:Name="CardFlameST" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ステラ}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ステラ}"/>
-                        <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=スペル}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=スペル}"/>
+                        <Image  x:Name="CardFlameSP" Panel.ZIndex="-5"  Width="240" Height="334" Source="{Binding SelectedCard.CostColor1, Converter={StaticResource ColorToColor1SourceConverter}, ConverterParameter=ルクス}" Visibility="{Binding SelectedCard.SteraSpell, Converter={StaticResource SteraSpellToVisibillity},ConverterParameter=ルクス}"/>
 
                         <Canvas x:Name="effectCanvas" Panel.ZIndex="100"  Canvas.Left="10" Canvas.Top="243" >
                             <vm:BindableRichTextBox x:Name="CardEffectText" Canvas.Left="0"  Canvas.Top="0"  Panel.ZIndex="105" Background="Transparent"  BorderThickness="0" CaretBrush="Red"
@@ -487,7 +487,7 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <RadioButton Margin="0,0,10,0" x:Name="suteraBox" Content="ステラ" Grid.Column="0"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSteraCOnverter}}"/>
-                        <RadioButton Margin="0,0,10,0" Content="スペル" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
+                        <RadioButton Margin="0,0,10,0" Content="ルクス" Grid.Column="1"   IsChecked="{Binding SelectedCard.SteraSpell, Converter={StaticResource IsSpellConverter},Mode=OneWay}"/>
                         <CheckBox Margin="0,0,10,0" Content="アンダーン" Grid.Column="2" IsChecked="{Binding SelectedCard.Beta,Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
@@ -692,8 +692,8 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <CheckBox x:Name="sealdtrigger"  Content="ダメージトリガー"  Grid.Row="1" Grid.Column="0"  IsChecked="{Binding  SelectedCard.SealedTrigger}"/>
-                        <CheckBox  x:Name="spellstep" Content="スペルステップ"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding  SelectedCard.SpellStep}"/>
-                        <CheckBox  x:Name="keepspell" Content="永続スペル"  Grid.Row="2" Grid.Column="0" IsChecked="{Binding  SelectedCard.KeepSpell}"/>
+                        <CheckBox  x:Name="spellstep" Content="ルクスステップ"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding  SelectedCard.SpellStep}"/>
+                        <CheckBox  x:Name="keepspell" Content="永続ルクス"  Grid.Row="2" Grid.Column="0" IsChecked="{Binding  SelectedCard.KeepSpell}"/>
                     </Grid>
 
 

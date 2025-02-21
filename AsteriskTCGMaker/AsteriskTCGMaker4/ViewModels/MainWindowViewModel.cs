@@ -975,7 +975,7 @@ namespace AsteriskTCGMaker4.ViewModels
 
     abstract public class CostValueConverterTest
     {
-        protected object TestValues(object value, double num, double x)
+        protected object TestValues(object value, double num, double x, double _5)
         {
             switch (value.ToString())
             {
@@ -983,12 +983,13 @@ namespace AsteriskTCGMaker4.ViewModels
                 case "2":
                 case "3":
                 case "4":
-                case "5":
                 case "6":
                 case "7":
                 case "8":
                 case "9":
                     return num;
+                case "5":
+                    return _5;
                 default:
                     return x;
             }
@@ -999,10 +1000,11 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numScaleXValue = 1.75;
         const double _xScaleXValue = 1.1;
+        const double _5ScaleXValue = 1.75;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            return TestValues(value, _numScaleXValue, _xScaleXValue);
+            return TestValues(value, _numScaleXValue, _xScaleXValue, _5ScaleXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -1017,9 +1019,10 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numCenterXValue = 9.0;
         const double _xCenterXValue = 68.0;
+        const double _5CenterXValue = 8.0;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return TestValues(value, _numCenterXValue, _xCenterXValue);
+            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -1032,9 +1035,10 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numCenterXValue = 9.0;
         const double _xCenterXValue = 38.0;
+        const double _5CenterXValue = 8.0;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return TestValues(value, _numCenterXValue, _xCenterXValue);
+            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
