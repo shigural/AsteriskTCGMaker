@@ -688,7 +688,7 @@ namespace AsteriskTCGMaker4.ViewModels
             }
             else
             {
-                text += "[" + SelectedCard.CostColor1.ToString() + "][スペル]";
+                text += "[" + SelectedCard.CostColor1.ToString() + "][ルクス]";
             }
             text += "\r\n";
             text += "〔" + SelectedCard.CostColor1 + ":" + SelectedCard.CostMana1;
@@ -975,7 +975,7 @@ namespace AsteriskTCGMaker4.ViewModels
 
     abstract public class CostValueConverterTest
     {
-        protected object TestValues(object value, double num, double x)
+        protected object TestValues(object value, double num, double x, double _5)
         {
             switch (value.ToString())
             {
@@ -983,12 +983,13 @@ namespace AsteriskTCGMaker4.ViewModels
                 case "2":
                 case "3":
                 case "4":
-                case "5":
                 case "6":
                 case "7":
                 case "8":
                 case "9":
                     return num;
+                case "5":
+                    return _5;
                 default:
                     return x;
             }
@@ -999,10 +1000,11 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numScaleXValue = 1.75;
         const double _xScaleXValue = 1.1;
+        const double _5ScaleXValue = 1.75;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            return TestValues(value, _numScaleXValue, _xScaleXValue);
+            return TestValues(value, _numScaleXValue, _xScaleXValue, _5ScaleXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -1017,9 +1019,10 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numCenterXValue = 9.0;
         const double _xCenterXValue = 68.0;
+        const double _5CenterXValue = 8.0;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return TestValues(value, _numCenterXValue, _xCenterXValue);
+            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -1032,9 +1035,10 @@ namespace AsteriskTCGMaker4.ViewModels
     {
         const double _numCenterXValue = 9.0;
         const double _xCenterXValue = 38.0;
+        const double _5CenterXValue = 8.0;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return TestValues(value, _numCenterXValue, _xCenterXValue);
+            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -1544,7 +1548,7 @@ namespace AsteriskTCGMaker4.ViewModels
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if ((bool)value) return "ステラ";
-            else return "スペル";
+            else return "ルクス";
         }
     }
 
@@ -1555,12 +1559,12 @@ namespace AsteriskTCGMaker4.ViewModels
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value.ToString() == "スペル";
+            return value.ToString() == "ルクス";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if ((bool)value) return "スペル";
+            if ((bool)value) return "ルクス";
             else return "ステラ";
         }
     }
@@ -1632,6 +1636,7 @@ namespace AsteriskTCGMaker4.ViewModels
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             //入力引数は「ステラ・スペル、種族1、種族2、種族3」の順
+            //入力引数は「ステラ・ルクス、種族1、種族2、種族3」の順 (2025/02/18変更)
 
 
             var text = "《" + values[0].ToString() + "》";
@@ -1803,6 +1808,7 @@ namespace AsteriskTCGMaker4.ViewModels
             text = text.Substring(text.IndexOf("\r\n") + 2, text.Length - (text.IndexOf("\r\n") + 2));
 
             //[色][ステラ/スペル]《種類1》《種類2》
+            //[色][ステラ/ルクス]《種類1》《種類2》(2025/02/18変更)
             MatchCollection matches1 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"\[.*?\]");
             MatchCollection matches2 = Regex.Matches(text.Substring(0, text.IndexOf("\r\n")), @"《.*?》");
             //Color = matches1[0].Value.Substring(1, matches1[0].Value.Length - 2);
