@@ -29,9 +29,9 @@
         <vm:CheckValueSizeConverter x:Key="CheckValueSizeConverter"/>
         <vm:MainCostResourceConverter x:Key="MainCostResourceConverter"/>
         <vm:SubCostResourceConverter x:Key="SubCostResourceConverter"/>
-        <vm:CostFontScaleXConverter x:Key="CostFontScaleXConverter"/>
-        <vm:MainCostCenterXConverter x:Key="MainCostCenterXConverter"/>
-        <vm:SubCostCenterXConverter x:Key="SubCostCenterXConverter"/>
+        <vm:CostValueConverter x:Key="CostFontScaleXConverter" _numValue="1.75" _xValue="1.1" _5Value="1.75"/>
+        <vm:CostValueConverter x:Key="MainCostCenterXConverter" _numValue="9.0" _xValue="68.0" _5Value="8.0"/>
+        <vm:CostValueConverter x:Key="SubCostCenterXConverter" _numValue="9.0" _xValue="38.0" _5Value="8.0"/>
         <vm:BoolToVisibillityConverter x:Key="BoolToVisibillityConverter"/>
 
 
