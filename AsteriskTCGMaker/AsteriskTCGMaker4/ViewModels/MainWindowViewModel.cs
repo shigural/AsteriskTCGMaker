@@ -973,9 +973,12 @@ namespace AsteriskTCGMaker4.ViewModels
         }
     }
 
-    abstract public class CostValueConverterTest
+    public class CostValueConverter : IValueConverter
     {
-        protected object TestValues(object value, double num, double x, double _5)
+        public double _numValue { get; set; } = 1.75;
+        public double _xValue { get; set; } = 1.1;
+        public double _5Value { get; set; } = 1.75;
+        protected object TestValues(object value, object num, object x, object _5)
         {
             switch (value.ToString())
             {
@@ -994,51 +997,10 @@ namespace AsteriskTCGMaker4.ViewModels
                     return x;
             }
         }
-    }
-
-    public class CostFontScaleXConverter : CostValueConverterTest, IValueConverter
-    {
-        const double _numScaleXValue = 1.75;
-        const double _xScaleXValue = 1.1;
-        const double _5ScaleXValue = 1.75;
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            return TestValues(value, _numScaleXValue, _xScaleXValue, _5ScaleXValue);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return 0.0f;
-        }
-    }
-
-
-
-    public class MainCostCenterXConverter : CostValueConverterTest,IValueConverter
-    {
-        const double _numCenterXValue = 9.0;
-        const double _xCenterXValue = 68.0;
-        const double _5CenterXValue = 8.0;
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return 0.0f;
-        }
-    }
-
-    public class SubCostCenterXConverter : CostValueConverterTest, IValueConverter
-    {
-        const double _numCenterXValue = 9.0;
-        const double _xCenterXValue = 38.0;
-        const double _5CenterXValue = 8.0;
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return TestValues(value, _numCenterXValue, _xCenterXValue, _5CenterXValue);
+            return TestValues(value, _numValue, _xValue, _5Value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
